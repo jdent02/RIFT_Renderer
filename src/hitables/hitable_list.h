@@ -4,7 +4,7 @@
 #define HITABLE_LIST_H
 
 #include "hitable.h"
-#include "ray.h"
+#include "utility/ray.h"
 
 class hitable_list
     :public hitable

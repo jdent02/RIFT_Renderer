@@ -2,8 +2,8 @@
 #define EDF_H
 
 #include "material.h"
-#include "texture.h"
-#include "vec3.h"
+#include "textures/texture.h"
+#include "utility/vec3.h"
 
 class diffuse_light
     : public material

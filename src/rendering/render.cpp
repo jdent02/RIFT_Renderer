@@ -1,9 +1,9 @@
 #include "render.h"
 
-#include "vec3.h"
-#include "utilities.h"
-#include "camera.h"
-#include "hitable.h"
+#include "utility/vec3.h"
+#include "utility/utilities.h"
+#include "camera/camera.h"
+#include "hitables/hitable.h"
 
 
 #include <fstream>
@@ -19,7 +19,7 @@ void renderer::do_render(
     const float inv_nx,
     const float inv_ny,
     camera cam,
-    hitable *world)
+    hitable *world) const
 {
     const float total_pixels_inv = 1.f / (nx * ny);
     int rendered_pixels = 0;

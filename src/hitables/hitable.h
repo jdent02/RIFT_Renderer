@@ -1,8 +1,8 @@
 #ifndef HITABLE_H
 #define HITABLE_H
 
-#include "ray.h"
-#include "vec3.h"
+#include "utility/ray.h"
+#include "utility/vec3.h"
 
 // Forward declaration
 class material;

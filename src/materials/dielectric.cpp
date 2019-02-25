@@ -1,8 +1,8 @@
 #include "dielectric.h"
 
-#include "ray.h"
-#include "utilities.h"
-#include "vec3.h"
+#include "utility/ray.h"
+#include "utility/utilities.h"
+#include "utility/vec3.h"
 
 bool dielectric::scatter(
     const ray & r_in,

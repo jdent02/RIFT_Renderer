@@ -1,8 +1,8 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "hitable.h"
-#include "camera.h"
+#include "hitables/hitable.h"
+#include "camera/camera.h"
 
 #include <vector>
 
@@ -20,7 +20,7 @@ public:
         const float inv_nx,
         const float inv_ny,
         camera cam,
-        hitable *world);
+        hitable *world) const;
 
     void write_buffer(
         std::vector<std::vector<int>>& buffer,

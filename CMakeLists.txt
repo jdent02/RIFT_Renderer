@@ -2,12 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 project(FARTS_renderer VERSION 0.1.0)
 
 include_directories(
-    src/camera
-    src/hitables
-    src/materials
-    src/rendering
-    src/textures
-    src/utility
+    src
 )
 
 set (CAMERA_SOURCES

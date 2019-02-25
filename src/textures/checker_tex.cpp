@@ -1,6 +1,6 @@
-
 #include "checker_tex.h"
-#include "vec3.h"
+
+#include "utility/vec3.h"
 
 #include <complex>
 

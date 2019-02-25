@@ -2,8 +2,10 @@
 #define METAL_H
 
 #include "material.h"
-#include "utilities.h"
-#include "vec3.h"
+
+#include "hitables/hitable.h"
+#include "utility/utilities.h"
+#include "utility/vec3.h"
 
 
 class metal

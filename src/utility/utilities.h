@@ -1,11 +1,10 @@
 #pragma once
 
-#include "hitable.h"
+#include "hitables/hitable.h"
 #include "vec3.h"
-#include "material.h"
-#include "lambertian.h"
+#include "materials/material.h"
+#include "materials/lambertian.h"
 #include "ray.h"
-#include "../hitables/hitable.h"
 
 constexpr float inv_rand_max = 1.f / RAND_MAX;
 

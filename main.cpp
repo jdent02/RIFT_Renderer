@@ -1,8 +1,8 @@
-#include "vec3.h"
-#include "camera.h"
-#include "hitable.h"
-#include "render.h"
-#include "generators.h"
+#include "utility/vec3.h"
+#include "camera/camera.h"
+#include "utility/generators.h"
+#include "hitables/hitable.h"
+#include "rendering/render.h"
 
 #include <iostream>
 #include <sstream>

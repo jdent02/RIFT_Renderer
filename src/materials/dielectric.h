@@ -1,9 +1,9 @@
 #ifndef DIELECTRIC_H
 #define DIELECTRIC_H
 
-#include "hitable.h"
+#include "hitables/hitable.h"
 #include "material.h"
-#include "ray.h"
+#include "utility/ray.h"
 
 
 class dielectric

@@ -1,13 +1,13 @@
 #include "generators.h"
 
-#include "hitable_list.h"
-#include "sphere.h"
-#include "lambertian.h"
+#include "hitables/hitable_list.h"
+#include "hitables/sphere.h"
+#include "materials/lambertian.h"
 #include "utilities.h"
-#include "metal.h"
-#include "dielectric.h"
-#include "constant_tex.h"
-#include "checker_tex.h"
+#include "materials/metal.h"
+#include "materials/dielectric.h"
+#include "textures/constant_tex.h"
+#include "textures/checker_tex.h"
 
 // Class implementation
 hitable* scene_generator::make_random_scene()

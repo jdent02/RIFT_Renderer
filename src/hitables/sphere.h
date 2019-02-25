@@ -2,8 +2,10 @@
 #define SPHERE_H
 
 #include "hitable.h"
-#include "material.h"
-#include "vec3.h"
+
+#include "materials/material.h"
+#include "utility/ray.h"
+#include "utility/vec3.h"
 
 class sphere
     :public hitable

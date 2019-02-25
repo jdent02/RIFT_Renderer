@@ -2,9 +2,9 @@
 #define LAMBERTIAN_H
 
 #include "material.h"
-#include "ray.h"
-#include "texture.h"
-#include "vec3.h"
+#include "utility/ray.h"
+#include "textures/texture.h"
+#include "utility/vec3.h"
 
 vec3 random_in_unit_sphere();
 
