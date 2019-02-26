@@ -12,9 +12,9 @@ class renderer
 {
 public:
     renderer(
-        const int nx,
-        const int ny,
-        const int ns,
+        int nx,
+        int ny,
+        int ns,
         camera cam,
         hitable *world);
 

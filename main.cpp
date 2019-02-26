@@ -22,13 +22,13 @@ int main()
     const float aperture = 0.05f;
 
     camera cam(
-        lookfrom,
-        lookat,
-        vec3(0.f, 1.f, 0.f), 
-        35.f, 
-        float(nx)/float(ny),
-        aperture,
-        dist_to_focus);
+            lookfrom,
+            lookat,
+            vec3(0.f, 1.f, 0.f),
+            35.f,
+            float(nx) / float(ny),
+            aperture,
+            dist_to_focus, 0, 0);
 
     scene_generator generator;
 

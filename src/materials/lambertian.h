@@ -6,13 +6,15 @@
 #include "textures/texture.h"
 #include "utility/data_types/vec3.h"
 
+#include <memory>
+
 vec3 random_in_unit_sphere();
 
 class lambertian :
     public material
 {
 public:
-    lambertian(texture* a);
+    lambertian(std::unique_ptr<texture> a);
     ~lambertian() = default;
 
     virtual bool scatter(
@@ -21,11 +23,11 @@ public:
         vec3& attenuation,
         ray& scattered) const override;
 
-    texture* albedo;
+    std::unique_ptr<texture> albedo;
 };
 
-inline lambertian::lambertian(texture* a)
-    : albedo(a) {}
+inline lambertian::lambertian(std::unique_ptr<texture> a)
+    : albedo(std::move(a)) {}
 
 inline bool lambertian::scatter(
     const ray& r_in, 
