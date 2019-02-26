@@ -3,7 +3,7 @@
 
 #include "material.h"
 #include "textures/texture.h"
-#include "utility/vec3.h"
+#include "utility/data_types/vec3.h"
 
 class diffuse_light
     : public material

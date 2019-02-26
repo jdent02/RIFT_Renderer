@@ -38,16 +38,13 @@ set (TEXTURE_SOURCES
 )
 
 set (UTILITY_SOURCES
-    src/utility/generators.h
-    src/utility/generators.cpp
-    src/utility/ray.h
-    src/utility/utilities.h
-    src/utility/vec3.h
-)
-
-set (RNG_SOURCES
 	src/utility/rng/xoroshiro128.h
-)
+	src/utility/rng/xoroshiro128.cpp
+	src/utility/generators/scene_generator.h
+	src/utility/generators/scene_generator.cpp
+	src/utility/data_types/ray.h
+	src/utility/utility_functions.h
+	src/utility/data_types/vec3.h src/utility/scatter_functions.h)
 
 set (MAIN_SOURCE
     main.cpp
@@ -90,10 +87,6 @@ source_group("src\\textures" FILES
 
 source_group("src\\utilities" FILES
     ${UTILITY_SOURCES}
-)
-
-source_group("src\\utilities\\rng" FILES
-	${RNG_SOURCES}
 )
  
 add_executable(FARTS_renderer

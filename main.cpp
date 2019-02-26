@@ -1,6 +1,6 @@
-#include "utility/vec3.h"
+#include "utility/data_types/vec3.h"
 #include "camera/camera.h"
-#include "utility/generators.h"
+#include "utility/generators/scene_generator.h"
 #include "hitables/hitable.h"
 #include "rendering/render.h"
 

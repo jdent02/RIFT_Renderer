@@ -1,19 +1,23 @@
-#include "generators.h"
+#include "scene_generator.h"
 
 #include "hitables/hitable_list.h"
 #include "hitables/sphere.h"
 #include "materials/lambertian.h"
-#include "utilities.h"
+#include "utility/utility_functions.h"
 #include "materials/metal.h"
 #include "materials/dielectric.h"
 #include "textures/constant_tex.h"
 #include "textures/checker_tex.h"
+#include "utility/rng/xoroshiro128.h"
 
 // Class implementation
 hitable* scene_generator::make_random_scene()
 {
     int n = 500;
     hitable **list = new hitable* [n + 1];
+
+    xoro_128 generator;
+    const float inv_max_uint = INV_UINT_MAX;
 
     // Ground
     texture *checker = new checker_texture(
@@ -31,12 +35,12 @@ hitable* scene_generator::make_random_scene()
     {
         for (int b = -11; b < 11; b++)
         {
-            const float choose_mat = rand() * inv_rand_max;
+            const float choose_mat = generator.next() * inv_max_uint;
             vec3 center(
-                a + 0.9f * (rand() * inv_rand_max),
+                a + 0.9f * (generator.next() * inv_max_uint),
                 0.2f,
-                b + 0.9f * (rand() * inv_rand_max));
-            if ((center - vec3(4, 0.2, 0.f)).length() > 0.9f)
+                b + 0.9f * (generator.next() * inv_max_uint));
+            if ((center - vec3(4.f, 0.2f, 0.f)).length() > 0.9f)
             {
                 if (choose_mat < 0.8f)
                 {
@@ -45,9 +49,9 @@ hitable* scene_generator::make_random_scene()
                         0.2f,
                         new lambertian(new constant_texture(
                             vec3(
-                                rand() * inv_rand_max * (rand() * inv_rand_max),
-                                rand() * inv_rand_max * (rand() * inv_rand_max),
-                                rand() * inv_rand_max * (rand() * inv_rand_max)))));
+                                    generator.next() * inv_max_uint * (generator.next() * inv_max_uint),
+                                    generator.next() * inv_max_uint * (generator.next() * inv_max_uint),
+                                    generator.next() * inv_max_uint * (generator.next() * inv_max_uint)))));
                 }
                 else if (choose_mat < 0.95f)
                 {
@@ -56,10 +60,10 @@ hitable* scene_generator::make_random_scene()
                         0.2f,
                         new metal(
                             vec3(
-                                0.5f * (1 + rand() * inv_rand_max),
-                                0.5f * (1 + rand() * inv_rand_max),
-                                0.5f * (1 + rand() * inv_rand_max)),
-                            rand() * inv_rand_max));
+                                0.5f * (1 + generator.next() * inv_max_uint),
+                                0.5f * (1 + generator.next() * inv_max_uint),
+                                0.5f * (1 + generator.next() * inv_max_uint)),
+                            generator.next() * inv_max_uint));
                 }
                 else
                 {

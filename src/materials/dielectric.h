@@ -3,7 +3,7 @@
 
 #include "hitables/hitable.h"
 #include "material.h"
-#include "utility/ray.h"
+#include "utility/data_types/ray.h"
 
 
 class dielectric

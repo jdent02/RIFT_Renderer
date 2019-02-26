@@ -1,5 +1,5 @@
 #pragma once
-#include "utility/vec3.h"
+#include "utility/data_types/vec3.h"
 
 class texture
 {

@@ -4,8 +4,8 @@
 #include "material.h"
 
 #include "hitables/hitable.h"
-#include "utility/utilities.h"
-#include "utility/vec3.h"
+#include "utility/data_types/vec3.h"
+#include "utility/scatter_functions.h"
 
 
 class metal

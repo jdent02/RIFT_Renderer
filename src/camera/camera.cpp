@@ -1,8 +1,8 @@
 #include "camera.h"
 
-#include "utility/ray.h"
-#include "utility/utilities.h"
-#include "utility/vec3.h"
+#include "utility/data_types/ray.h"
+#include "utility/utility_functions.h"
+#include "utility/data_types/vec3.h"
 
 camera::camera(
     vec3 lookfrom,

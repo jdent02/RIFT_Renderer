@@ -2,7 +2,7 @@
 #define MATERIAL_H
 
 #include "hitables/hitable.h"
-#include "utility/ray.h"
+#include "utility/data_types/ray.h"
 
 class material
 {

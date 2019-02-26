@@ -1,42 +1,35 @@
-#ifndef XOROSHIRO128_H
-#define XOROSHIRO128_H
+#ifndef XORO_128
+#define XORO_128
 
-#include <cstdint>
+#include <stdint.h>
 
-//  Adapted from xoroshiro128
-//  Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
+#define INV_UINT_MAX 1.f / UINT64_MAX;
 
-static uint64_t rotl(const uint64_t x, int k)
+// Taken from Xoroshiro128
+// Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
+
+
+static inline uint64_t rotl(const uint64_t x, int k)
 {
-    return x << k | x >> 64 - k;
+	return (x << k) | (x >> (64 - k));
 }
 
-class xoro128
+class xoro_128
 {
-public:
-    xoro128();
-    xoro128(uint64_t seed_1, uint64_t seed_2);
-    float get_num();
-private:
-    uint64_t s[2] {0x46961b5e381bce6eull, 0x55897310023cae21ull};
+  public:
+    // Constructors
+    xoro_128() = default;
+    xoro_128(uint64_t s0, uint64_t s1);
+
+    // Destructor
+    ~xoro_128() = default;
+
+	uint64_t next();
+	void jump();
+	void long_jump();
+
+  private:
+    uint64_t s[2] {0x46961B5E381BCE6EULL, 0x55897310023CAE21ULL};
 };
 
-inline xoro128::xoro128(uint64_t seed_1, uint64_t seed_2)
-{
-    s[0] = seed_1;
-    s[1] = seed_2;
-}
-
-inline float xoro128::get_num() {
-	const uint64_t s0 = s[0];
-	uint64_t s1 = s[1];
-	const uint64_t result = rotl(s0 * 5, 7) * 9;
-
-	s1 ^= s0;
-	s[0] = rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
-	s[1] = rotl(s1, 37); // c
-
-	return float(result);
-}
-
-#endif // XOROSHIRO128_H
+#endif // XORO_128

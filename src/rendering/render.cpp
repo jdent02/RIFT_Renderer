@@ -1,14 +1,15 @@
 #include "render.h"
 
-#include "utility/vec3.h"
-#include "utility/utilities.h"
+#include "utility/data_types/vec3.h"
+#include "utility/utility_functions.h"
 #include "utility/rng/xoroshiro128.h"
 #include "camera/camera.h"
 
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
-#include <vector>
 #include <iostream>
+#include <vector>
 
 renderer::renderer(
     const int nx, 
@@ -31,6 +32,13 @@ void renderer::do_render() const
     const float total_pixels_inv = 1.f / (nx * ny);
     int rendered_pixels = 0;
 
+    time_t rand_seed = time(nullptr);
+    auto seed_1 = static_cast<uint64_t>(rand_seed);
+    auto seed_2 = static_cast<uint64_t>(rand_seed >> 16);
+
+    xoro_128 generator(seed_1, seed_2);
+    const float inv_uint_max = INV_UINT_MAX;
+
     std::cout << "Generating Pixels..." << std::endl;
     std::cout << "Progress:" << std::endl;
 
@@ -41,8 +49,8 @@ void renderer::do_render() const
             vec3 col(0.f, 0.f, 0.f);
             for (int s = 0; s < ns; s++)
             {
-                float u = (i + (float)rand() * inv_rand_max) * inv_nx;
-                float v = (j + (float)rand() * inv_rand_max) * inv_ny;
+                float u = (i + generator.next() * inv_uint_max) * inv_nx;
+                float v = (j + generator.next() * inv_uint_max) * inv_ny;
                 ray r = cam.get_ray(u, v);
                 col += color(r, world, 0);
             }
@@ -65,7 +73,7 @@ void renderer::do_render() const
     std::cout << std::endl;
 }
 
-void renderer::write_buffer(std::vector<std::vector<int>> &buffer, const int& x_res, const int& y_res)
+void renderer::write_buffer() const
 {
     std::cout << "Writing Output" << std::endl;
 

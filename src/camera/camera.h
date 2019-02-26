@@ -1,8 +1,8 @@
 #ifndef RAYTRACER_CAMERA_H
 #define RAYTRACER_CAMERA_H
 
-#include "utility/ray.h"
-#include "utility/vec3.h"
+#include "utility/data_types/ray.h"
+#include "utility/data_types/vec3.h"
 
 
 class camera

@@ -4,8 +4,8 @@
 #include "hitable.h"
 
 #include "materials/material.h"
-#include "utility/ray.h"
-#include "utility/vec3.h"
+#include "utility/data_types/ray.h"
+#include "utility/data_types/vec3.h"
 
 class sphere
     :public hitable
