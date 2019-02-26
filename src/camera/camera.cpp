@@ -12,7 +12,7 @@ camera::camera(
     float aspect,
     float aperture,
     float focus_dist)
-    : lens_radius(aperture / 2.f), origin(lookfrom)
+    : origin(lookfrom), lens_radius(aperture / 2.f)
 {
     const float theta = vfov * pi / 180;
     const float half_height = tan(theta / 2.f);

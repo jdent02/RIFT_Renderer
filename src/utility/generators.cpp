@@ -13,7 +13,7 @@
 hitable* scene_generator::make_random_scene()
 {
     int n = 500;
-    hitable **list = new hitable *[n + 1];
+    hitable **list = new hitable* [n + 1];
 
     // Ground
     texture *checker = new checker_texture(

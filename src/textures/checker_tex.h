@@ -1,5 +1,5 @@
-#ifndef FARTS_CHECKER_TEX
-#define FARTS_CHECKER_TEX
+#ifndef CHECKER_TEX_H
+#define CHECKER_TEX_H
 
 #include "texture.h"
 
@@ -15,6 +15,4 @@ public:
     texture* odd;
     texture* even;
 };
-
-
-#endif FARTS_CHECKER_TEX
+#endif // CHECKER_TEX_H

@@ -2,24 +2,31 @@
 
 #include "utility/vec3.h"
 #include "utility/utilities.h"
+#include "utility/rng/xoroshiro128.h"
 #include "camera/camera.h"
-#include "hitables/hitable.h"
-
 
 #include <fstream>
 #include <iomanip>
 #include <vector>
 #include <iostream>
 
-void renderer::do_render(
-    std::vector<std::vector<int>> &buffer,
-    const int nx,
-    const int ny,
-    const int ns,
-    const float inv_nx,
-    const float inv_ny,
+renderer::renderer(
+    const int nx, 
+    const int ny, 
+    const int ns, 
     camera cam,
-    hitable *world) const
+    hitable* world)
+    :   buffer(create_buffer()), 
+        nx(nx), 
+        ny(ny), 
+        ns(ns), 
+        inv_nx(1.f / nx), 
+        inv_ny(1.f / ny), 
+        cam(cam),
+        world(world)
+{}
+
+void renderer::do_render() const
 {
     const float total_pixels_inv = 1.f / (nx * ny);
     int rendered_pixels = 0;
@@ -48,7 +55,7 @@ void renderer::do_render(
             temp_out.push_back(int(255.99 * col[1]));
             temp_out.push_back(int(255.99 * col[2]));
 
-            buffer.push_back(temp_out);
+            buffer->push_back(temp_out);
             rendered_pixels++;
         }
 
@@ -64,9 +71,9 @@ void renderer::write_buffer(std::vector<std::vector<int>> &buffer, const int& x_
 
     std::ofstream file;
     file.open("../image.ppm");
-    file << "P3\n" << x_res << " " << y_res << "\n255" << std::endl;
+    file << "P3\n" << nx << " " << ny << "\n255" << std::endl;
 
-    for (std::vector<int> &pixel : buffer)
+    for (std::vector<int> &pixel : *buffer)
     {
         file << pixel[0] << " " << pixel[1] << " " << pixel[2] << std::endl;
     }

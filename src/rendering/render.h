@@ -4,28 +4,34 @@
 #include "hitables/hitable.h"
 #include "camera/camera.h"
 
+#include <memory>
 #include <vector>
 
 
 class renderer
 {
 public:
-    renderer() = default;
-    ~renderer() = default;
-    void do_render(
-        std::vector<std::vector<int>> &buffer,
+    renderer(
         const int nx,
         const int ny,
         const int ns,
-        const float inv_nx,
-        const float inv_ny,
         camera cam,
-        hitable *world) const;
+        hitable *world);
 
-    void write_buffer(
-        std::vector<std::vector<int>>& buffer,
-        const int& x_res,
-        const int& y_res);
+    ~renderer() = default;
+
+    void do_render() const;
+    void write_buffer() const;
+
+private:
+    std::unique_ptr<std::vector<std::vector<int>>> buffer;
+    const int nx;
+    const int ny;
+    const int ns;
+    const float inv_nx;
+    const float inv_ny;
+    camera cam;
+    hitable *world;
 };
 
 

@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <vector>
 #include <ctime>
 
 
@@ -15,15 +14,12 @@ int main()
 {
     const int nx{640};
     const int ny{480};
-    const int num_samples(5);
-
-    const float inv_nx = 1.f / nx;
-    const float inv_ny = 1.f / ny;
+    const int num_samples(3);
 
     const vec3 lookfrom(-1.f, 1.75f, 8.f);
     const vec3 lookat(0.f, 0.5f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
-    const float aperture = 0.1f;
+    const float aperture = 0.05f;
 
     camera cam(
         lookfrom,
@@ -38,25 +34,20 @@ int main()
 
     hitable* world = generator.make_random_scene();
 
-    std::vector<std::vector<int>> buffer;
-
     time_t start_time = time(NULL);
 
     std::cout << "Rendering....." << std::endl;
 
-    renderer engine;
+    renderer engine{
+        nx,
+        ny,
+        num_samples,
+        cam,
+        world};
 
-    engine.do_render(
-        buffer, 
-        nx, 
-        ny, 
-        num_samples, 
-        inv_nx, 
-        inv_ny, 
-        cam, 
-        world);
+    engine.do_render();
 
-    engine.write_buffer(buffer, nx, ny);
+    engine.write_buffer();
 
     time_t end_time = time(NULL);
 

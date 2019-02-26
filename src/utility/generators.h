@@ -12,4 +12,4 @@ public:
     hitable *make_random_scene();
 };
 
-#endif FARTS_GENERATORS
+#endif

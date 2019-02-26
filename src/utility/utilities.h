@@ -7,8 +7,15 @@
 #include "ray.h"
 
 constexpr float inv_rand_max = 1.f / RAND_MAX;
+#include <limits>
+#include <memory>
+#include <vector>
+
+
 
 constexpr float pi = 3.14159f;
+
+inline std::unique_ptr<std::vector<std::vector<int>>> create_buffer() { return std::make_unique<std::vector<std::vector<int>>>(); }
 
 inline vec3 random_in_unit_sphere()
 {

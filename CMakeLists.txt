@@ -18,7 +18,7 @@ set (HITABLES_SOURCES
 
 set (MATERIAL_SOURCES
     src/materials/dielectric.h
-	src/materials/dielectric.cpp
+    src/materials/dielectric.cpp
     src/materials/edf.h
     src/materials/lambertian.h
     src/materials/material.h
@@ -45,6 +45,10 @@ set (UTILITY_SOURCES
     src/utility/vec3.h
 )
 
+set (RNG_SOURCES
+	src/utility/rng/xoroshiro128.h
+)
+
 set (MAIN_SOURCE
     main.cpp
 )
@@ -57,6 +61,11 @@ set (CPP_SOURCES
     ${RENDERING_SOURCES}
     ${TEXTURE_SOURCES}
     ${UTILITY_SOURCES}
+	${RNG_SOURCES}
+)
+
+source_group("src\\" FILES
+    ${MAIN_SOURCE}
 )
 
 source_group("src\\cameras" FILES
@@ -81,6 +90,10 @@ source_group("src\\textures" FILES
 
 source_group("src\\utilities" FILES
     ${UTILITY_SOURCES}
+)
+
+source_group("src\\utilities\\rng" FILES
+	${RNG_SOURCES}
 )
  
 add_executable(FARTS_renderer
