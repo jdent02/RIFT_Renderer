@@ -45,11 +45,8 @@ ihitable* scene_generator::make_random_scene()
             {
                 if (choose_mat < 0.8f)
                 {
-                    list[i++] = new moving_sphere(
+                    list[i++] = new sphere(
                         center,
-                        center + vec3(0.f, 0.5f * sampler.random_generator->next(), 0.f),
-                        0.f,
-                        1.f,
                         0.2f,
                         new lambertian(
                             std::make_unique<constant_texture>(

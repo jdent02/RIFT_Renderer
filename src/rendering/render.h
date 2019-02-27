@@ -32,6 +32,7 @@ class renderer
     const int ns;
     const float inv_nx;
     const float inv_ny;
+    const float inv_ns;
     camera cam;
     ihitable* world;
 };

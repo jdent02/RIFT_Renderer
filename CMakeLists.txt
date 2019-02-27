@@ -14,12 +14,12 @@ set (
 set (
     HITABLES_SOURCES
     src/hitables/hitable_list.h
-    src/hitables/hitable.h
     src/hitables/sphere.h
-	src/hitables/sphere.cpp
+    src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
-	src/hitables/moving_sphere.cpp
-)
+    src/hitables/moving_sphere.cpp
+    src/hitables/bvh_node.cpp
+    src/hitables/bvh_node.h)
 
 set (
     MATERIAL_SOURCES
@@ -27,10 +27,10 @@ set (
     src/materials/dielectric.cpp
     src/materials/edf.h
     src/materials/lambertian.h
-	src/materials/lambertian.cpp
+    src/materials/lambertian.cpp
     src/materials/imaterial.h
     src/materials/metal.h
-	src/materials/metal.cpp
+    src/materials/metal.cpp
 )
 
 set (
@@ -57,10 +57,11 @@ set (
     src/utility/utility_functions.h
     src/utility/data_types/vec3.h
     src/utility/scatter_functions.h
-    src/utility/rng/igenerator.h 
-	src/utility/rng/drand48.cpp
-	src/utility/rng/drand48.h
-)
+    src/utility/rng/igenerator.h
+    src/utility/rng/drand48.cpp
+    src/utility/rng/drand48.h
+    src/utility/data_types/aabb.cpp
+    src/utility/data_types/aabb.h)
 
 set (
     MAIN_SOURCE

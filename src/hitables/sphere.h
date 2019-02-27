@@ -1,7 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "hitables/hitable.h"
+#include "hitables/ihitable.h"
 
 // Forward declarations
 class imaterial;
@@ -25,6 +25,11 @@ class sphere
         float t_min,
         float t_max,
         hit_record& rec) const override;
+
+    virtual bool bounding_box(
+        float t0,
+        float t1,
+        aabb& box) const override;
 
     // Properties
     vec3 center;

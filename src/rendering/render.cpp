@@ -14,7 +14,7 @@ renderer::renderer(
     const int nx,
     const int ny,
     const int ns,
-    camera cam,
+    const camera cam,
     ihitable* world)
     : buffer(create_buffer()),
       nx(nx),
@@ -22,6 +22,7 @@ renderer::renderer(
       ns(ns),
       inv_nx(1.f / nx),
       inv_ny(1.f / ny),
+      inv_ns(1.f / ns),
       cam(cam),
       world(world) {}
 
@@ -52,7 +53,7 @@ void renderer::do_render() const
                 col += color(r, world, 0);
             }
 
-            col /= float(ns);
+            col *= inv_ns;
             col = vec3(std::sqrt(col[0]), std::sqrt(col[1]), std::sqrt(col[2]));
 
             std::vector<int> temp_out;
