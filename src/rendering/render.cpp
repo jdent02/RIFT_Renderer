@@ -11,20 +11,19 @@
 #include <vector>
 
 renderer::renderer(
-    const int nx, 
-    const int ny, 
-    const int ns, 
+    const int nx,
+    const int ny,
+    const int ns,
     camera cam,
-    hitable* world)
-    :   buffer(create_buffer()), 
-        nx(nx), 
-        ny(ny), 
-        ns(ns), 
-        inv_nx(1.f / nx), 
-        inv_ny(1.f / ny), 
-        cam(cam),
-        world(world)
-{}
+    ihitable* world)
+    : buffer(create_buffer()),
+      nx(nx),
+      ny(ny),
+      ns(ns),
+      inv_nx(1.f / nx),
+      inv_ny(1.f / ny),
+      cam(cam),
+      world(world) {}
 
 void renderer::do_render() const
 {
@@ -34,7 +33,7 @@ void renderer::do_render() const
     time_t rand_seed = time(nullptr);
     auto seed_1 = static_cast<uint64_t>(rand_seed);
 
-    sampler sample_gen(XORO_128);
+    sampler sample_gen(XORO_128_GEN);
     sample_gen.random_generator->seed_gen(seed_1);
 
     std::cout << "Generating Pixels..." << std::endl;
@@ -79,7 +78,7 @@ void renderer::write_buffer() const
     file.open("../image.ppm");
     file << "P3\n" << nx << " " << ny << "\n255" << std::endl;
 
-    for (std::vector<int> &pixel : *buffer)
+    for (std::vector<int>& pixel : *buffer)
     {
         file << pixel[0] << " " << pixel[1] << " " << pixel[2] << std::endl;
     }

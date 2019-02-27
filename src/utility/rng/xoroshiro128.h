@@ -1,9 +1,11 @@
 #ifndef XORO_128_IMPL
 #define XORO_128_IMPL
 
-#include "generator.h"
-#include <stdint.h>
+// Local libraries
+#include "igenerator.h"
 
+// Standard libraries
+#include <cstdint>
 
 // Taken from Xoroshiro128
 // Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
@@ -15,7 +17,7 @@ static inline uint64_t rotl(const uint64_t x, int k)
 }
 
 class xoro_128
-	: public generator
+	: public igenerator
 {
   public:
     // Constructors

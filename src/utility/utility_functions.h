@@ -1,21 +1,23 @@
-#include <cmath>
-
-#pragma once
+#ifndef UTILITY_FUNCTIONS_H
+#define UTILITY_FUNCTIONS_H
 
 #include "hitables/hitable.h"
-#include "utility/data_types/vec3.h"
-#include "materials/material.h"
-#include "materials/lambertian.h"
+#include "materials/imaterial.h"
 #include "utility/data_types/ray.h"
 
+#include <cmath>
 #include <limits>
 #include <memory>
 #include <vector>
 
 
-constexpr float inv_rand_max = 1.f / RAND_MAX;
+class imaterial;
 
+
+// global const variables
+constexpr float inv_rand_max = 1.f / RAND_MAX;
 constexpr float pi = 3.14159f;
+
 
 inline std::unique_ptr<std::vector<std::vector<int>>> create_buffer()
 {
@@ -45,7 +47,7 @@ inline vec3 random_in_unit_disk()
     return p;
 }
 
-inline vec3 color(const ray& r, hitable* world, int depth)
+inline vec3 color(const ray& r, ihitable* world, int depth)
 {
     hit_record rec;
 
@@ -70,3 +72,4 @@ inline vec3 color(const ray& r, hitable* world, int depth)
 }
 
 
+#endif // UTILITY_FUNCTIONS_H

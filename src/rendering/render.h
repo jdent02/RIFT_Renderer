@@ -1,29 +1,31 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "hitables/hitable.h"
 #include "camera/camera.h"
 
 #include <memory>
 #include <vector>
 
+// Forward declarations
+class ihitable;
 
 class renderer
 {
-public:
+  public:
     renderer(
         int nx,
         int ny,
         int ns,
         camera cam,
-        hitable *world);
+        ihitable* world);
 
     ~renderer() = default;
 
     void do_render() const;
+
     void write_buffer() const;
 
-private:
+  private:
     std::unique_ptr<std::vector<std::vector<int>>> buffer;
     const int nx;
     const int ny;
@@ -31,7 +33,7 @@ private:
     const float inv_nx;
     const float inv_ny;
     camera cam;
-    hitable *world;
+    ihitable* world;
 };
 
 

@@ -15,5 +15,5 @@ public:
     // properties
     vec3 A;
     vec3 B;
-    float _time;
+    float _time{};
 };

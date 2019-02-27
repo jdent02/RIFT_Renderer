@@ -3,12 +3,15 @@
 
 #include <cstdint>
 
-class generator
+class igenerator
 {
   public:
-    generator() = default;
-    virtual ~generator() = default;
+    igenerator() = default;
+
+    virtual ~igenerator() = default;
+
     virtual float next() = 0;
+
     virtual void seed_gen(uint64_t seed) = 0;
 };
 

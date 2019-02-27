@@ -6,7 +6,7 @@
 inline bool refract(
     const vec3& v,
     const vec3& n,
-    float ni_over_nt,
+    const float ni_over_nt,
     vec3& refracted)
 {
     const vec3 uv = unit_vector(v);
@@ -25,7 +25,7 @@ inline vec3 reflect(const vec3& v, const vec3& n)
     return v - 2 * dot(v, n) * n;
 }
 
-inline float schlick(float cosine, float ref_idx)
+inline float schlick(const float cosine, const float ref_idx)
 {
     float r0 = (1 - ref_idx) / (1 + ref_idx);
     r0 = r0 * r0;

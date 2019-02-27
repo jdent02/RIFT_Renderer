@@ -1,15 +1,19 @@
 #ifndef FARTS_GENERATORS
 #define FARTS_GENERATORS
 
-#include "hitables/hitable_list.h"
+
+#include <hitables/ihitable.h>
+
 
 // Utility function to generate a random scene
 class scene_generator
 {
-public:
+  public:
     scene_generator() = default;
+
     ~scene_generator() = default;
-    hitable *make_random_scene();
+
+    ihitable* make_random_scene();
 };
 
 #endif

@@ -6,36 +6,41 @@ include_directories(
 )
 
 set (
-	CAMERA_SOURCES
+    CAMERA_SOURCES
     src/camera/camera.h
     src/camera/camera.cpp
 )
 
 set (
-	HITABLES_SOURCES
+    HITABLES_SOURCES
     src/hitables/hitable_list.h
     src/hitables/hitable.h
     src/hitables/sphere.h
-	src/hitables/moving_sphere.h)
+	src/hitables/sphere.cpp
+    src/hitables/moving_sphere.h
+	src/hitables/moving_sphere.cpp
+)
 
 set (
-	MATERIAL_SOURCES
+    MATERIAL_SOURCES
     src/materials/dielectric.h
     src/materials/dielectric.cpp
     src/materials/edf.h
     src/materials/lambertian.h
-    src/materials/material.h
+	src/materials/lambertian.cpp
+    src/materials/imaterial.h
     src/materials/metal.h
+	src/materials/metal.cpp
 )
 
 set (
-	RENDERING_SOURCES
+    RENDERING_SOURCES
     src/rendering/render.h
     src/rendering/render.cpp
-	src/rendering/sampler.h)
+    src/rendering/sampler.h)
 
 set (
-	TEXTURE_SOURCES
+    TEXTURE_SOURCES
     src/textures/constant_tex.h
     src/textures/texture.h
     src/textures/checker_tex.h
@@ -43,23 +48,27 @@ set (
 )
 
 set (
-	UTILITY_SOURCES
-	src/utility/rng/xoroshiro128.h
-	src/utility/rng/xoroshiro128.cpp
-	src/utility/generators/scene_generator.h
-	src/utility/generators/scene_generator.cpp
-	src/utility/data_types/ray.h
-	src/utility/utility_functions.h
-	src/utility/data_types/vec3.h src/utility/scatter_functions.h
-	src/utility/rng/generator.h)
+    UTILITY_SOURCES
+    src/utility/rng/xoroshiro128.h
+    src/utility/rng/xoroshiro128.cpp
+    src/utility/generators/scene_generator.h
+    src/utility/generators/scene_generator.cpp
+    src/utility/data_types/ray.h
+    src/utility/utility_functions.h
+    src/utility/data_types/vec3.h
+    src/utility/scatter_functions.h
+    src/utility/rng/igenerator.h 
+	src/utility/rng/drand48.cpp
+	src/utility/rng/drand48.h
+)
 
 set (
-	MAIN_SOURCE
+    MAIN_SOURCE
     main.cpp
 )
 
 set (
-	CPP_SOURCES
+    CPP_SOURCES
     ${MAIN_SOURCE}
     ${CAMERA_SOURCES}
     ${HITABLES_SOURCES}
@@ -67,45 +76,45 @@ set (
     ${RENDERING_SOURCES}
     ${TEXTURE_SOURCES}
     ${UTILITY_SOURCES}
-	${RNG_SOURCES}
-	)
+    ${RNG_SOURCES}
+)
 
 source_group(
-	"src\\" FILES
+    "src\\" FILES
     ${MAIN_SOURCE}
 )
 
 source_group(
-	"src\\cameras" FILES
+    "src\\cameras" FILES
     ${CAMERA_SOURCES}
 )
 
 source_group(
-	"src\\hitables" FILES
+    "src\\hitables" FILES
     ${HITABLES_SOURCES}
 )
 
 source_group(
-	"src\\materials" FILES
+    "src\\materials" FILES
     ${MATERIAL_SOURCES}
 )
 
 source_group(
-	"src\\rendering" FILES
+    "src\\rendering" FILES
     ${RENDERING_SOURCES}
 )
 
 source_group(
-	"src\\textures" FILES
+    "src\\textures" FILES
     ${TEXTURE_SOURCES}
 )
 
 source_group(
-	"src\\utilities" FILES
+    "src\\utilities" FILES
     ${UTILITY_SOURCES}
 )
- 
+
 add_executable(
-	FARTS_renderer
-    ${CPP_SOURCES}    
+    FARTS_renderer
+    ${CPP_SOURCES}
 )

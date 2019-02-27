@@ -1,9 +1,10 @@
 #ifndef RAYTRACER_CAMERA_H
 #define RAYTRACER_CAMERA_H
 
-#include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
 
+// Forward declaration
+class ray;
 
 class camera
 {
@@ -19,8 +20,9 @@ class camera
         float t0,
         float t1);
 
-    ray get_ray(float u, float v) const;
+    ray get_ray(float s, float t) const;
 
+    // Properties
     vec3 origin;
     vec3 lower_left_corner;
     vec3 horizontal;

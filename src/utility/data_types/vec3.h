@@ -1,41 +1,58 @@
-#pragma once
+#ifndef VEC3_H
+#define VEC3_H
 
 #include <cmath>
 #include <iostream>
 
 class vec3
 {
-public:
+  public:
     vec3() = default;;
+
     vec3(float e0, float e1, float e2);
 
     // Getters.
     float x() const { return e[0]; }
+
     float y() const { return e[1]; }
+
     float z() const { return e[2]; }
+
     float r() const { return e[0]; }
+
     float g() const { return e[1]; }
+
     float b() const { return e[2]; }
 
     // Operator overloads.
     const vec3& operator+() const { return *this; }
+
     vec3 operator-() const { return {-e[0], -e[1], -e[2]}; }
+
     float operator[](int i) const { return e[i]; }
+
     float& operator[](int i) { return e[i]; }
 
     vec3& operator+=(const vec3& v2);
+
     vec3& operator-=(const vec3& v2);
+
     vec3& operator*=(const vec3& v2);
+
     vec3& operator/=(const vec3& v2);
+
     vec3& operator*=(float t);
+
     vec3& operator/=(float t);
 
     // Other methods.
     float length() const;
+
     float squared_length() const;
+
     void make_unit_vector();
 
-    float e[3] {};
+    float e[3]{};
 };
 
 inline std::istream& operator>>(std::istream& is, vec3& t)
@@ -85,7 +102,7 @@ inline vec3 operator*(const vec3& v, const float t)
     return vec3{v.e[0] * t, v.e[1] * t, v.e[2] * t};
 }
 
-inline vec3 &vec3::operator+=(const vec3& v2)
+inline vec3& vec3::operator+=(const vec3& v2)
 {
     e[0] += v2.e[0];
     e[1] += v2.e[1];
@@ -93,7 +110,7 @@ inline vec3 &vec3::operator+=(const vec3& v2)
     return *this;
 }
 
-inline vec3 &vec3::operator-=(const vec3& v2)
+inline vec3& vec3::operator-=(const vec3& v2)
 {
     e[0] -= v2.e[0];
     e[1] -= v2.e[1];
@@ -101,7 +118,7 @@ inline vec3 &vec3::operator-=(const vec3& v2)
     return *this;
 }
 
-inline vec3 &vec3::operator*=(const vec3& v2)
+inline vec3& vec3::operator*=(const vec3& v2)
 {
     e[0] *= v2.e[0];
     e[1] *= v2.e[1];
@@ -109,7 +126,7 @@ inline vec3 &vec3::operator*=(const vec3& v2)
     return *this;
 }
 
-inline vec3 &vec3::operator/=(const vec3& v2)
+inline vec3& vec3::operator/=(const vec3& v2)
 {
     e[0] /= v2.e[0];
     e[1] /= v2.e[1];
@@ -117,7 +134,7 @@ inline vec3 &vec3::operator/=(const vec3& v2)
     return *this;
 }
 
-inline vec3 &vec3::operator*=(const float t)
+inline vec3& vec3::operator*=(const float t)
 {
     e[0] *= t;
     e[1] *= t;
@@ -125,7 +142,7 @@ inline vec3 &vec3::operator*=(const float t)
     return *this;
 }
 
-inline vec3 &vec3::operator/=(const float t)
+inline vec3& vec3::operator/=(const float t)
 {
     e[0] /= t;
     e[1] /= t;
@@ -166,14 +183,17 @@ inline vec3 unit_vector(vec3 v)
 inline vec3 cross(const vec3& v1, const vec3& v2)
 {
     return
-    {
-        (v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
-        (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
-        (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
-    };
+        {
+            (v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
+            (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
+            (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
+        };
 }
 
 inline float dot(const vec3& v1, const vec3& v2)
 {
     return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
+
+
+#endif // VEC3_H

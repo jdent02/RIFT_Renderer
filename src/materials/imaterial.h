@@ -1,13 +1,19 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include "hitables/hitable.h"
-#include "utility/data_types/ray.h"
+#include "utility/data_types/vec3.h"
 
-class material
+// Forward declarations
+struct hit_record;
+
+class ray;
+
+
+class imaterial
 {
-public:
-    virtual ~material() = default;
+  public:
+    virtual ~imaterial() = default;
+
     virtual bool scatter(
         const ray& r_in,
         const hit_record& rec,
@@ -16,4 +22,5 @@ public:
 
     virtual vec3 emitted(float u, float v, const vec3& p) const { return vec3(0.f, 0.f, 0.f); }
 };
+
 #endif // MATERIAL_H

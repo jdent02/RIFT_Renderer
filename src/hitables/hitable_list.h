@@ -1,32 +1,33 @@
-
-
 #ifndef HITABLE_LIST_H
 #define HITABLE_LIST_H
 
-#include "hitable.h"
+#include "ihitable.h"
 #include "utility/data_types/ray.h"
 
 class hitable_list
-    : public hitable
+    : public ihitable
 {
-public:
+  public:
     hitable_list() = default;
-    hitable_list(hitable** l, int n);
+
+    hitable_list(ihitable** l, int n);
+
     virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec) const override;
-    hitable** list;
+
+    ihitable** list;
     int list_size;
 };
 
-inline hitable_list::hitable_list(hitable** l, int n)
-    :list(l), list_size(n)
+inline hitable_list::hitable_list(ihitable** l, int n)
+    : list(l), list_size(n)
 {
 }
 
 inline bool hitable_list::hit(
-    const ray&      r, 
-    float           t_min, 
-    float           t_max, 
-    hit_record&     rec) const
+    const ray& r,
+    float t_min,
+    float t_max,
+    hit_record& rec) const
 {
     hit_record temp_rec;
     bool hit_anything = false;
@@ -43,4 +44,5 @@ inline bool hitable_list::hit(
 
     return hit_anything;
 }
+
 #endif // HITABLE_LIST_H

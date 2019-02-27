@@ -1,23 +1,20 @@
 #ifndef HITABLE_H
 #define HITABLE_H
 
+#include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
 
-// Forward declarations
+// Forward declaration
 class imaterial;
-
-class ray;
-
-class vec3;
 
 struct hit_record
 {
-    float t;
-    float u;
-    float v;
+    float t{};
+    float u{};
+    float v{};
     vec3 p;
     vec3 normal;
-    imaterial* mat_ptr;
+    imaterial* mat_ptr{};
 
 };
 

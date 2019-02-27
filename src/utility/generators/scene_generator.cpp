@@ -2,6 +2,7 @@
 
 #include "hitables/hitable_list.h"
 #include "hitables/sphere.h"
+#include "hitables/moving_sphere.h"
 #include "materials/lambertian.h"
 #include "utility/utility_functions.h"
 #include "materials/metal.h"
@@ -13,20 +14,21 @@
 #include <memory>
 
 // Class implementation
-hitable* scene_generator::make_random_scene()
+ihitable* scene_generator::make_random_scene()
 {
     int n = 500;
-    hitable **list = new hitable* [n + 1];
+    ihitable** list = new ihitable* [n + 1];
 
-    sampler sampler(XORO_128);
+    sampler sampler(XORO_128_GEN);
 
     // Ground
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
-        new lambertian(std::make_unique<checker_texture>(
-            std::make_unique<constant_texture>(vec3(0.2f, 0.3f, 0.1f)),
-            std::make_unique<constant_texture>(vec3(0.9f, 0.9f, 0.9f)))));
+        new lambertian(
+            std::make_unique<checker_texture>(
+                std::make_unique<constant_texture>(vec3(0.2f, 0.3f, 0.1f)),
+                std::make_unique<constant_texture>(vec3(0.9f, 0.9f, 0.9f)))));
 
     int i = 1;
 
@@ -43,11 +45,15 @@ hitable* scene_generator::make_random_scene()
             {
                 if (choose_mat < 0.8f)
                 {
-                    list[i++] = new sphere(
+                    list[i++] = new moving_sphere(
                         center,
+                        center + vec3(0.f, 0.5f * sampler.random_generator->next(), 0.f),
+                        0.f,
+                        1.f,
                         0.2f,
-                        new lambertian(std::make_unique<constant_texture>(
-                            vec3(
+                        new lambertian(
+                            std::make_unique<constant_texture>(
+                                vec3(
                                     sampler.random_generator->next() * (sampler.random_generator->next()),
                                     sampler.random_generator->next() * (sampler.random_generator->next()),
                                     sampler.random_generator->next() * (sampler.random_generator->next())))));
@@ -80,8 +86,9 @@ hitable* scene_generator::make_random_scene()
     list[i++] = new sphere(
         vec3(-1.f, 1.f, -2.f),
         1.f,
-        new lambertian(std::make_unique<constant_texture>(
-            vec3(0.4f, 0.2f, 0.1f))));
+        new lambertian(
+            std::make_unique<constant_texture>(
+                vec3(0.4f, 0.2f, 0.1f))));
 
     list[i++] = new sphere(
         vec3(1.f, 1.f, 2.f),

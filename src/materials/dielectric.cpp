@@ -6,10 +6,10 @@
 #include "utility/scatter_functions.h"
 
 bool dielectric::scatter(
-    const ray & r_in,
-    const hit_record & rec,
-    vec3 & attenuation,
-    ray & scattered) const
+    const ray& r_in,
+    const hit_record& rec,
+    vec3& attenuation,
+    ray& scattered) const
 {
     vec3 outward_normal;
     float ni_over_nt;
@@ -39,17 +39,17 @@ bool dielectric::scatter(
     }
     else
     {
-        scattered = ray(rec.p, reflected);
+        scattered = ray(rec.p, reflected, r_in.time());
         reflect_prob = 1.f;
     }
 
     if (rand() * inv_rand_max < reflect_prob)
     {
-        scattered = ray(rec.p, reflected);
+        scattered = ray(rec.p, reflected, r_in.time());
     }
     else
     {
-        scattered = ray(rec.p, refracted);
+        scattered = ray(rec.p, refracted, r_in.time());
     }
 
     return true;
