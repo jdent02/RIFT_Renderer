@@ -14,7 +14,7 @@ int main()
 {
     const int nx{640};
     const int ny{480};
-    const int num_samples(3);
+    const int num_samples(50);
 
     const vec3 lookfrom(-1.f, 1.75f, 8.f);
     const vec3 lookat(0.f, 0.5f, 0.f);

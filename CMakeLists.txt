@@ -11,6 +11,11 @@ set (
     src/camera/camera.cpp
 )
 
+source_group(
+    "src\\cameras" FILES
+    ${CAMERA_SOURCES}
+)
+
 set (
     HITABLES_SOURCES
     src/hitables/hitable_list.h
@@ -19,6 +24,11 @@ set (
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
     src/hitables/bvh_node.h src/hitables/bvh_node.cpp)
+
+source_group(
+    "src\\hitables" FILES
+    ${HITABLES_SOURCES}
+)
 
 set (
     MATERIAL_SOURCES
@@ -32,11 +42,22 @@ set (
     src/materials/metal.cpp
 )
 
+source_group(
+    "src\\materials" FILES
+    ${MATERIAL_SOURCES}
+)
+
 set (
     RENDERING_SOURCES
     src/rendering/render.h
     src/rendering/render.cpp
-    src/rendering/sampler.h)
+    src/rendering/sampler.h
+)
+
+source_group(
+    "src\\rendering" FILES
+    ${RENDERING_SOURCES}
+)
 
 set (
     TEXTURE_SOURCES
@@ -46,20 +67,58 @@ set (
     src/textures/checker_tex.cpp
 )
 
+source_group(
+    "src\\textures" FILES
+    ${TEXTURE_SOURCES}
+)
+
 set (
     UTILITY_SOURCES
-    src/utility/rng/xoroshiro128.h
-    src/utility/rng/xoroshiro128.cpp
+    src/utility/data_types/ray.h
+    src/utility/data_types/vec3.h
+    src/utility/data_types/aabb.h
+    src/utility/data_types/aabb.cpp
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
-    src/utility/data_types/ray.h
     src/utility/utility_functions.h
-    src/utility/data_types/vec3.h
+    src/utility/bvh_utils.h
     src/utility/scatter_functions.h
+    src/utility/rng/xoroshiro128.h
+    src/utility/rng/xoroshiro128.cpp
     src/utility/rng/igenerator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
-    src/utility/data_types/aabb.h src/utility/bvh_utils.h src/utility/data_types/aabb.cpp)
+)
+
+source_group(
+    "src\\utilities\\data_types" FILES
+    src/utility/data_types/ray.h
+    src/utility/data_types/vec3.h
+    src/utility/data_types/aabb.h
+    src/utility/data_types/aabb.cpp
+)
+
+source_group(
+    "src\\utilities\\generators" FILES
+    src/utility/generators/scene_generator.h
+    src/utility/generators/scene_generator.cpp
+)
+
+source_group(
+    "src\\utilities" FILES
+    src/utility/utility_functions.h
+    src/utility/bvh_utils.h
+    src/utility/scatter_functions.h
+)
+
+source_group(
+    "src\\utilities\\rng" FILES
+    src/utility/rng/xoroshiro128.h
+    src/utility/rng/xoroshiro128.cpp
+    src/utility/rng/igenerator.h
+    src/utility/rng/drand48.cpp
+    src/utility/rng/drand48.h
+)
 
 set (
     MAIN_SOURCE
@@ -81,36 +140,6 @@ set (
 source_group(
     "src\\" FILES
     ${MAIN_SOURCE}
-)
-
-source_group(
-    "src\\cameras" FILES
-    ${CAMERA_SOURCES}
-)
-
-source_group(
-    "src\\hitables" FILES
-    ${HITABLES_SOURCES}
-)
-
-source_group(
-    "src\\materials" FILES
-    ${MATERIAL_SOURCES}
-)
-
-source_group(
-    "src\\rendering" FILES
-    ${RENDERING_SOURCES}
-)
-
-source_group(
-    "src\\textures" FILES
-    ${TEXTURE_SOURCES}
-)
-
-source_group(
-    "src\\utilities" FILES
-    ${UTILITY_SOURCES}
 )
 
 add_executable(

@@ -24,6 +24,11 @@ class moving_sphere
         float t_max,
         hit_record& rec) const override;
 
+    virtual bool bounding_box(
+        float t0,
+        float t1,
+        aabb& box) const override;
+
     vec3 center(float time) const;
 
     vec3 center0, center1;
