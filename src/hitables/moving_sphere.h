@@ -1,11 +1,11 @@
 #ifndef MOVING_SPHERE_H
 #define MOVING_SPHERE_H
 
-#include "ihitable.h"
+#include "hitable.h"
 #include "utility/data_types/vec3.h"
 
 class moving_sphere
-    : public ihitable
+    : public hitable
 {
   public:
     moving_sphere() = default;
@@ -16,7 +16,7 @@ class moving_sphere
         float t0,
         float t1,
         float r,
-        imaterial* m);
+        material* m);
 
     virtual bool hit(
         const ray& r,
@@ -29,7 +29,7 @@ class moving_sphere
     vec3 center0, center1;
     float time0{}, time1{};
     float radius{};
-    imaterial* mat_ptr{};
+    material* mat_ptr{};
 };
 
 

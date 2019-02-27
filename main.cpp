@@ -1,7 +1,7 @@
 #include "utility/data_types/vec3.h"
 #include "camera/camera.h"
 #include "utility/generators/scene_generator.h"
-#include "hitables/ihitable.h"
+#include "hitables/hitable.h"
 #include "rendering/render.h"
 
 #include <iostream>
@@ -34,7 +34,7 @@ int main()
 
     scene_generator generator;
 
-    ihitable* world = generator.make_random_scene();
+    hitable* world = generator.make_random_scene();
 
     time_t start_time = time(NULL);
 

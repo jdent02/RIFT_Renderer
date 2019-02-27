@@ -2,13 +2,13 @@
 #define DIELECTRIC_H
 
 
-#include "imaterial.h"
+#include "material.h"
 
 // Forward declaration
 class vec3;
 
 class dielectric
-    : public imaterial
+    : public material
 {
   public:
     explicit dielectric(const float ri)

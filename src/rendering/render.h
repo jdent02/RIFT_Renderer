@@ -7,7 +7,7 @@
 #include <vector>
 
 // Forward declarations
-class ihitable;
+class hitable;
 
 class renderer
 {
@@ -17,7 +17,7 @@ class renderer
         int ny,
         int ns,
         camera cam,
-        ihitable* world);
+        hitable* world);
 
     ~renderer() = default;
 
@@ -34,7 +34,7 @@ class renderer
     const float inv_ny;
     const float inv_ns;
     camera cam;
-    ihitable* world;
+    hitable* world;
 };
 
 

@@ -1,12 +1,12 @@
 #ifndef METAL_H
 #define METAL_H
 
-#include "imaterial.h"
+#include "material.h"
 #include "utility/data_types/vec3.h"
 
 
 class metal
-    : public imaterial
+    : public material
 {
   public:
     explicit metal(const vec3& a, const float& fuzz)

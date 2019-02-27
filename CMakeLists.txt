@@ -18,8 +18,7 @@ set (
     src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
-    src/hitables/bvh_node.cpp
-    src/hitables/bvh_node.h)
+    src/hitables/bvh_node.h src/hitables/bvh_node.cpp)
 
 set (
     MATERIAL_SOURCES
@@ -28,7 +27,7 @@ set (
     src/materials/edf.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
-    src/materials/imaterial.h
+    src/materials/material.h
     src/materials/metal.h
     src/materials/metal.cpp
 )
@@ -60,8 +59,7 @@ set (
     src/utility/rng/igenerator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
-    src/utility/data_types/aabb.cpp
-    src/utility/data_types/aabb.h)
+    src/utility/data_types/aabb.h src/utility/bvh_utils.h src/utility/data_types/aabb.cpp)
 
 set (
     MAIN_SOURCE

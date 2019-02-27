@@ -1,21 +1,21 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "hitables/ihitable.h"
+#include "hitables/hitable.h"
 
 // Forward declarations
-class imaterial;
+class material;
 
 class ray;
 
 
 class sphere
-    : public ihitable
+    : public hitable
 {
   public:
     sphere() = default;
 
-    sphere(const vec3 cen, const float r, imaterial* mat)
+    sphere(const vec3 cen, const float r, material* mat)
         : center(cen), radius(r), material(mat) {};
 
     ~sphere() override = default;
@@ -34,7 +34,7 @@ class sphere
     // Properties
     vec3 center;
     float radius{};
-    imaterial* material{};
+    material* material{};
 };
 
 #endif // SPHERE_H

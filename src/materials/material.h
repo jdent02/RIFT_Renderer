@@ -9,10 +9,10 @@ struct hit_record;
 class ray;
 
 
-class imaterial
+class material
 {
   public:
-    virtual ~imaterial() = default;
+    virtual ~material() = default;
 
     virtual bool scatter(
         const ray& r_in,

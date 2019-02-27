@@ -15,7 +15,7 @@ renderer::renderer(
     const int ny,
     const int ns,
     const camera cam,
-    ihitable* world)
+    hitable* world)
     : buffer(create_buffer()),
       nx(nx),
       ny(ny),

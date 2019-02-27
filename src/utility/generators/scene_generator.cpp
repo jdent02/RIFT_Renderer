@@ -1,5 +1,6 @@
 #include "scene_generator.h"
 
+#include "hitables/bvh_node.h"
 #include "hitables/hitable_list.h"
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
@@ -14,10 +15,10 @@
 #include <memory>
 
 // Class implementation
-ihitable* scene_generator::make_random_scene()
+hitable* scene_generator::make_random_scene()
 {
     int n = 500;
-    ihitable** list = new ihitable* [n + 1];
+    hitable** list = new hitable* [n + 1];
 
     sampler sampler(XORO_128_GEN);
 
@@ -94,5 +95,5 @@ ihitable* scene_generator::make_random_scene()
             vec3(0.7f, 0.6f, 0.5f),
             0.03f));
 
-    return new hitable_list(list, i);
+    return new bvh_node(list, i, 0.f, 0.5f);
 }

@@ -1,19 +1,19 @@
 #ifndef HITABLE_LIST_H
 #define HITABLE_LIST_H
 
-#include "ihitable.h"
+#include "hitable.h"
 #include "utility/data_types/aabb.h"
 #include "utility/data_types/ray.h"
 #include "utility/utility_functions.h"
 
 
 class hitable_list
-    : public ihitable
+    : public hitable
 {
   public:
     hitable_list() = default;
 
-    hitable_list(ihitable** l, int n);
+    hitable_list(hitable** l, int n);
 
     virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec) const override;
 
@@ -22,11 +22,11 @@ class hitable_list
         float t1,
         aabb& box) const override;
 
-    ihitable** list{};
+    hitable** list{};
     int list_size{};
 };
 
-inline hitable_list::hitable_list(ihitable** l, int n)
+inline hitable_list::hitable_list(hitable** l, int n)
     : list(l), list_size(n)
 {
 }

@@ -3,8 +3,8 @@
 #ifndef UTILITY_FUNCTIONS_H
 #define UTILITY_FUNCTIONS_H
 
-#include "hitables/ihitable.h"
-#include "materials/imaterial.h"
+#include "hitables/hitable.h"
+#include "materials/material.h"
 #include "utility/data_types/ray.h"
 #include "utility/data_types/aabb.h"
 
@@ -14,7 +14,7 @@
 #include <vector>
 
 
-class imaterial;
+class material;
 
 
 // global const variables
@@ -50,7 +50,7 @@ inline vec3 random_in_unit_disk()
     return p;
 }
 
-inline vec3 color(const ray& r, ihitable* world, int depth)
+inline vec3 color(const ray& r, hitable* world, int depth)
 {
     hit_record rec;
 
@@ -74,81 +74,8 @@ inline vec3 color(const ray& r, ihitable* world, int depth)
     // return vec3(0.f, 0.f, 0.f);
 }
 
-inline aabb surrounding_box(aabb box0, aabb box1)
-{
-    vec3 small(
-        std::fmin(box0.min().x(), box1.min().x()),
-        std::fmin(box0.min().y(), box1.min().y()),
-        std::fmin(box0.min().z(), box1.min().z()));
 
-    vec3 big(
-        std::fmin(box0.max().x(), box1.max().x()),
-        std::fmin(box0.max().y(), box1.max().y()),
-        std::fmin(box0.max().z(), box1.max().z()));
-    return aabb(small, big);
-}
 
-inline int box_x_compare(
-    const void* a,
-    const void* b)
-{
-    aabb box_left, box_right;
-    ihitable* ah = *(ihitable**)a;
-    ihitable* bh = *(ihitable**)b;
-    if (!ah->bounding_box(0.f, 0.f, box_left) || !bh->bounding_box(0.f, 0.f, box_right))
-    {
-        std::cerr << "No bounding box in bvh_constructor" << std::endl;
-    }
-    if (box_left.min().x() - box_right.min().x() < 0.f)
-    {
-        return -1;
-    }
-    else
-    {
-        return 1;
-    }
-}
 
-inline int box_y_compare(
-    const void* a,
-    const void* b)
-{
-    aabb box_left, box_right;
-    ihitable* ah = *(ihitable**)a;
-    ihitable* bh = *(ihitable**)b;
-    if (!ah->bounding_box(0.f, 0.f, box_left) || !bh->bounding_box(0.f, 0.f, box_right))
-    {
-        std::cerr << "No bounding box in bvh_constructor" << std::endl;
-    }
-    if (box_left.min().y() - box_right.min().y() < 0.f)
-    {
-        return -1;
-    }
-    else
-    {
-        return 1;
-    }
-}
-
-inline int box_z_compare(
-    const void* a,
-    const void* b)
-{
-    aabb box_left, box_right;
-    ihitable* ah = *(ihitable**)a;
-    ihitable* bh = *(ihitable**)b;
-    if (!ah->bounding_box(0.f, 0.f, box_left) || !bh->bounding_box(0.f, 0.f, box_right))
-    {
-        std::cerr << "No bounding box in bvh_constructor" << std::endl;
-    }
-    if (box_left.min().z() - box_right.min().z() < 0.f)
-    {
-        return -1;
-    }
-    else
-    {
-        return 1;
-    }
-}
 
 #endif // UTILITY_FUNCTIONS_H

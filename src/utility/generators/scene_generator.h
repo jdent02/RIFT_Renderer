@@ -2,7 +2,7 @@
 #define FARTS_GENERATORS
 
 
-#include <hitables/ihitable.h>
+#include <hitables/hitable.h>
 
 
 // Utility function to generate a random scene
@@ -13,7 +13,7 @@ class scene_generator
 
     ~scene_generator() = default;
 
-    ihitable* make_random_scene();
+    hitable* make_random_scene();
 };
 
 #endif

@@ -6,7 +6,7 @@ moving_sphere::moving_sphere(
     float t0,
     float t1,
     float r,
-    imaterial* m)
+    material* m)
     : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r), mat_ptr(m)
 {
 }

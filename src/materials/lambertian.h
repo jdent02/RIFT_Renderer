@@ -1,7 +1,7 @@
 #ifndef LAMBERTIAN_H
 #define LAMBERTIAN_H
 
-#include "imaterial.h"
+#include "material.h"
 #include "textures/texture.h"
 #include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
@@ -9,10 +9,10 @@
 #include <memory>
 
 class lambertian :
-    public imaterial
+    public material
 {
   public:
-    lambertian(std::unique_ptr<texture> a)
+    explicit lambertian(std::unique_ptr<texture> a)
         : albedo(std::move(a)) {};
 
     ~lambertian() = default;

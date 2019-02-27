@@ -1,12 +1,12 @@
 #ifndef EDF_H
 #define EDF_H
 
-#include "imaterial.h"
+#include "material.h"
 #include "textures/texture.h"
 #include "utility/data_types/vec3.h"
 
 class diffuse_light
-    : public imaterial
+    : public material
 {
   public:
     explicit diffuse_light(texture* a)

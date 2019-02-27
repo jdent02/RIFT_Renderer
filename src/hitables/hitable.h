@@ -6,7 +6,7 @@
 #include "utility/data_types/vec3.h"
 
 // Forward declaration
-class imaterial;
+class material;
 
 struct hit_record
 {
@@ -15,14 +15,14 @@ struct hit_record
     float v{};
     vec3 p;
     vec3 normal;
-    imaterial* mat_ptr{};
+    material* mat_ptr{};
 
 };
 
-class ihitable
+class hitable
 {
   public:
-    virtual ~ihitable() = default;
+    virtual ~hitable() = default;
 
     virtual bool hit(
         const ray& r,
