@@ -14,6 +14,8 @@ class scene_generator
     ~scene_generator() = default;
 
     hitable* make_random_scene();
+
+    hitable* two_spheres();
 };
 
 #endif

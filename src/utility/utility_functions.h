@@ -6,9 +6,7 @@
 #include "hitables/hitable.h"
 #include "materials/material.h"
 #include "utility/data_types/ray.h"
-#include "utility/data_types/aabb.h"
 
-#include <cmath>
 #include <limits>
 #include <memory>
 #include <vector>

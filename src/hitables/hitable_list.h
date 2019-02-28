@@ -4,7 +4,6 @@
 #include "hitable.h"
 #include "utility/data_types/aabb.h"
 #include "utility/data_types/ray.h"
-#include "utility/utility_functions.h"
 
 
 class hitable_list
@@ -53,7 +52,7 @@ inline bool hitable_list::hit(
     return hit_anything;
 }
 
-bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
+inline bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
 {
     if (list_size < 1)
     {

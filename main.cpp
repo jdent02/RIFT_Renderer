@@ -14,7 +14,7 @@ int main()
 {
     const int nx{640};
     const int ny{480};
-    const int num_samples(50);
+    const int num_samples(25);
 
     const vec3 lookfrom(-1.f, 1.75f, 8.f);
     const vec3 lookat(0.f, 0.5f, 0.f);
@@ -34,7 +34,7 @@ int main()
 
     scene_generator generator;
 
-    hitable* world = generator.make_random_scene();
+    hitable* world = generator.two_spheres();
 
     time_t start_time = time(NULL);
 

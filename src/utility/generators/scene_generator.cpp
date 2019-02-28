@@ -5,12 +5,15 @@
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
 #include "materials/lambertian.h"
-#include "utility/utility_functions.h"
 #include "materials/metal.h"
 #include "materials/dielectric.h"
+#include "rendering/sampler.h"
 #include "textures/constant_tex.h"
 #include "textures/checker_tex.h"
-#include "rendering/sampler.h"
+#include "textures/noise_texture.h"
+#include "utility/utility_functions.h"
+#include "utility/data_types/vec3.h"
+
 
 #include <memory>
 
@@ -99,4 +102,19 @@ hitable* scene_generator::make_random_scene()
             0.03f));
 
     return new bvh_node(list, i, 0.f, 0.5f);
+}
+
+hitable* scene_generator::two_spheres()
+{
+    hitable** list = new hitable*[2];
+    list[0] = new sphere(
+        vec3(0.f, -1000.f, 0.f),
+        1000.f,
+        new lambertian(std::make_unique<noise_texture>(2.f)));
+
+    list[1] = new sphere(
+        vec3(0.f, 2.f, 0.f),
+        2.f,
+        new lambertian(std::make_unique<noise_texture>(2.f)));
+    return new hitable_list(list, 2);
 }

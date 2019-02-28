@@ -65,7 +65,7 @@ set (
     src/textures/texture.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
-)
+    src/textures/noise_texture.h)
 
 source_group(
     "src\\textures" FILES
@@ -88,6 +88,12 @@ set (
     src/utility/rng/igenerator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
+	src/utility/noises/perlin.h
+)
+
+source_group(
+    "src\\utilities\\noises" FILES
+    src/utility/noises/perlin.h
 )
 
 source_group(

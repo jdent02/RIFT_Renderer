@@ -2,9 +2,9 @@
 #define RENDER_H
 
 #include "camera/camera.h"
-
 #include <memory>
 #include <vector>
+
 
 // Forward declarations
 class hitable;
