@@ -19,11 +19,15 @@ class noise_texture
         float v,
         const vec3& p) const override
     {
-        return vec3(1.f, 1.f, 1.f) * noise.noise(scale * p);
+        return vec3(1.f, 1.f, 1.f) * 0.5f * (1 + noise.turb(scale * p));
+//        return vec3(1.f, 1.f, 1.f) * noise.turb(scale * p);
+//        return vec3(1.f, 1.f, 1.f) * 0.5f * (1 + sin(scale*p.z() + 10.f * noise.turb(p)));
     }
 
     perlin noise{};
     float scale{1.f};
 };
+
+
 
 #endif //FARTS_RENDERER_NOISE_TEXTURE_H

@@ -110,11 +110,11 @@ hitable* scene_generator::two_spheres()
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
-        new lambertian(std::make_unique<noise_texture>(2.f)));
+        new lambertian(std::make_unique<noise_texture>(3.f)));
 
     list[1] = new sphere(
         vec3(0.f, 2.f, 0.f),
         2.f,
-        new lambertian(std::make_unique<noise_texture>(2.f)));
+        new lambertian(std::make_unique<noise_texture>(3.f)));
     return new hitable_list(list, 2);
 }
