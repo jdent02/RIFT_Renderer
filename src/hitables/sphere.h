@@ -45,8 +45,8 @@ class sphere
 
     // Properties
     vec3 center;
-    float radius{};
-    material* material{};
+    float radius;
+    material* material;
 };
 
 #endif // SPHERE_H

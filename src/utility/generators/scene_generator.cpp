@@ -7,6 +7,8 @@
 #include "hitables/hitable_list.h"
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
+#include "hitables/xy_rect.h"
+#include "materials/diffuse_light.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "materials/dielectric.h"
@@ -124,11 +126,9 @@ hitable* scene_generator::two_spheres()
 
 hitable* scene_generator::earth_sphere()
 {
-    hitable** list = new hitable*[1];
-
     int nx, ny, nn;
     unsigned char* tex_data = stbi_load(
-        "C:/Users/jdent/Documents/Code_Projects/FARTS_renderer/world.topo.bathy.200401.3x5400x2700.jpg",
+        "../world.topo.bathy.200401.3x5400x2700.jpg",
         &nx, &ny, &nn, 0);
 
     return new sphere(
@@ -136,4 +136,38 @@ hitable* scene_generator::earth_sphere()
         2.f,
         new lambertian(
             std::make_unique<image_texture>(tex_data, nx, ny)));
+}
+
+hitable* scene_generator::rect_light()
+{
+
+    hitable** list = new hitable*[3];
+    list[0] = new sphere(
+        vec3(0.f, -1000.f, 0.f),
+        1000.f,
+        new lambertian(std::make_unique<noise_texture>(4.f)));
+
+    list[1] = new sphere(
+        vec3(0.f, 2.f, 0.f),
+        2.f,
+        new lambertian(std::make_unique<noise_texture>(4.f)));
+
+    list[2] = new xy_rect(
+        3.f,
+        5.f,
+        1.f,
+        3.f,
+        -2.f,
+        new diffuse_light(
+            std::make_unique<constant_texture>(
+                vec3(4.f, 4.f, 4.f))));
+
+//    list[3] = new sphere(
+//        vec3(0.f, 7.f, 0.f),
+//        2.f,
+//        new diffuse_light(
+//            std::make_unique<constant_texture>(
+//                vec3(4.f, 4.f, 4.f))));
+
+    return new hitable_list(list, 3);
 }

@@ -1,18 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(FARTS_renderer VERSION 0.1.0)
 
-set (
-    STB_LIB
-    D:/libraries/stb
-    )
-
-set (
-	STB_LIB_DIR
-	${STB_LIB}
-)
-
 include_directories(
-	${STB_LIB_DIR}
+	${STB_LIB}
     src
 )
 
@@ -36,7 +26,9 @@ set (
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
     src/hitables/bvh_node.h 
-	src/hitables/bvh_node.cpp)
+	src/hitables/bvh_node.cpp
+	src/hitables/xy_rect.cpp 
+	src/hitables/xy_rect.h)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION
@@ -47,6 +39,7 @@ set (
     MATERIAL_SOURCES
     src/materials/dielectric.h
     src/materials/dielectric.cpp
+	src/materials/diffuse_light.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
     src/materials/material.h

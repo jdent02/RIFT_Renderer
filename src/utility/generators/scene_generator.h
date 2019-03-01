@@ -18,6 +18,8 @@ class scene_generator
     hitable* two_spheres();
 
     hitable* earth_sphere();
+
+    hitable* rect_light();
 };
 
 #endif

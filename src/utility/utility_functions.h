@@ -63,14 +63,13 @@ inline vec3 color(const ray& r, hitable* world, int depth)
             return emitted + attenuation * color(scattered, world, depth + 1);
         }
 
-//        return emitted;
-        return attenuation;
+        return emitted;
     }
 
-    vec3 unit_direction = unit_vector(r.direction());
-    const float t = 0.5f * (unit_direction.y() + 1.f);
-    return (1.f - t) * vec3(1.f, 1.f, 1.f) + t * vec3(0.5f, 0.7f, 1.f);
-    //return vec3(0.f, 0.f, 0.f);
+//    vec3 unit_direction = unit_vector(r.direction());
+//    const float t = 0.5f * (unit_direction.y() + 1.f);
+//    return (1.f - t) * vec3(1.f, 1.f, 1.f) + t * vec3(0.5f, 0.7f, 1.f);
+    return vec3(0.f, 0.f, 0.f);
 }
 
 

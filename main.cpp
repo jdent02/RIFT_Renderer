@@ -14,10 +14,10 @@ int main()
 {
     const int nx{640};
     const int ny{480};
-    const int num_samples(25);
+    const int num_samples(300);
 
-    const vec3 lookfrom(-1.f, 1.75f, 8.f);
-    const vec3 lookat(0.f, 0.5f, 0.f);
+    const vec3 lookfrom(13.f, 2.5f, 6.f);
+    const vec3 lookat(0.f, 1.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
@@ -34,7 +34,7 @@ int main()
 
     scene_generator generator;
 
-    hitable* world = generator.earth_sphere();
+    hitable* world = generator.rect_light();
 
     time_t start_time = time(NULL);
 
