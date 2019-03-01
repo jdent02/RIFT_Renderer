@@ -23,6 +23,7 @@ bool sphere::hit(
             rec.p = r.point_at_parameter(rec.t);
             rec.normal = (rec.p - center) / radius;
             rec.mat_ptr = material;
+            get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
             return true;
         }
 
@@ -33,6 +34,7 @@ bool sphere::hit(
             rec.p = r.point_at_parameter(rec.t);
             rec.normal = (rec.p - center) / radius;
             rec.mat_ptr = material;
+            get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
             return true;
         }
     }

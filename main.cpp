@@ -34,7 +34,7 @@ int main()
 
     scene_generator generator;
 
-    hitable* world = generator.two_spheres();
+    hitable* world = generator.earth_sphere();
 
     time_t start_time = time(NULL);
 

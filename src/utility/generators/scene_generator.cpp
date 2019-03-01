@@ -1,3 +1,6 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #include "scene_generator.h"
 
 #include "hitables/bvh_node.h"
@@ -10,10 +13,10 @@
 #include "rendering/sampler.h"
 #include "textures/constant_tex.h"
 #include "textures/checker_tex.h"
+#include "textures/image_texture.h"
 #include "textures/noise_texture.h"
 #include "utility/utility_functions.h"
 #include "utility/data_types/vec3.h"
-
 
 #include <memory>
 
@@ -117,4 +120,20 @@ hitable* scene_generator::two_spheres()
         2.f,
         new lambertian(std::make_unique<noise_texture>(3.f)));
     return new hitable_list(list, 2);
+}
+
+hitable* scene_generator::earth_sphere()
+{
+    hitable** list = new hitable*[1];
+
+    int nx, ny, nn;
+    unsigned char* tex_data = stbi_load(
+        "C:/Users/jdent/Documents/Code_Projects/FARTS_renderer/world.topo.bathy.200401.3x5400x2700.jpg",
+        &nx, &ny, &nn, 0);
+
+    return new sphere(
+        vec3(0.f, 1.f, 0.f),
+        2.f,
+        new lambertian(
+            std::make_unique<image_texture>(tex_data, nx, ny)));
 }

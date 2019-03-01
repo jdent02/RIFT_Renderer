@@ -1,7 +1,18 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(FARTS_renderer VERSION 0.1.0)
 
+set (
+    STB_LIB
+    D:/libraries/stb
+    )
+
+set (
+	STB_LIB_DIR
+	${STB_LIB}
+)
+
 include_directories(
+	${STB_LIB_DIR}
     src
 )
 
@@ -12,29 +23,30 @@ set (
 )
 
 source_group(
-    "src\\cameras" FILES
-    ${CAMERA_SOURCES}
+    "src\\camera" REGULAR_EXPRESSION
+    src/camera/.*
 )
 
 set (
     HITABLES_SOURCES
+	src/hitables/hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
-    src/hitables/bvh_node.h src/hitables/bvh_node.cpp)
+    src/hitables/bvh_node.h 
+	src/hitables/bvh_node.cpp)
 
 source_group(
-    "src\\hitables" FILES
-    ${HITABLES_SOURCES}
+    "src\\hitables" REGULAR_EXPRESSION
+    src/hitables/.*
 )
 
 set (
     MATERIAL_SOURCES
     src/materials/dielectric.h
     src/materials/dielectric.cpp
-    src/materials/edf.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
     src/materials/material.h
@@ -43,8 +55,8 @@ set (
 )
 
 source_group(
-    "src\\materials" FILES
-    ${MATERIAL_SOURCES}
+    "src\\materials" REGULAR_EXPRESSION
+    src/materials/.*
 )
 
 set (
@@ -55,8 +67,8 @@ set (
 )
 
 source_group(
-    "src\\rendering" FILES
-    ${RENDERING_SOURCES}
+    "src\\rendering" REGULAR_EXPRESSION
+    src/rendering/.*
 )
 
 set (
@@ -65,11 +77,13 @@ set (
     src/textures/texture.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
-    src/textures/noise_texture.h)
+    src/textures/noise_texture.h 
+	src/textures/image_texture.cpp 
+	src/textures/image_texture.h)
 
 source_group(
-    "src\\textures" FILES
-    ${TEXTURE_SOURCES}
+    "src\\textures" REGULAR_EXPRESSION
+	src/textures/.*
 )
 
 set (
@@ -92,38 +106,28 @@ set (
 )
 
 source_group(
-    "src\\utilities\\noises" FILES
-    src/utility/noises/perlin.h
+    "src\\utilities\\noises" REGULAR_EXPRESSION
+    src/utility/noises/.*
 )
 
 source_group(
-    "src\\utilities\\data_types" FILES
-    src/utility/data_types/ray.h
-    src/utility/data_types/vec3.h
-    src/utility/data_types/aabb.h
-    src/utility/data_types/aabb.cpp
+    "src\\utilities\\data_types" REGULAR_EXPRESSION
+    src/utility/data_types/.*
 )
 
 source_group(
-    "src\\utilities\\generators" FILES
-    src/utility/generators/scene_generator.h
-    src/utility/generators/scene_generator.cpp
+    "src\\utilities\\generators" REGULAR_EXPRESSION
+    src/utility/generators/.*
 )
 
 source_group(
-    "src\\utilities" FILES
-    src/utility/utility_functions.h
-    src/utility/bvh_utils.h
-    src/utility/scatter_functions.h
+    "src\\utilities" REGULAR_EXPRESSION
+    src/utility/.*
 )
 
 source_group(
-    "src\\utilities\\rng" FILES
-    src/utility/rng/xoroshiro128.h
-    src/utility/rng/xoroshiro128.cpp
-    src/utility/rng/igenerator.h
-    src/utility/rng/drand48.cpp
-    src/utility/rng/drand48.h
+    "src\\utilities\\rng" REGULAR_EXPRESSION
+    src/utility/rng/.*
 )
 
 set (

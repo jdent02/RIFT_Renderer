@@ -1,12 +1,24 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include <utility/utility_functions.h>
 #include "hitables/hitable.h"
 
 // Forward declarations
 class material;
 
 class ray;
+
+inline void get_sphere_uv(
+    const vec3& p,
+    float& u,
+    float& v)
+{
+    float phi = std::atan2(p.z(), p.x());
+    float theta = std::asin(p.y());
+    u = 1.f - (phi + pi) / (2 * pi);
+    v = (theta + pi / 2) / pi;
+}
 
 
 class sphere

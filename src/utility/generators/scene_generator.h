@@ -16,6 +16,8 @@ class scene_generator
     hitable* make_random_scene();
 
     hitable* two_spheres();
+
+    hitable* earth_sphere();
 };
 
 #endif

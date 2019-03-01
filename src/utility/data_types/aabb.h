@@ -5,9 +5,9 @@
 #include "vec3.h"
 
 
-inline float ffmin(float a, float b) { return a < b ? a : b; }
-
-inline float ffmax(float a, float b) { return a > b ? a : b; }
+//inline float ffmin(float a, float b) { return a < b ? a : b; }
+//
+//inline float ffmax(float a, float b) { return a > b ? a : b; }
 
 class aabb
 {
