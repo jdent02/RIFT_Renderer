@@ -22,9 +22,9 @@ inline float trilinear_interp(
             for (int k = 0; k < 2; k++)
             {
                 vec3 weight_v(u - i, v - j, w - k);
-                accum += (i * u + (1.f - i) * (1.f - u)) *
-                         (j * v + (1.f - j) * (1.f - v)) *
-                         (k * w + (1.f - k) * (1.f - w)) * dot(c[i][j][k], weight_v);
+                accum += (i * uu + (1.f - i) * (1.f - uu)) *
+                         (j * vv + (1.f - j) * (1.f - vv)) *
+                         (k * ww + (1.f - k) * (1.f - ww)) * dot(c[i][j][k], weight_v);
             }
         }
     }
