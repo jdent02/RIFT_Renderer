@@ -1,13 +1,15 @@
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "stb_image.h"
 
 #include "scene_generator.h"
 
+#include "hitables/box.h"
 #include "hitables/bvh_node.h"
 #include "hitables/hitable_list.h"
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
-#include "hitables/xy_rect.h"
+#include "hitables/rect.h"
 #include "materials/diffuse_light.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
@@ -111,7 +113,7 @@ hitable* scene_generator::make_random_scene()
 
 hitable* scene_generator::two_spheres()
 {
-    hitable** list = new hitable*[2];
+    hitable** list = new hitable* [2];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
@@ -141,7 +143,7 @@ hitable* scene_generator::earth_sphere()
 hitable* scene_generator::rect_light()
 {
 
-    hitable** list = new hitable*[3];
+    hitable** list = new hitable* [3];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
@@ -170,4 +172,85 @@ hitable* scene_generator::rect_light()
 //                vec3(4.f, 4.f, 4.f))));
 
     return new hitable_list(list, 3);
+}
+
+hitable* scene_generator::cornell_box()
+{
+    hitable** list = new hitable* [8];
+    int i = 0;
+    material* red = new lambertian(
+        std::make_unique<constant_texture>(
+            vec3(0.65f, 0.05f, 0.05f)));
+    material* white = new lambertian(
+        std::make_unique<constant_texture>(
+            vec3(0.73f, 0.73f, 0.73f)));
+    material* green = new lambertian(
+        std::make_unique<constant_texture>(
+            vec3(0.12f, 0.45f, 0.15f)));
+    material* light = new diffuse_light(
+        std::make_unique<constant_texture>(
+            vec3(15.f, 15.f, 15.f)));
+
+    list[i++] = new flip_normals(
+        new yz_rect(
+            0,
+            555,
+            0,
+            555,
+            555,
+            green));
+
+    list[i++] = new yz_rect(
+        0,
+        555,
+        0,
+        555,
+        0,
+        red);
+
+    list[i++] = new xz_rect(
+        213,
+        343,
+        227,
+        332,
+        554,
+        light);
+
+    list[i++] = new flip_normals(
+        new xz_rect(
+            0,
+            555,
+            0,
+            555,
+            555,
+            white));
+
+    list[i++] = new xz_rect(
+        0,
+        555,
+        0,
+        555,
+        0,
+        white);
+
+    list[i++] = new flip_normals(
+        new xy_rect(
+            0,
+            555,
+            0,
+            555,
+            555,
+            white));
+
+    list[i++] = new box(
+        vec3(130, 0, 65),
+        vec3(295, 165, 230),
+        white);
+
+    list[i++] = new box(
+        vec3(265, 0, 295),
+        vec3(430, 330, 460),
+        white);
+
+    return new hitable_list(list, i);
 }

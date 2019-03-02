@@ -12,12 +12,12 @@
 
 int main()
 {
-    const int nx{640};
+    const int nx{480};
     const int ny{480};
-    const int num_samples(300);
+    const int num_samples(200);
 
-    const vec3 lookfrom(13.f, 2.5f, 6.f);
-    const vec3 lookat(0.f, 1.f, 0.f);
+    const vec3 lookfrom(278.f, 278.f, -800.f);
+    const vec3 lookat(278.f, 278.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
@@ -25,7 +25,7 @@ int main()
             lookfrom,
             lookat,
             vec3(0.f, 1.f, 0.f),
-            35.f,
+            40.f,
             float(nx) / float(ny),
             aperture,
             dist_to_focus,
@@ -34,7 +34,7 @@ int main()
 
     scene_generator generator;
 
-    hitable* world = generator.rect_light();
+    hitable* world = generator.cornell_box();
 
     time_t start_time = time(NULL);
 

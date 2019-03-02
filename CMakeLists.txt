@@ -27,8 +27,8 @@ set (
     src/hitables/moving_sphere.cpp
     src/hitables/bvh_node.h 
 	src/hitables/bvh_node.cpp
-	src/hitables/xy_rect.cpp 
-	src/hitables/xy_rect.h)
+	src/hitables/rect.cpp
+	src/hitables/rect.h src/hitables/box.cpp src/hitables/box.h)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION

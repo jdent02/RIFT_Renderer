@@ -20,6 +20,8 @@ class scene_generator
     hitable* earth_sphere();
 
     hitable* rect_light();
+
+    hitable* cornell_box();
 };
 
 #endif
