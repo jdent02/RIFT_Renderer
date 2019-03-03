@@ -5,6 +5,10 @@
 #include "camera/camera.h"
 #include "rendering/sampler.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STBI_MSC_SECURE_CRT
+#include "stb_image_write.h"
+
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -57,9 +61,9 @@ void renderer::do_render() const
             col = vec3(std::sqrt(col[0]), std::sqrt(col[1]), std::sqrt(col[2]));
 
             std::vector<int> temp_out;
-            temp_out.push_back(int(255.99 * col[0]));
-            temp_out.push_back(int(255.99 * col[1]));
-            temp_out.push_back(int(255.99 * col[2]));
+            temp_out.push_back(int(255 * col[0]));
+            temp_out.push_back(int(255 * col[1]));
+            temp_out.push_back(int(255 * col[2]));
 
             buffer->push_back(temp_out);
             rendered_pixels++;
@@ -75,15 +79,26 @@ void renderer::write_buffer() const
 {
     std::cout << "Writing Output" << std::endl;
 
-    std::ofstream file;
-    file.open("../image.ppm");
-    file << "P3\n" << nx << " " << ny << "\n255" << std::endl;
+    // std::ofstream file;
+    // file.open("../image.ppm");
+    // file << "P3\n" << nx << " " << ny << "\n255" << std::endl;
+
+    int buffer_size{nx * ny * 3};
+
+    unsigned char* out_buffer = new unsigned char[buffer_size];
+
+    int location{0};
 
     for (std::vector<int>& pixel : *buffer)
     {
-        file << pixel[0] << " " << pixel[1] << " " << pixel[2] << std::endl;
+        out_buffer[location++] = pixel[0];
+        out_buffer[location++] = pixel[1];
+        out_buffer[location++] = pixel[2];
+        // file << pixel[0] << " " << pixel[1] << " " << pixel[2] << std::endl;
     }
 
-    file.close();
+    int success = stbi_write_jpg("../image.jpg", nx, ny, 3, out_buffer, 75);
+
+    // file.close();
     std::cout << "Done Writing Output" << std::endl;
 }

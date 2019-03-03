@@ -28,7 +28,11 @@ set (
     src/hitables/bvh_node.h 
 	src/hitables/bvh_node.cpp
 	src/hitables/rect.cpp
-	src/hitables/rect.h src/hitables/box.cpp src/hitables/box.h)
+	src/hitables/rect.h
+	src/hitables/box.cpp
+	src/hitables/box.h
+	src/hitables/instancers.cpp
+	src/hitables/instancers.h)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION

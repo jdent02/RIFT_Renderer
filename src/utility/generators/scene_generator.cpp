@@ -7,6 +7,7 @@
 #include "hitables/box.h"
 #include "hitables/bvh_node.h"
 #include "hitables/hitable_list.h"
+#include "hitables/instancers.h"
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
 #include "hitables/rect.h"
@@ -242,15 +243,23 @@ hitable* scene_generator::cornell_box()
             555,
             white));
 
-    list[i++] = new box(
-        vec3(130, 0, 65),
-        vec3(295, 165, 230),
-        white);
+    list[i++] = new translate(
+        new rotate_y(
+            new box(
+                vec3(0, 0, 0),
+                vec3(165, 165, 165),
+                white),
+            -18),
+        vec3(130, 0, 65));
 
-    list[i++] = new box(
-        vec3(265, 0, 295),
-        vec3(430, 330, 460),
-        white);
+    list[i++] = new translate(
+        new rotate_y(
+            new box(
+                vec3(0, 0, 0),
+                vec3(165, 330, 165),
+                white),
+            15),
+        vec3(265, 0, 295));
 
     return new hitable_list(list, i);
 }
