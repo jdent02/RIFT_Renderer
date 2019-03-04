@@ -1,8 +1,14 @@
 #ifndef FARTS_GENERATORS
 #define FARTS_GENERATORS
 
+#include "camera/camera.h"
+#include "hitables/hitable.h"
 
-#include <hitables/hitable.h>
+struct scene
+{
+    camera* cam;
+    hitable* world;
+};
 
 
 // Utility function to generate a random scene
@@ -13,15 +19,15 @@ class scene_generator
 
     ~scene_generator() = default;
 
-    hitable* make_random_scene();
+    scene* make_random_scene(int nx, int ny);
 
     hitable* two_spheres();
 
-    hitable* earth_sphere();
+    scene* earth_sphere(int x_dim, int y_dim);
 
-    hitable* rect_light();
+    scene* rect_light(int nx, int ny);
 
-    hitable* cornell_box();
+    scene* cornell_box(int nx, int ny);
 };
 
 #endif

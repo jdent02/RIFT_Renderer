@@ -12,29 +12,13 @@
 
 int main()
 {
-    const int nx{480};
+    const int nx{640};
     const int ny{480};
-    const int num_samples(100);
-
-    const vec3 lookfrom(278.f, 278.f, -800.f);
-    const vec3 lookat(278.f, 278.f, 0.f);
-    const float dist_to_focus = (lookfrom - lookat).length();
-    const float aperture = 0.05f;
-
-    camera cam(
-            lookfrom,
-            lookat,
-            vec3(0.f, 1.f, 0.f),
-            40.f,
-            float(nx) / float(ny),
-            aperture,
-            dist_to_focus,
-            0.f,
-            0.5f);
+    const int num_samples(800);
 
     scene_generator generator;
 
-    hitable* world = generator.cornell_box();
+    scene* scene = generator.cornell_box(nx, ny);
 
     time_t start_time = time(NULL);
 
@@ -44,12 +28,12 @@ int main()
         nx,
         ny,
         num_samples,
-        cam,
-        world};
+        scene->cam,
+        scene->world};
 
     engine.do_render();
 
-    engine.write_buffer();
+    engine.write_JPEG();
 
     time_t end_time = time(NULL);
 

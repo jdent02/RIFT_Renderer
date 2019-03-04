@@ -20,11 +20,6 @@ constexpr float inv_rand_max = 1.f / RAND_MAX;
 constexpr float pi = 3.14159f;
 
 
-inline std::unique_ptr<std::vector<std::vector<int>>> create_buffer()
-{
-    return std::make_unique<std::vector<std::vector<int>>>();
-}
-
 inline vec3 random_in_unit_sphere()
 {
     vec3 p;
@@ -61,6 +56,7 @@ inline vec3 color(const ray& r, hitable* world, int depth)
         if (depth < 10 && rec.mat_ptr->scatter(r, rec, attenuation, scattered))
         {
             return emitted + attenuation * color(scattered, world, depth + 1);
+//            return attenuation;
         }
 
         return emitted;

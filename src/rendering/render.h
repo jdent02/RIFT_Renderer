@@ -16,24 +16,24 @@ class renderer
         int nx,
         int ny,
         int ns,
-        camera cam,
+        camera* cam,
         hitable* world);
 
     ~renderer() = default;
 
     void do_render() const;
 
-    void write_buffer() const;
+    void write_JPEG() const;
 
   private:
-    std::unique_ptr<std::vector<std::vector<int>>> buffer;
+    float* buffer;
     const int nx;
     const int ny;
     const int ns;
     const float inv_nx;
     const float inv_ny;
     const float inv_ns;
-    camera cam;
+    camera* cam;
     hitable* world;
 };
 

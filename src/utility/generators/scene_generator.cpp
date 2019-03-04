@@ -1,5 +1,4 @@
 #define STB_IMAGE_IMPLEMENTATION
-
 #include "stb_image.h"
 
 #include "scene_generator.h"
@@ -26,7 +25,7 @@
 #include <memory>
 
 // Class implementation
-hitable* scene_generator::make_random_scene()
+scene* scene_generator::make_random_scene(int nx, int ny)
 {
     int n = 500;
     hitable** list = new hitable* [n + 1];
@@ -109,7 +108,23 @@ hitable* scene_generator::make_random_scene()
             vec3(0.7f, 0.6f, 0.5f),
             0.03f));
 
-    return new bvh_node(list, i, 0.f, 0.5f);
+    const vec3 lookfrom(0.f, 2.f, 8.f);
+    const vec3 lookat(0.f, 1.f, 0.f);
+    const float dist_to_focus = (lookfrom - lookat).length();
+    const float aperture = 0.05f;
+
+    camera* cam = new camera(
+        lookfrom,
+        lookat,
+        vec3(0.f, 1.f, 0.f),
+        40.f,
+        float(nx) / float(ny),
+        aperture,
+        dist_to_focus,
+        0.f,
+        0.5f);
+
+    return new scene{cam, new bvh_node(list, i, 0.f, 0.5f)};
 }
 
 hitable* scene_generator::two_spheres()
@@ -127,21 +142,39 @@ hitable* scene_generator::two_spheres()
     return new hitable_list(list, 2);
 }
 
-hitable* scene_generator::earth_sphere()
+scene* scene_generator::earth_sphere(int x_dim, int y_dim)
 {
     int nx, ny, nn;
     unsigned char* tex_data = stbi_load(
         "../world.topo.bathy.200401.3x5400x2700.jpg",
         &nx, &ny, &nn, 0);
 
-    return new sphere(
+    hitable* earth_sphere = new sphere(
         vec3(0.f, 1.f, 0.f),
         2.f,
         new lambertian(
             std::make_unique<image_texture>(tex_data, nx, ny)));
+
+    const vec3 lookfrom(0.f, 2.f, 8.f);
+    const vec3 lookat(0.f, 1.f, 0.f);
+    const float dist_to_focus = (lookfrom - lookat).length();
+    const float aperture = 0.05f;
+
+    camera* cam = new camera(
+        lookfrom,
+        lookat,
+        vec3(0.f, 1.f, 0.f),
+        40.f,
+        float(x_dim) / float(y_dim),
+        aperture,
+        dist_to_focus,
+        0.f,
+        0.5f);
+
+    return new scene{cam, earth_sphere};
 }
 
-hitable* scene_generator::rect_light()
+scene* scene_generator::rect_light(int nx, int ny)
 {
 
     hitable** list = new hitable* [3];
@@ -172,10 +205,26 @@ hitable* scene_generator::rect_light()
 //            std::make_unique<constant_texture>(
 //                vec3(4.f, 4.f, 4.f))));
 
-    return new hitable_list(list, 3);
+    const vec3 lookfrom(8.f, 2.f, 9.f);
+    const vec3 lookat(1.f, 1.f, 0.f);
+    const float dist_to_focus = (lookfrom - lookat).length();
+    const float aperture = 0.05f;
+
+    camera* cam = new camera(
+        lookfrom,
+        lookat,
+        vec3(0.f, 1.f, 0.f),
+        40.f,
+        float(nx) / float(ny),
+        aperture,
+        dist_to_focus,
+        0.f,
+        0.5f);
+
+    return new scene{cam, new hitable_list(list, 3)};
 }
 
-hitable* scene_generator::cornell_box()
+scene* scene_generator::cornell_box(int nx, int ny)
 {
     hitable** list = new hitable* [8];
     int i = 0;
@@ -261,5 +310,21 @@ hitable* scene_generator::cornell_box()
             15),
         vec3(265, 0, 295));
 
-    return new hitable_list(list, i);
+    const vec3 lookfrom(278.f, 278.f, -800.f);
+    const vec3 lookat(278.f, 278.f, 0.f);
+    const float dist_to_focus = (lookfrom - lookat).length();
+    const float aperture = 0.05f;
+
+    camera* cam = new camera(
+        lookfrom,
+        lookat,
+        vec3(0.f, 1.f, 0.f),
+        40.f,
+        float(nx) / float(ny),
+        aperture,
+        dist_to_focus,
+        0.f,
+        0.5f);
+
+    return new scene{cam, new hitable_list(list, i)};
 }
