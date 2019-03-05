@@ -10,6 +10,7 @@
 #include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
 #include "hitables/rect.h"
+#include "hitables/sky_sphere.h"
 #include "materials/diffuse_light.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
@@ -19,11 +20,7 @@
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
 #include "textures/sky_gradient.h"
-#include "core/rendering/utility_functions.h"
-#include "core/data_types/vec3.h"
 #include "utility/rng/xoroshiro128.h"
-
-#include <memory>
 
 
 // Class implementation
@@ -39,9 +36,9 @@ scene* scene_generator::make_random_scene(int nx, int ny)
         vec3(0.f, -1000.f, 0.f),
         1000.f,
         new lambertian(
-            std::make_unique<checker_texture>(
-                std::make_unique<constant_texture>(vec3(0.2f, 0.3f, 0.1f)),
-                std::make_unique<constant_texture>(vec3(0.9f, 0.9f, 0.9f)))));
+            new checker_texture(
+                new constant_texture(vec3(0.2f, 0.3f, 0.1f)),
+                new constant_texture(vec3(0.9f, 0.9f, 0.9f)))));
 
     int i = 1;
 
@@ -65,7 +62,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
                         0.5f,
                         0.2f,
                         new lambertian(
-                            std::make_unique<constant_texture>(
+                            new constant_texture(
                                 vec3(
                                     random_generator->next() * (random_generator->next()),
                                     random_generator->next() * (random_generator->next()),
@@ -100,7 +97,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
         vec3(-1.f, 1.f, -2.f),
         1.f,
         new lambertian(
-            std::make_unique<constant_texture>(
+            new constant_texture(
                 vec3(0.4f, 0.2f, 0.1f))));
 
     list[i++] = new sphere(
@@ -110,11 +107,10 @@ scene* scene_generator::make_random_scene(int nx, int ny)
             vec3(0.7f, 0.6f, 0.5f),
             0.03f));
 
-    list[i++] = new flip_normals(new sphere(
-        vec3(0.f, 0.f, 0.f),
-        10000.f,
-        new diffuse_light(
-            std::make_unique<sky_gradient>())));
+    list[i++] = new flip_normals(new sky_sphere(
+            new sky_gradient(
+                vec3(1.f, 1.f, 1.f),
+                vec3(0.3f, 0.6f, 1.f))));
 
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);
@@ -132,6 +128,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
         0.f,
         0.5f);
 
+    delete random_generator;
     return new scene{cam, new bvh_node(list, i, 0.f, 0.5f)};
 }
 
@@ -141,12 +138,12 @@ hitable* scene_generator::two_spheres()
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
-        new lambertian(std::make_unique<noise_texture>(3.f)));
+        new lambertian(new noise_texture(3.f)));
 
     list[1] = new sphere(
         vec3(0.f, 2.f, 0.f),
         2.f,
-        new lambertian(std::make_unique<noise_texture>(3.f)));
+        new lambertian(new noise_texture(3.f)));
     return new hitable_list(list, 2);
 }
 
@@ -161,7 +158,7 @@ scene* scene_generator::earth_sphere(int x_dim, int y_dim)
         vec3(0.f, 1.f, 0.f),
         2.f,
         new lambertian(
-            std::make_unique<image_texture>(tex_data, nx, ny)));
+            new image_texture(tex_data, nx, ny)));
 
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);
@@ -188,12 +185,12 @@ scene* scene_generator::rect_light(int nx, int ny)
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
-        new lambertian(std::make_unique<noise_texture>(4.f)));
+        new lambertian(new noise_texture(4.f)));
 
     list[1] = new sphere(
         vec3(0.f, 2.f, 0.f),
         2.f,
-        new lambertian(std::make_unique<noise_texture>(4.f)));
+        new lambertian(new noise_texture(4.f)));
 
     list[2] = new xy_rect(
         3.f,
@@ -202,7 +199,7 @@ scene* scene_generator::rect_light(int nx, int ny)
         3.f,
         -2.f,
         new diffuse_light(
-            std::make_unique<constant_texture>(
+            new constant_texture(
                 vec3(4.f, 4.f, 4.f))));
 
     //    list[3] = new sphere(
@@ -236,16 +233,16 @@ scene* scene_generator::cornell_box(int nx, int ny)
     hitable** list = new hitable* [8];
     int i = 0;
     material* red = new lambertian(
-        std::make_unique<constant_texture>(
+        new constant_texture(
             vec3(0.65f, 0.05f, 0.05f)));
     material* white = new lambertian(
-        std::make_unique<constant_texture>(
+        new constant_texture(
             vec3(0.73f, 0.73f, 0.73f)));
     material* green = new lambertian(
-        std::make_unique<constant_texture>(
+        new constant_texture(
             vec3(0.12f, 0.45f, 0.15f)));
     material* light = new diffuse_light(
-        std::make_unique<constant_texture>(
+        new constant_texture(
             vec3(15.f, 15.f, 15.f)));
 
     list[i++] = new flip_normals(

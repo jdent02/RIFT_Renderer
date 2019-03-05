@@ -4,6 +4,7 @@
 #include "core/rendering/utility_functions.h"
 #include "core/data_types/vec3.h"
 #include "core/rendering/scatter_functions.h"
+#include "core/data_types/hit_record.h"
 
 bool dielectric::scatter(
     const ray& r_in,

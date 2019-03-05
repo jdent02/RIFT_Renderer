@@ -2,6 +2,7 @@
 
 #include "core/rendering/utility_functions.h"
 #include "core/rendering/scatter_functions.h"
+#include "core/data_types/hit_record.h"
 
 
 bool metal::scatter(

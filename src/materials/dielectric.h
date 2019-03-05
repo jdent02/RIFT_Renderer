@@ -2,6 +2,7 @@
 
 
 #include "core/bases/material.h"
+#include "core/data_types/hit_record.h"
 
 // Forward declaration
 class vec3;

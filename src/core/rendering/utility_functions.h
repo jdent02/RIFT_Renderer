@@ -4,10 +4,10 @@
 #include "core/bases/hitable.h"
 #include "core/bases/material.h"
 #include "core/data_types/ray.h"
+#include "core/data_types/hit_record.h"
 
 #include <cfloat>
 #include <cmath>
-#include <limits>
 
 
 class material;

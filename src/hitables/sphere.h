@@ -3,6 +3,7 @@
 #include "core/bases/hitable.h"
 
 #include "core/rendering/utility_functions.h"
+#include "core/data_types/hit_record.h"
 
 // Forward declarations
 class material;

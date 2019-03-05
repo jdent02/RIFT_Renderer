@@ -4,16 +4,15 @@
 #include "core/bases/material.h"
 #include "core/bases/texture.h"
 #include "core/data_types/vec3.h"
-
-#include <memory>
+#include "core/data_types/hit_record.h"
 
 class lambertian
     : public material
 {
 public:
     explicit
-    lambertian(std::unique_ptr<texture> a)
-        : albedo(std::move(a)) {};
+    lambertian(texture* a)
+        : albedo(a) {};
 
     ~lambertian() = default;
 
@@ -23,5 +22,5 @@ public:
         vec3& attenuation,
         ray& scattered) const override;
 
-    std::unique_ptr<texture> albedo;
+    texture* albedo;
 };

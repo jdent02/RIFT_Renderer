@@ -2,6 +2,7 @@
 
 #include "core/bases/hitable.h"
 #include "core/data_types/aabb.h"
+#include "core/data_types/hit_record.h"
 
 
 class bvh_node

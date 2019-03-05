@@ -34,7 +34,7 @@ set (
     src/hitables/box.cpp
     src/hitables/box.h
     src/hitables/instancers.cpp
-    src/hitables/instancers.h)
+    src/hitables/instancers.h src/hitables/sky_sphere.h)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION
@@ -60,9 +60,9 @@ source_group(
 
 set (
     RENDERING_SOURCES
-    src/core/rendering/render.h
-    src/core/rendering/render.cpp
-    src/core/rendering/render_unit.h)
+    src/core/rendering/render_controller.h
+    src/core/rendering/render_controller.cpp
+    src/core/rendering/render_unit.h src/core/image_writers/jpeg_writer.cpp src/core/image_writers/jpeg_writer.h src/core/image_writers/iimage_writer.h)
 
 source_group(
     "src\\rendering" REGULAR_EXPRESSION
@@ -101,7 +101,7 @@ set (
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
     src/utility/noises/perlin.h
-)
+    src/core/data_types/hit_record.h)
 
 source_group(
     "src\\utilities\\noises" REGULAR_EXPRESSION

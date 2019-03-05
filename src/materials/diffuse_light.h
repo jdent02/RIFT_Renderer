@@ -4,16 +4,15 @@
 #include "core/bases/material.h"
 #include "core/bases/texture.h"
 #include "core/data_types/vec3.h"
-
-#include <memory>
+#include "core/data_types/hit_record.h"
 
 class diffuse_light
     : public material
 {
 public:
     explicit
-    diffuse_light(std::unique_ptr<texture> a)
-        : emit(std::move(a)) {};
+    diffuse_light(texture* a)
+        : emit(a) {};
 
     virtual ~diffuse_light() override = default;;
 
@@ -30,5 +29,5 @@ public:
         float v,
         const vec3& p) const override { return emit->value(u, v, p); }
 
-    std::unique_ptr<texture> emit;
+    texture* emit;
 };

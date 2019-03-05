@@ -2,6 +2,7 @@
 
 #include "core/data_types/aabb.h"
 #include "core/data_types/ray.h"
+#include "core/data_types/hit_record.h"
 
 bool sphere::hit(
     const ray& r,

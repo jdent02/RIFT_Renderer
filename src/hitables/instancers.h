@@ -4,6 +4,7 @@
 
 #include "core/data_types/aabb.h"
 #include "core/data_types/vec3.h"
+#include "core/data_types/hit_record.h"
 
 
 class translate

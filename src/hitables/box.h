@@ -2,6 +2,7 @@
 
 
 #include "core/bases/hitable.h"
+#include "core/data_types/hit_record.h"
 
 class box
     : public hitable
@@ -12,6 +13,8 @@ public:
         const vec3& p0,
         const vec3& p1,
         material* ptr);
+
+    ~box() override { delete list_ptr; }
 
     virtual bool hit(
         const ray& r,

@@ -2,6 +2,7 @@
 
 #include "bvh_utils.h"
 #include "core/rendering/utility_functions.h"
+#include "core/data_types/hit_record.h"
 
 
 bool bvh_node::bounding_box(float t0, float t1, aabb& b) const

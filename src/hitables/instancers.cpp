@@ -4,8 +4,7 @@
 #include "core/data_types/aabb.h"
 
 #include "core/rendering/utility_functions.h"
-
-#include <cfloat>
+#include "core/data_types/hit_record.h"
 
 
 translate::translate(hitable* p, const vec3& displacement)

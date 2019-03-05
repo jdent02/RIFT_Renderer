@@ -10,7 +10,7 @@
 #include <mutex>
 #include <vector>
 
-namespace render_unit
+namespace render_worker
 {
     void run_thread(
         int seed,
@@ -26,9 +26,7 @@ namespace render_unit
         std::unique_ptr<igenerator> rn_gen = std::make_unique<xoro_128>();
         rn_gen->seed_gen(static_cast<uint64_t>(seed));
 
-        std::unique_ptr<std::vector<float>> temp_buffer = std::make_unique<std::vector<float>>();
-
-        temp_buffer->reserve(nx * ny * 3);
+        std::vector<float>* temp_buffer = new std::vector<float>;
 
         float inv_nx = 1.f / nx;
         float inv_ny = 1.f / ny;
@@ -60,5 +58,6 @@ namespace render_unit
             buffer[i] += temp_buffer->at(i);
         }
 
+        delete temp_buffer;
     }
-} // render_unit namespace
+} // render_worker namespace

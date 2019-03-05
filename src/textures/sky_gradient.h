@@ -7,11 +7,18 @@ class sky_gradient
     : public texture
 {
   public:
-    explicit sky_gradient() = default;
+    sky_gradient(
+        const vec3& horizon,
+        const vec3& zenith)
+        : horizon(horizon)
+        , zenith(zenith) {};
 
     virtual vec3 value(
         float u,
         float v,
         const vec3& p) const override;
+
+    vec3 horizon;
+    vec3 zenith;
 };
 
