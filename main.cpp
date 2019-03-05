@@ -1,5 +1,5 @@
 #include "utility/generators/scene_generator.h"
-#include "rendering/render.h"
+#include "core/rendering/render.h"
 
 #include <iostream>
 #include <sstream>
@@ -10,12 +10,12 @@
 int main()
 {
     const int nx{640};
-    const int ny{480};
-    const int num_samples(400);
+    const int ny{640};
+    const int num_samples(5 * 8);
 
     scene_generator generator;
 
-    scene* scene = generator.cornell_box(nx, ny);
+    scene* scene = generator.make_random_scene(nx, ny);
 
     time_t start_time = time(NULL);
 

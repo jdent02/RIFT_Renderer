@@ -60,9 +60,9 @@ source_group(
 
 set (
     RENDERING_SOURCES
-    src/rendering/render.h
-    src/rendering/render.cpp
-    src/rendering/render_unit.h)
+    src/core/rendering/render.h
+    src/core/rendering/render.cpp
+    src/core/rendering/render_unit.h)
 
 source_group(
     "src\\rendering" REGULAR_EXPRESSION

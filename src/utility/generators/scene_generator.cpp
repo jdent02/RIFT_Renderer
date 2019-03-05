@@ -108,6 +108,12 @@ scene* scene_generator::make_random_scene(int nx, int ny)
             vec3(0.7f, 0.6f, 0.5f),
             0.03f));
 
+    list[i++] = new flip_normals(new sphere(
+        vec3(0.f, 0.f, 0.f),
+        10000.f,
+        new diffuse_light(
+            std::make_unique<constant_texture>(vec3(.9f, .9f, .9f)))));
+
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();

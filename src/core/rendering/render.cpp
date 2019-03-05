@@ -1,4 +1,4 @@
-#include "render.h"
+#include "core/rendering/render.h"
 
 #include "utility/rng/igenerator.h"
 #include "utility/data_types/vec3.h"
@@ -18,19 +18,19 @@
 #include <vector>
 
 renderer::renderer(
-    const int nx,
-    const int ny,
-    const int ns,
-    camera* cam,
-    hitable* world)
-    : nx(nx)
-    , ny(ny)
-    , ns(ns)
-    , inv_nx(1.f / nx)
-    , inv_ny(1.f / ny)
-    , inv_ns(1.f / ns)
-    , cam(cam)
-    , world(world)
+    const int   nx,
+    const int   ny,
+    const int   ns,
+    camera*     cam,
+    hitable*    world)
+  : nx(nx)
+  , ny(ny)
+  , ns(ns)
+  , inv_nx(1.f / nx)
+  , inv_ny(1.f / ny)
+  , inv_ns(1.f / ns)
+  , cam(cam)
+  , world(world)
 {
     buffer = new float[nx * ny * 3];
 }

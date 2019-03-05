@@ -44,7 +44,7 @@ inline vec3 color(const ray& r, hitable* world, int depth)
 {
     hit_record rec;
 
-    if (world->hit(r, 0.001f, std::numeric_limits<float>::max(), rec))
+    if (world->hit(r, 0.001f, FLT_MAX, rec))
     {
         ray scattered;
         vec3 attenuation;
