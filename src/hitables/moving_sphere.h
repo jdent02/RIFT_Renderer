@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "hitable.h"
+#include "core/bases/hitable.h"
 #include "utility/data_types/vec3.h"
 
 class moving_sphere

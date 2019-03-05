@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hitable.h"
+#include "core/bases/hitable.h"
 
 class xy_rect final
     : public hitable

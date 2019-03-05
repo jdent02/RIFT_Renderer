@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "hitable.h"
+#include "core/bases/hitable.h"
 
 class box
     : public hitable

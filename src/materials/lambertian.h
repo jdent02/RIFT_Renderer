@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "material.h"
-#include "textures/texture.h"
+#include "core/bases/material.h"
+#include "core/bases/texture.h"
 #include "utility/data_types/vec3.h"
 
 #include <memory>

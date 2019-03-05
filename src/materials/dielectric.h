@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "material.h"
+#include "core/bases/material.h"
 
 // Forward declaration
 class vec3;

@@ -1,10 +1,11 @@
 #pragma once
 
 
-#include "hitables/hitable.h"
-#include "materials/material.h"
+#include "core/bases/hitable.h"
+#include "core/bases/material.h"
 #include "utility/data_types/ray.h"
 
+#include <cfloat>
 #include <cmath>
 #include <limits>
 

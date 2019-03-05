@@ -2,7 +2,7 @@
 
 
 #include "camera/camera.h"
-#include "hitables/hitable.h"
+#include "core/bases/hitable.h"
 
 
 struct scene

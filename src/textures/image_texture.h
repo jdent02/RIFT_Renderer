@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "texture.h"
+#include "core/bases/texture.h"
 
 
 class image_texture

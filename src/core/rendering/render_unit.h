@@ -1,5 +1,5 @@
 #include "camera/camera.h"
-#include "hitables/hitable.h"
+#include "core/bases/hitable.h"
 #include "utility/data_types/ray.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"

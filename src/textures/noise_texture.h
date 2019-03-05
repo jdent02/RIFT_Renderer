@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "texture.h"
+#include "core/bases/texture.h"
 #include "utility/data_types/vec3.h"
 #include "utility/noises/perlin.h"
 

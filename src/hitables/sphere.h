@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hitable.h"
+#include "core/bases/hitable.h"
 
 #include "utility/utility_functions.h"
 

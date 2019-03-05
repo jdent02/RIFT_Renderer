@@ -21,7 +21,7 @@ source_group(
 
 set (
     HITABLES_SOURCES
-    src/hitables/hitable.h
+    src/core/bases/hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
@@ -48,7 +48,7 @@ set (
     src/materials/diffuse_light.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
-    src/materials/material.h
+    src/core/bases/material.h
     src/materials/metal.h
     src/materials/metal.cpp
 )
@@ -72,7 +72,7 @@ source_group(
 set (
     TEXTURE_SOURCES
     src/textures/constant_tex.h
-    src/textures/texture.h
+    src/core/bases/texture.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
     src/textures/noise_texture.h
