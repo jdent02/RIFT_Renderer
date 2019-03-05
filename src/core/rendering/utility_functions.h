@@ -3,7 +3,7 @@
 
 #include "core/bases/hitable.h"
 #include "core/bases/material.h"
-#include "utility/data_types/ray.h"
+#include "core/data_types/ray.h"
 
 #include <cfloat>
 #include <cmath>

@@ -1,7 +1,7 @@
 #include "metal.h"
 
-#include "utility/utility_functions.h"
-#include "utility/scatter_functions.h"
+#include "core/rendering/utility_functions.h"
+#include "core/rendering/scatter_functions.h"
 
 
 bool metal::scatter(

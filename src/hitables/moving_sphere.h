@@ -2,7 +2,7 @@
 
 
 #include "core/bases/hitable.h"
-#include "utility/data_types/vec3.h"
+#include "core/data_types/vec3.h"
 
 class moving_sphere
     : public hitable

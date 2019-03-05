@@ -1,6 +1,6 @@
 #include "checker_tex.h"
 
-#include "utility/data_types/vec3.h"
+#include "core/data_types/vec3.h"
 
 
 vec3 checker_texture::value(const float u, const float v, const vec3& p) const

@@ -1,7 +1,7 @@
 #include "bvh_node.h"
 
-#include "utility/bvh_utils.h"
-#include "utility/utility_functions.h"
+#include "bvh_utils.h"
+#include "core/rendering/utility_functions.h"
 
 
 bool bvh_node::bounding_box(float t0, float t1, aabb& b) const

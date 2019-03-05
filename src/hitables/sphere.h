@@ -2,7 +2,7 @@
 
 #include "core/bases/hitable.h"
 
-#include "utility/utility_functions.h"
+#include "core/rendering/utility_functions.h"
 
 // Forward declarations
 class material;
@@ -27,7 +27,10 @@ class sphere
 public:
     sphere() = default;
 
-    sphere(const vec3 cen, const float r, material* mat)
+    sphere(
+        const vec3 cen,
+        const float r,
+        material* mat)
         : center(cen)
         , radius(r)
         , material(mat) {};

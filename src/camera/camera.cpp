@@ -1,8 +1,8 @@
 #include "camera.h"
 
-#include "utility/data_types/ray.h"
-#include "utility/data_types/vec3.h"
-#include "utility/utility_functions.h"
+#include "core/data_types/ray.h"
+#include "core/data_types/vec3.h"
+#include "core/rendering/utility_functions.h"
 
 
 camera::camera(

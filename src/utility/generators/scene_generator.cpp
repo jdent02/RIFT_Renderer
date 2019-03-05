@@ -4,7 +4,7 @@
 #include "scene_generator.h"
 
 #include "hitables/box.h"
-#include "hitables/bvh_node.h"
+#include "core/acceleration_structures/bvh_node.h"
 #include "hitables/hitable_list.h"
 #include "hitables/instancers.h"
 #include "hitables/sphere.h"
@@ -18,11 +18,13 @@
 #include "textures/checker_tex.h"
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
-#include "utility/utility_functions.h"
-#include "utility/data_types/vec3.h"
+#include "textures/sky_gradient.h"
+#include "core/rendering/utility_functions.h"
+#include "core/data_types/vec3.h"
 #include "utility/rng/xoroshiro128.h"
 
 #include <memory>
+
 
 // Class implementation
 scene* scene_generator::make_random_scene(int nx, int ny)
@@ -112,7 +114,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
         vec3(0.f, 0.f, 0.f),
         10000.f,
         new diffuse_light(
-            std::make_unique<constant_texture>(vec3(.9f, .9f, .9f)))));
+            std::make_unique<sky_gradient>())));
 
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);

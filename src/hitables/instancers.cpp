@@ -1,9 +1,9 @@
 #include "instancers.h"
 
-#include "utility/data_types/ray.h"
-#include "utility/data_types/aabb.h"
+#include "core/data_types/ray.h"
+#include "core/data_types/aabb.h"
 
-#include "utility/utility_functions.h"
+#include "core/rendering/utility_functions.h"
 
 #include <cfloat>
 

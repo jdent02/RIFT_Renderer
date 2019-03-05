@@ -1,7 +1,7 @@
 #include "moving_sphere.h"
 
-#include "utility/data_types/aabb.h"
-#include "utility/data_types/ray.h"
+#include "core/data_types/aabb.h"
+#include "core/data_types/ray.h"
 
 moving_sphere::moving_sphere(
     vec3 cen0,

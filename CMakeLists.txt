@@ -27,8 +27,8 @@ set (
     src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
-    src/hitables/bvh_node.h
-    src/hitables/bvh_node.cpp
+    src/core/acceleration_structures/bvh_node.h
+    src/core/acceleration_structures/bvh_node.cpp
     src/hitables/rect.cpp
     src/hitables/rect.h
     src/hitables/box.cpp
@@ -77,7 +77,7 @@ set (
     src/textures/checker_tex.cpp
     src/textures/noise_texture.h
     src/textures/image_texture.cpp
-    src/textures/image_texture.h)
+    src/textures/image_texture.h src/textures/sky_gradient.cpp src/textures/sky_gradient.h)
 
 source_group(
     "src\\textures" REGULAR_EXPRESSION
@@ -86,15 +86,15 @@ source_group(
 
 set (
     UTILITY_SOURCES
-    src/utility/data_types/ray.h
-    src/utility/data_types/vec3.h
-    src/utility/data_types/aabb.h
-    src/utility/data_types/aabb.cpp
+    src/core/data_types/ray.h
+    src/core/data_types/vec3.h
+    src/core/data_types/aabb.h
+    src/core/data_types/aabb.cpp
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
-    src/utility/utility_functions.h
-    src/utility/bvh_utils.h
-    src/utility/scatter_functions.h
+    src/core/rendering/utility_functions.h
+    src/core/acceleration_structures/bvh_utils.h
+    src/core/rendering/scatter_functions.h
     src/utility/rng/xoroshiro128.h
     src/utility/rng/xoroshiro128.cpp
     src/utility/rng/igenerator.h

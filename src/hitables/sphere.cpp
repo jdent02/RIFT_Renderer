@@ -1,7 +1,7 @@
 #include "sphere.h"
 
-#include "utility/data_types/aabb.h"
-#include "utility/data_types/ray.h"
+#include "core/data_types/aabb.h"
+#include "core/data_types/ray.h"
 
 bool sphere::hit(
     const ray& r,

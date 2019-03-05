@@ -2,7 +2,7 @@
 
 
 #include "core/bases/texture.h"
-#include "utility/data_types/vec3.h"
+#include "core/data_types/vec3.h"
 #include "utility/noises/perlin.h"
 
 

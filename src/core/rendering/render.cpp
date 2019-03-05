@@ -1,8 +1,8 @@
 #include "core/rendering/render.h"
 
 #include "utility/rng/igenerator.h"
-#include "utility/data_types/vec3.h"
-#include "utility/utility_functions.h"
+#include "core/data_types/vec3.h"
+#include "utility_functions.h"
 #include "camera/camera.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION

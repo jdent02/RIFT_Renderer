@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "utility/data_types/aabb.h"
+#include "core/data_types/aabb.h"
 
 class hitable_list
     : public hitable

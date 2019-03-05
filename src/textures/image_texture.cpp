@@ -1,6 +1,6 @@
 #include "image_texture.h"
 
-#include "utility/data_types/vec3.h"
+#include "core/data_types/vec3.h"
 
 image_texture::image_texture(unsigned char* pixels, int A, int B)
     : data(pixels)

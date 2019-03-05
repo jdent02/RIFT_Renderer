@@ -1,7 +1,7 @@
 #include "rect.h"
 
-#include "utility/data_types/aabb.h"
-#include "utility/data_types/vec3.h"
+#include "core/data_types/aabb.h"
+#include "core/data_types/vec3.h"
 
 bool xy_rect::hit(
     const ray& r,

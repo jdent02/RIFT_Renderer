@@ -1,9 +1,9 @@
 #include "dielectric.h"
 
-#include "utility/data_types/ray.h"
-#include "utility/utility_functions.h"
-#include "utility/data_types/vec3.h"
-#include "utility/scatter_functions.h"
+#include "core/data_types/ray.h"
+#include "core/rendering/utility_functions.h"
+#include "core/data_types/vec3.h"
+#include "core/rendering/scatter_functions.h"
 
 bool dielectric::scatter(
     const ray& r_in,

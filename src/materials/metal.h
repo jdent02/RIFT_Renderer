@@ -2,7 +2,7 @@
 
 
 #include "core/bases/material.h"
-#include "utility/data_types/vec3.h"
+#include "core/data_types/vec3.h"
 
 
 class metal

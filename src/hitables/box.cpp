@@ -2,7 +2,7 @@
 
 #include "hitable_list.h"
 #include "rect.h"
-#include "utility/data_types/aabb.h"
+#include "core/data_types/aabb.h"
 
 
 bool box::hit(const ray& r, float t_min, float t_max, hit_record& rec) const

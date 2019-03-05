@@ -1,6 +1,6 @@
 #include "lambertian.h"
 
-#include "utility/utility_functions.h"
+#include "core/rendering/utility_functions.h"
 
 bool lambertian::scatter(
     const ray& r_in,

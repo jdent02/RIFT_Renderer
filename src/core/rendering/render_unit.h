@@ -1,9 +1,9 @@
 #include "camera/camera.h"
 #include "core/bases/hitable.h"
-#include "utility/data_types/ray.h"
+#include "core/data_types/ray.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"
-#include "utility/utility_functions.h"
+#include "utility_functions.h"
 
 #include <iostream>
 #include <memory>
