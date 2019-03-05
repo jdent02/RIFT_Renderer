@@ -15,7 +15,10 @@ camera::camera(
     const float focus_dist,
     const float t0,
     const float t1)
-    : origin(lookfrom), lens_radius(aperture / 2.f), time0(t0), time1(t1)
+    : origin(lookfrom)
+    , lens_radius(aperture / 2.f)
+    , time0(t0)
+    , time1(t1)
 {
     const float theta = vfov * pi / 180.f;
     const float half_height = std::tan(theta / 2.f);

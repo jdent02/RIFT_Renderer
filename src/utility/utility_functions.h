@@ -1,15 +1,12 @@
-#include <cmath>
+#pragma once
 
-#ifndef UTILITY_FUNCTIONS_H
-#define UTILITY_FUNCTIONS_H
 
 #include "hitables/hitable.h"
 #include "materials/material.h"
 #include "utility/data_types/ray.h"
 
+#include <cmath>
 #include <limits>
-#include <memory>
-#include <vector>
 
 
 class material;
@@ -56,20 +53,14 @@ inline vec3 color(const ray& r, hitable* world, int depth)
         if (depth < 10 && rec.mat_ptr->scatter(r, rec, attenuation, scattered))
         {
             return emitted + attenuation * color(scattered, world, depth + 1);
-//            return attenuation;
+            //            return attenuation;
         }
 
         return emitted;
     }
 
-//    vec3 unit_direction = unit_vector(r.direction());
-//    const float t = 0.5f * (unit_direction.y() + 1.f);
-//    return (1.f - t) * vec3(1.f, 1.f, 1.f) + t * vec3(0.5f, 0.7f, 1.f);
+    //    vec3 unit_direction = unit_vector(r.direction());
+    //    const float t = 0.5f * (unit_direction.y() + 1.f);
+    //    return (1.f - t) * vec3(1.f, 1.f, 1.f) + t * vec3(0.5f, 0.7f, 1.f);
     return vec3(0.f, 0.f, 0.f);
 }
-
-
-
-
-
-#endif // UTILITY_FUNCTIONS_H

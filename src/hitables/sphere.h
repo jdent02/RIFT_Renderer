@@ -1,13 +1,13 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#pragma once
 
-#include <utility/utility_functions.h>
-#include "hitables/hitable.h"
+#include "hitable.h"
+
+#include "utility/utility_functions.h"
 
 // Forward declarations
 class material;
-
 class ray;
+struct hit_record;
 
 inline void get_sphere_uv(
     const vec3& p,
@@ -24,11 +24,13 @@ inline void get_sphere_uv(
 class sphere
     : public hitable
 {
-  public:
+public:
     sphere() = default;
 
     sphere(const vec3 cen, const float r, material* mat)
-        : center(cen), radius(r), material(mat) {};
+        : center(cen)
+        , radius(r)
+        , material(mat) {};
 
     ~sphere() override = default;
 
@@ -48,5 +50,3 @@ class sphere
     float radius;
     material* material;
 };
-
-#endif // SPHERE_H

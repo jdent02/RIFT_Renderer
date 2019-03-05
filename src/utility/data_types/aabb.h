@@ -1,25 +1,24 @@
-#ifndef FARTS_RENDERER_AABB_H
-#define FARTS_RENDERER_AABB_H
+#pragma once
+
 
 #include "ray.h"
 #include "vec3.h"
 
 
-//inline float ffmin(float a, float b) { return a < b ? a : b; }
-//
-//inline float ffmax(float a, float b) { return a > b ? a : b; }
-
 class aabb
 {
-  public:
+public:
     aabb() = default;
 
     aabb(const vec3& a, const vec3& b)
-        : _min(a), _max(b) {};
+        : _min(a)
+        , _max(b) {};
 
-    vec3 min() const { return _min; }
+    vec3
+    min() const { return _min; }
 
-    vec3 max() const { return _max; }
+    vec3
+    max() const { return _max; }
 
     bool hit(const ray& r, float tmin, float tmax) const;
 
@@ -39,6 +38,3 @@ inline aabb surrounding_box(aabb box0, aabb box1)
         std::fmax(box0.max().z(), box1.max().z()));
     return aabb(small, big);
 }
-
-
-#endif //FARTS_RENDERER_AABB_H

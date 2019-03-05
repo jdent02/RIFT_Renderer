@@ -14,13 +14,13 @@
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "materials/dielectric.h"
-#include "rendering/sampler.h"
 #include "textures/constant_tex.h"
 #include "textures/checker_tex.h"
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
 #include "utility/utility_functions.h"
 #include "utility/data_types/vec3.h"
+#include "utility/rng/xoroshiro128.h"
 
 #include <memory>
 
@@ -30,7 +30,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
     int n = 500;
     hitable** list = new hitable* [n + 1];
 
-    sampler sampler(XORO_128_GEN);
+    igenerator* random_generator = new xoro_128;
 
     // Ground
     list[0] = new sphere(
@@ -47,27 +47,27 @@ scene* scene_generator::make_random_scene(int nx, int ny)
     {
         for (int b = -11; b < 11; b++)
         {
-            const float choose_mat = sampler.random_generator->next();
+            const float choose_mat = random_generator->next();
             vec3 center(
-                a + 0.9f * (sampler.random_generator->next()),
+                a + 0.9f * (random_generator->next()),
                 0.2f,
-                b + 0.9f * (sampler.random_generator->next()));
+                b + 0.9f * (random_generator->next()));
             if ((center - vec3(4.f, 0.2f, 0.f)).length() > 0.9f)
             {
                 if (choose_mat < 0.8f)
                 {
                     list[i++] = new moving_sphere(
                         center,
-                        center + vec3(0.f, 0.5f * sampler.random_generator->next(), 0.f),
+                        center + vec3(0.f, 0.5f * random_generator->next(), 0.f),
                         0.f,
                         0.5f,
                         0.2f,
                         new lambertian(
                             std::make_unique<constant_texture>(
                                 vec3(
-                                    sampler.random_generator->next() * (sampler.random_generator->next()),
-                                    sampler.random_generator->next() * (sampler.random_generator->next()),
-                                    sampler.random_generator->next() * (sampler.random_generator->next())))));
+                                    random_generator->next() * (random_generator->next()),
+                                    random_generator->next() * (random_generator->next()),
+                                    random_generator->next() * (random_generator->next())))));
                 }
                 else if (choose_mat < 0.95f)
                 {
@@ -76,10 +76,10 @@ scene* scene_generator::make_random_scene(int nx, int ny)
                         0.2f,
                         new metal(
                             vec3(
-                                0.5f * (1 + sampler.random_generator->next()),
-                                0.5f * (1 + sampler.random_generator->next()),
-                                0.5f * (1 + sampler.random_generator->next())),
-                            sampler.random_generator->next()));
+                                0.5f * (1 + random_generator->next()),
+                                0.5f * (1 + random_generator->next()),
+                                0.5f * (1 + random_generator->next())),
+                            random_generator->next()));
                 }
                 else
                 {
@@ -176,7 +176,6 @@ scene* scene_generator::earth_sphere(int x_dim, int y_dim)
 
 scene* scene_generator::rect_light(int nx, int ny)
 {
-
     hitable** list = new hitable* [3];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
@@ -198,12 +197,12 @@ scene* scene_generator::rect_light(int nx, int ny)
             std::make_unique<constant_texture>(
                 vec3(4.f, 4.f, 4.f))));
 
-//    list[3] = new sphere(
-//        vec3(0.f, 7.f, 0.f),
-//        2.f,
-//        new diffuse_light(
-//            std::make_unique<constant_texture>(
-//                vec3(4.f, 4.f, 4.f))));
+    //    list[3] = new sphere(
+    //        vec3(0.f, 7.f, 0.f),
+    //        2.f,
+    //        new diffuse_light(
+    //            std::make_unique<constant_texture>(
+    //                vec3(4.f, 4.f, 4.f))));
 
     const vec3 lookfrom(8.f, 2.f, 9.f);
     const vec3 lookat(1.f, 1.f, 0.f);

@@ -1,5 +1,5 @@
-#ifndef MOVING_SPHERE_H
-#define MOVING_SPHERE_H
+#pragma once
+
 
 #include "hitable.h"
 #include "utility/data_types/vec3.h"
@@ -7,7 +7,7 @@
 class moving_sphere
     : public hitable
 {
-  public:
+public:
     moving_sphere() = default;
 
     moving_sphere(
@@ -36,6 +36,3 @@ class moving_sphere
     float radius{};
     material* mat_ptr{};
 };
-
-
-#endif //FARTS_RENDERER_MOVING_SPHERE_H

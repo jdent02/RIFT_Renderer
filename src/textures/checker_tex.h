@@ -1,5 +1,5 @@
-#ifndef CHECKER_TEX_H
-#define CHECKER_TEX_H
+#pragma once
+
 
 #include "texture.h"
 
@@ -10,11 +10,12 @@ class vec3;
 class checker_texture
     : public texture
 {
-  public:
+public:
     checker_texture() = default;
 
     checker_texture(std::unique_ptr<texture> t0, std::unique_ptr<texture> t1)
-        : odd(std::move(t1)), even(std::move(t0)) {};
+        : odd(std::move(t1))
+        , even(std::move(t0)) {};
 
     virtual ~checker_texture() override = default;
 
@@ -23,5 +24,3 @@ class checker_texture
     std::unique_ptr<texture> odd;
     std::unique_ptr<texture> even;
 };
-
-#endif // CHECKER_TEX_H

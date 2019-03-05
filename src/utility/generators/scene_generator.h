@@ -1,8 +1,9 @@
-#ifndef FARTS_GENERATORS
-#define FARTS_GENERATORS
+#pragma once
+
 
 #include "camera/camera.h"
 #include "hitables/hitable.h"
+
 
 struct scene
 {
@@ -14,7 +15,7 @@ struct scene
 // Utility function to generate a random scene
 class scene_generator
 {
-  public:
+public:
     scene_generator() = default;
 
     ~scene_generator() = default;
@@ -29,5 +30,3 @@ class scene_generator
 
     scene* cornell_box(int nx, int ny);
 };
-
-#endif

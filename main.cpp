@@ -1,7 +1,4 @@
-#include "utility/data_types/vec3.h"
-#include "camera/camera.h"
 #include "utility/generators/scene_generator.h"
-#include "hitables/hitable.h"
 #include "rendering/render.h"
 
 #include <iostream>
@@ -14,7 +11,7 @@ int main()
 {
     const int nx{640};
     const int ny{480};
-    const int num_samples(800);
+    const int num_samples(400);
 
     scene_generator generator;
 

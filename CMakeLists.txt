@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(FARTS_renderer VERSION 0.1.0)
 
+set(CMAKE_CXX_STANDARD 14)
+
 include_directories(
-	${STB_LIB}
+    ${STB_LIB}
     src
 )
 
@@ -19,20 +21,20 @@ source_group(
 
 set (
     HITABLES_SOURCES
-	src/hitables/hitable.h
+    src/hitables/hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
-    src/hitables/bvh_node.h 
-	src/hitables/bvh_node.cpp
-	src/hitables/rect.cpp
-	src/hitables/rect.h
-	src/hitables/box.cpp
-	src/hitables/box.h
-	src/hitables/instancers.cpp
-	src/hitables/instancers.h)
+    src/hitables/bvh_node.h
+    src/hitables/bvh_node.cpp
+    src/hitables/rect.cpp
+    src/hitables/rect.h
+    src/hitables/box.cpp
+    src/hitables/box.h
+    src/hitables/instancers.cpp
+    src/hitables/instancers.h)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION
@@ -43,7 +45,7 @@ set (
     MATERIAL_SOURCES
     src/materials/dielectric.h
     src/materials/dielectric.cpp
-	src/materials/diffuse_light.h
+    src/materials/diffuse_light.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
     src/materials/material.h
@@ -60,8 +62,7 @@ set (
     RENDERING_SOURCES
     src/rendering/render.h
     src/rendering/render.cpp
-    src/rendering/sampler.h
-	src/rendering/render_unit.h)
+    src/rendering/render_unit.h)
 
 source_group(
     "src\\rendering" REGULAR_EXPRESSION
@@ -74,13 +75,13 @@ set (
     src/textures/texture.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
-    src/textures/noise_texture.h 
-	src/textures/image_texture.cpp 
-	src/textures/image_texture.h)
+    src/textures/noise_texture.h
+    src/textures/image_texture.cpp
+    src/textures/image_texture.h)
 
 source_group(
     "src\\textures" REGULAR_EXPRESSION
-	src/textures/.*
+    src/textures/.*
 )
 
 set (
@@ -99,7 +100,7 @@ set (
     src/utility/rng/igenerator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
-	src/utility/noises/perlin.h
+    src/utility/noises/perlin.h
 )
 
 source_group(

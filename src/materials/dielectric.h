@@ -1,5 +1,4 @@
-#ifndef DIELECTRIC_H
-#define DIELECTRIC_H
+#pragma once
 
 
 #include "material.h"
@@ -10,8 +9,9 @@ class vec3;
 class dielectric
     : public material
 {
-  public:
-    explicit dielectric(const float ri)
+public:
+    explicit
+    dielectric(const float ri)
         : ref_idx(ri) {};
 
     virtual ~dielectric() override = default;
@@ -24,5 +24,3 @@ class dielectric
 
     float ref_idx;
 };
-
-#endif // DIELECTRIC_H

@@ -1,13 +1,14 @@
+#include "camera/camera.h"
 #include "hitables/hitable.h"
 #include "utility/data_types/ray.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"
 #include "utility/utility_functions.h"
-#include "sampler.h"
 
 #include <iostream>
+#include <memory>
 #include <mutex>
-#include <camera/camera.h>
+#include <vector>
 
 namespace render_unit
 {

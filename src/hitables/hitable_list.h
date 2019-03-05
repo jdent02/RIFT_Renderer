@@ -1,15 +1,12 @@
-#ifndef HITABLE_LIST_H
-#define HITABLE_LIST_H
+#pragma once
 
-#include "hitable.h"
+
 #include "utility/data_types/aabb.h"
-#include "utility/data_types/ray.h"
-
 
 class hitable_list
     : public hitable
 {
-  public:
+public:
     hitable_list() = default;
 
     hitable_list(hitable** l, int n);
@@ -21,14 +18,13 @@ class hitable_list
         float t1,
         aabb& box) const override;
 
-    hitable** list{};
-    int list_size{};
+    hitable** list;
+    int list_size;
 };
 
 inline hitable_list::hitable_list(hitable** l, int n)
-    : list(l), list_size(n)
-{
-}
+    : list(l)
+    , list_size(n) {}
 
 inline bool hitable_list::hit(
     const ray& r,
@@ -81,5 +77,3 @@ inline bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
     }
     return true;
 }
-
-#endif // HITABLE_LIST_H

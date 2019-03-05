@@ -1,5 +1,8 @@
 #include "moving_sphere.h"
 
+#include "utility/data_types/aabb.h"
+#include "utility/data_types/ray.h"
+
 moving_sphere::moving_sphere(
     vec3 cen0,
     vec3 cen1,
@@ -7,9 +10,12 @@ moving_sphere::moving_sphere(
     float t1,
     float r,
     material* m)
-    : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r), mat_ptr(m)
-{
-}
+    : center0(cen0)
+    , center1(cen1)
+    , time0(t0)
+    , time1(t1)
+    , radius(r)
+    , mat_ptr(m) {}
 
 vec3 moving_sphere::center(float time) const
 {
@@ -56,8 +62,8 @@ bool moving_sphere::hit(
 
 bool moving_sphere::bounding_box(float t0, float t1, aabb& box) const
 {
-    aabb box_1 {center0 - vec3(radius, radius, radius), center0 + vec3(radius, radius, radius)};
-    aabb box_2 {center1 - vec3(radius, radius, radius), center1 + vec3(radius, radius, radius)};
+    aabb box_1{center0 - vec3(radius, radius, radius), center0 + vec3(radius, radius, radius)};
+    aabb box_2{center1 - vec3(radius, radius, radius), center1 + vec3(radius, radius, radius)};
     box = surrounding_box(box_1, box_2);
     return true;
 }

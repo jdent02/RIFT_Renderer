@@ -1,17 +1,13 @@
-#ifndef RENDER_H
-#define RENDER_H
-
-#include "camera/camera.h"
-#include <memory>
-#include <vector>
+#pragma once
 
 
 // Forward declarations
+class camera;
 class hitable;
 
 class renderer
 {
-  public:
+public:
     renderer(
         int nx,
         int ny,
@@ -25,7 +21,7 @@ class renderer
 
     void write_JPEG() const;
 
-  private:
+private:
     float* buffer;
     const int nx;
     const int ny;
@@ -36,6 +32,3 @@ class renderer
     camera* cam;
     hitable* world;
 };
-
-
-#endif // RENDER_H

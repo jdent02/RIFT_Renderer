@@ -1,37 +1,47 @@
-#ifndef VEC3_H
-#define VEC3_H
+#pragma once
+
 
 #include <cmath>
 #include <iostream>
 
 class vec3
 {
-  public:
+public:
     vec3() = default;;
 
     vec3(float e0, float e1, float e2);
 
     // Getters.
-    float x() const { return e[0]; }
+    float
+    x() const { return e[0]; }
 
-    float y() const { return e[1]; }
+    float
+    y() const { return e[1]; }
 
-    float z() const { return e[2]; }
+    float
+    z() const { return e[2]; }
 
-    float r() const { return e[0]; }
+    float
+    r() const { return e[0]; }
 
-    float g() const { return e[1]; }
+    float
+    g() const { return e[1]; }
 
-    float b() const { return e[2]; }
+    float
+    b() const { return e[2]; }
 
     // Operator overloads.
-    const vec3& operator+() const { return *this; }
+    const vec3&
+    operator+() const { return *this; }
 
-    vec3 operator-() const { return {-e[0], -e[1], -e[2]}; }
+    vec3
+    operator-() const { return {-e[0], -e[1], -e[2]}; }
 
-    float operator[](int i) const { return e[i]; }
+    float
+    operator[](int i) const { return e[i]; }
 
-    float& operator[](int i) { return e[i]; }
+    float&
+    operator[](int i) { return e[i]; }
 
     vec3& operator+=(const vec3& v2);
 
@@ -183,17 +193,14 @@ inline vec3 unit_vector(vec3 v)
 inline vec3 cross(const vec3& v1, const vec3& v2)
 {
     return
-        {
-            (v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
-            (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
-            (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
-        };
+    {
+        (v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
+        (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
+        (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
+    };
 }
 
 inline float dot(const vec3& v1, const vec3& v2)
 {
     return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
-
-
-#endif // VEC3_H

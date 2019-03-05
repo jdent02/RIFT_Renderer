@@ -1,18 +1,18 @@
-#ifndef LAMBERTIAN_H
-#define LAMBERTIAN_H
+#pragma once
+
 
 #include "material.h"
 #include "textures/texture.h"
-#include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
 
 #include <memory>
 
-class lambertian :
-    public material
+class lambertian
+    : public material
 {
-  public:
-    explicit lambertian(std::unique_ptr<texture> a)
+public:
+    explicit
+    lambertian(std::unique_ptr<texture> a)
         : albedo(std::move(a)) {};
 
     ~lambertian() = default;
@@ -25,5 +25,3 @@ class lambertian :
 
     std::unique_ptr<texture> albedo;
 };
-
-#endif // LAMBERTIAN_H

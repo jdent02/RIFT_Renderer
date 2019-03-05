@@ -1,5 +1,5 @@
-#ifndef FARTS_RENDERER_IMAGE_TEXTURE_H
-#define FARTS_RENDERER_IMAGE_TEXTURE_H
+#pragma once
+
 
 #include "texture.h"
 
@@ -7,7 +7,7 @@
 class image_texture
     : public texture
 {
-  public:
+public:
     image_texture() = default;
     image_texture(
         unsigned char* pixels,
@@ -22,6 +22,3 @@ class image_texture
     unsigned char* data;
     int nx, ny;
 };
-
-
-#endif //FARTS_RENDERER_IMAGE_TEXTURE_H

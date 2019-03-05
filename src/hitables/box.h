@@ -1,12 +1,12 @@
-#ifndef FARTS_RENDERER_BOX_H
-#define FARTS_RENDERER_BOX_H
+#pragma once
+
 
 #include "hitable.h"
 
 class box
-    :public hitable
+    : public hitable
 {
-  public:
+public:
     box() = default;
     box(
         const vec3& p0,
@@ -26,9 +26,4 @@ class box
 
     vec3 pmin, pmax;
     hitable* list_ptr;
-
-
 };
-
-
-#endif //FARTS_RENDERER_BOX_H

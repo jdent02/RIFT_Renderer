@@ -10,7 +10,7 @@ float xoro_128::next()
 
     s1 ^= s0;
     s[0] = rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
-    s[1] = rotl(s1, 37); // c
+    s[1] = rotl(s1, 37);                   // c
 
     return result * inv_uint64;
 }
@@ -20,4 +20,3 @@ void xoro_128::seed_gen(uint64_t seed)
     s[0] = seed;
     s[1] = seed << 16;
 }
-

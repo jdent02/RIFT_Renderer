@@ -1,11 +1,9 @@
-#ifndef HITABLE_H
-#define HITABLE_H
+#pragma once
 
-#include "utility/data_types/aabb.h"
-#include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
 
-// Forward declaration
+class ray;
+class aabb;
 class material;
 
 struct hit_record
@@ -35,5 +33,3 @@ class hitable
         float t1,
         aabb& box) const = 0;
 };
-
-#endif // HITABLE_H

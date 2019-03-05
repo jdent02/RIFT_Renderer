@@ -1,7 +1,5 @@
-#ifndef FARTS_RENDERER_SCATTER_FUNCTIONS_H
-#define FARTS_RENDERER_SCATTER_FUNCTIONS_H
+#pragma once
 
-#include <utility/data_types/vec3.h>
 
 inline bool refract(
     const vec3& v,
@@ -32,4 +30,4 @@ inline float schlick(const float cosine, const float ref_idx)
     return static_cast<float>(r0 + (1 - r0) * pow((1 - cosine), 5));
 }
 
-#endif //FARTS_RENDERER_SCATTER_FUNCTIONS_H
+

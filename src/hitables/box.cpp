@@ -1,7 +1,9 @@
 #include "box.h"
 
-#include "rect.h"
 #include "hitable_list.h"
+#include "rect.h"
+#include "utility/data_types/aabb.h"
+
 
 bool box::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
 {
@@ -18,7 +20,8 @@ box::box(
     const vec3& p0,
     const vec3& p1,
     material* ptr)
-    : pmin(p0), pmax(p1)
+    : pmin(p0)
+    , pmax(p1)
 {
     hitable** list = new hitable*[6];
     list[0] = new xy_rect(

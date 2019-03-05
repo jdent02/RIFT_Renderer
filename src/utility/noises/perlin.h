@@ -1,5 +1,4 @@
-#ifndef FARTS_RENDERER_PERLIN_H
-#define FARTS_RENDERER_PERLIN_H
+#pragma once
 
 
 #include "utility/utility_functions.h"
@@ -23,8 +22,8 @@ inline float trilinear_interp(
             {
                 vec3 weight_v(u - i, v - j, w - k);
                 accum += (i * uu + (1.f - i) * (1.f - uu)) *
-                         (j * vv + (1.f - j) * (1.f - vv)) *
-                         (k * ww + (1.f - k) * (1.f - ww)) * dot(c[i][j][k], weight_v);
+                    (j * vv + (1.f - j) * (1.f - vv)) *
+                    (k * ww + (1.f - k) * (1.f - ww)) * dot(c[i][j][k], weight_v);
             }
         }
     }
@@ -72,16 +71,16 @@ static int* perlin_generate_perm()
 
 class perlin
 {
-  public:
+public:
     perlin()
-        : ranvec(perlin_generate()),
-          perm_x(perlin_generate_perm()),
-          perm_y(perlin_generate_perm()),
-          perm_z(perlin_generate_perm()) {}
+        : ranvec(perlin_generate())
+        , perm_x(perlin_generate_perm())
+        , perm_y(perlin_generate_perm())
+        , perm_z(perlin_generate_perm()) {}
 
     float noise(const vec3& p) const;
 
-    float turb(const vec3& p, const float depth=7) const;
+    float turb(const vec3& p, const float depth = 7) const;
 
     vec3* ranvec;
     int* perm_x;
@@ -106,8 +105,8 @@ inline float perlin::noise(const vec3& p) const
             for (int dk = 0; dk < 2; dk++)
             {
                 c[di][dj][dk] = ranvec[perm_x[(i + di) & 255] ^
-                                       perm_y[(j + dj) & 255] ^
-                                       perm_z[(k + dk) & 255]];
+                    perm_y[(j + dj) & 255] ^
+                    perm_z[(k + dk) & 255]];
             }
         }
     }
@@ -122,12 +121,9 @@ float perlin::turb(const vec3& p, const float depth) const
     float weight = 1.f;
     for (int i = 0; i < depth; i++)
     {
-        accum += weight*noise(temp_p);
+        accum += weight * noise(temp_p);
         weight *= 0.5f;
         temp_p *= 2.;
     }
     return std::fabs(accum);
 }
-
-
-#endif //FARTS_RENDERER_PERLIN_H

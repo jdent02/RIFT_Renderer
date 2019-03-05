@@ -1,9 +1,9 @@
 #include "render.h"
 
+#include "utility/rng/igenerator.h"
 #include "utility/data_types/vec3.h"
 #include "utility/utility_functions.h"
 #include "camera/camera.h"
-#include "rendering/sampler.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #define STBI_MSC_SECURE_CRT
@@ -23,14 +23,14 @@ renderer::renderer(
     const int ns,
     camera* cam,
     hitable* world)
-    : nx(nx),
-      ny(ny),
-      ns(ns),
-      inv_nx(1.f / nx),
-      inv_ny(1.f / ny),
-      inv_ns(1.f / ns),
-      cam(cam),
-      world(world)
+    : nx(nx)
+    , ny(ny)
+    , ns(ns)
+    , inv_nx(1.f / nx)
+    , inv_ny(1.f / ny)
+    , inv_ns(1.f / ns)
+    , cam(cam)
+    , world(world)
 {
     buffer = new float[nx * ny * 3];
 }
@@ -40,14 +40,16 @@ void renderer::do_render() const
     time_t rand_seed = time(nullptr);
     auto seed_1 = static_cast<uint64_t>(rand_seed);
 
-    sampler sample_gen(XORO_128_GEN);
-    sample_gen.random_generator->seed_gen(seed_1);
+    std::unique_ptr<igenerator> random_generator = std::make_unique<xoro_128>();
+    random_generator->seed_gen(seed_1);
 
     std::cout << "Generating Pixels..." << std::endl;
 
     std::vector<std::thread> threads;
 
     int samples_per_thread = ns / 8;
+
+    threads.reserve(8);
 
     std::cout << "Number of samples per thread: " << samples_per_thread << std::endl;
 
@@ -56,7 +58,7 @@ void renderer::do_render() const
         threads.push_back(
             std::thread(
                 render_unit::run_thread,
-                sample_gen.random_generator->next(),
+                random_generator->next(),
                 nx,
                 ny,
                 samples_per_thread,
@@ -72,11 +74,10 @@ void renderer::do_render() const
 
     int buffer_size{nx * ny * 3};
 
-    for (size_t i = 0; i < buffer_size; i++)
+    for (int i = 0; i < buffer_size; i++)
     {
         buffer[i] *= inv_ns;
     }
-
 }
 
 void renderer::write_JPEG() const

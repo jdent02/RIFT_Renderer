@@ -46,12 +46,12 @@ xy_rect::xy_rect(
     float _y1,
     float _k,
     material* mat)
-    : x0(_x0),
-      x1(_x1),
-      y0(_y0),
-      y1(_y1),
-      k(_k),
-      mp(mat) {}
+    : mp(mat)
+    , x0(_x0)
+    , x1(_x1)
+    , y0(_y0)
+    , y1(_y1)
+    , k(_k) {}
 
 
 // X_Z rect
@@ -101,12 +101,12 @@ xz_rect::xz_rect(
     float _z1,
     float _k,
     material* mat)
-    : x0(_x0),
-      x1(_x1),
-      z0(_z0),
-      z1(_z1),
-      k(_k),
-      mp(mat) {}
+    : mp(mat)
+    , x0(_x0)
+    , x1(_x1)
+    , z0(_z0)
+    , z1(_z1)
+    , k(_k) {}
 
 bool yz_rect::hit(
     const ray& r,
@@ -154,12 +154,12 @@ yz_rect::yz_rect(
     float _z1,
     float _k,
     material* mat)
-    : y0(_y0),
-      y1(_y1),
-      z0(_z0),
-      z1(_z1),
-      k(_k),
-      mp(mat) {}
+    : mp(mat)
+    , y0(_y0)
+    , y1(_y1)
+    , z0(_z0)
+    , z1(_z1)
+    , k(_k) {}
 
 bool flip_normals::hit(
     const ray& r,

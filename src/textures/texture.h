@@ -1,12 +1,12 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
+
 
 // Froward declaration
 class vec3;
 
 class texture
 {
-  public:
+public:
     virtual ~texture() = default;
 
     virtual vec3 value(
@@ -14,5 +14,3 @@ class texture
         float v,
         const vec3& p) const = 0;
 };
-
-#endif // TEXTURE_H

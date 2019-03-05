@@ -1,5 +1,5 @@
-#ifndef METAL_H
-#define METAL_H
+#pragma once
+
 
 #include "material.h"
 #include "utility/data_types/vec3.h"
@@ -8,9 +8,11 @@
 class metal
     : public material
 {
-  public:
-    explicit metal(const vec3& a, const float& fuzz)
-        : albedo(a), fuzz(fuzz) {};
+public:
+    explicit
+    metal(const vec3& a, const float& fuzz)
+        : albedo(a)
+        , fuzz(fuzz) {};
 
     virtual ~metal() override = default;
 
@@ -23,6 +25,3 @@ class metal
     vec3 albedo;
     float fuzz;
 };
-
-
-#endif // METAL_H

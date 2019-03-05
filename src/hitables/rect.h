@@ -1,12 +1,11 @@
-#ifndef FARTS_RENDERER_RECT_H
-#define FARTS_RENDERER_RECT_H
+#pragma once
 
 #include "hitable.h"
 
-class xy_rect
+class xy_rect final
     : public hitable
 {
-  public:
+public:
     xy_rect() = default;
 
     xy_rect(
@@ -32,10 +31,10 @@ class xy_rect
     float x0, x1, y0, y1, k;
 };
 
-class xz_rect
+class xz_rect final
     : public hitable
 {
-  public:
+public:
     xz_rect() = default;
 
     xz_rect(
@@ -61,10 +60,10 @@ class xz_rect
     float x0, x1, z0, z1, k;
 };
 
-class yz_rect
+class yz_rect final
     : public hitable
 {
-  public:
+public:
     yz_rect() = default;
 
     yz_rect(
@@ -90,11 +89,13 @@ class yz_rect
     float y0, y1, z0, z1, k;
 };
 
-class flip_normals
-    :public hitable
+class flip_normals final
+    : public hitable
 {
-  public:
-    explicit flip_normals(hitable* p) : ptr(p) {}
+public:
+    explicit
+    flip_normals(hitable* p)
+        : ptr(p) {}
 
 
     virtual bool hit(
@@ -110,5 +111,3 @@ class flip_normals
 
     hitable* ptr;
 };
-
-#endif //FARTS_RENDERER_RECT_H

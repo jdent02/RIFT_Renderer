@@ -1,5 +1,5 @@
-#ifndef XORO_128_IMPL
-#define XORO_128_IMPL
+#pragma once
+
 
 // Local libraries
 #include "igenerator.h"
@@ -13,25 +13,23 @@
 
 static inline uint64_t rotl(const uint64_t x, int k)
 {
-	return (x << k) | (x >> (64 - k));
+    return (x << k) | (x >> (64 - k));
 }
 
 class xoro_128
-	: public igenerator
+    : public igenerator
 {
-  public:
+public:
     // Constructors
     xoro_128() = default;
 
     // Destructor
     ~xoro_128() override = default;
 
-	virtual float next() override;
+    virtual float next() override;
 
-	virtual void seed_gen(uint64_t seed) override;
+    virtual void seed_gen(uint64_t seed);
 
-  private:
-    uint64_t s[2] {0x46961B5E381BCE6EULL, 0x55897310023CAE21ULL};
+private:
+    uint64_t s[2]{0x46961B5E381BCE6EULL, 0x55897310023CAE21ULL};
 };
-
-#endif // XORO_128_IMPL

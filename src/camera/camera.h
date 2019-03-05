@@ -1,14 +1,11 @@
-#ifndef RAYTRACER_CAMERA_H
-#define RAYTRACER_CAMERA_H
+#pragma once
 
+#include "utility/data_types/ray.h"
 #include "utility/data_types/vec3.h"
-
-// Forward declaration
-class ray;
 
 class camera
 {
-  public:
+public:
     camera(
         vec3 lookfrom,
         vec3 lookat,
@@ -31,5 +28,3 @@ class camera
     float lens_radius;
     float time0, time1;
 };
-
-#endif //RAYTRACER_CAMERA_H

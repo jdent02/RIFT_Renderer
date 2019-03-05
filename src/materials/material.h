@@ -1,17 +1,16 @@
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#pragma once
+
 
 #include "utility/data_types/vec3.h"
 
 // Forward declarations
 struct hit_record;
-
 class ray;
 
 
 class material
 {
-  public:
+public:
     virtual ~material() = default;
 
     virtual bool scatter(
@@ -20,7 +19,6 @@ class material
         vec3& attenuation,
         ray& scattered) const = 0;
 
-    virtual vec3 emitted(float u, float v, const vec3& p) const { return vec3(0.f, 0.f, 0.f); }
+    virtual vec3
+    emitted(float u, float v, const vec3& p) const { return vec3(0.f, 0.f, 0.f); }
 };
-
-#endif // MATERIAL_H

@@ -1,15 +1,15 @@
-#ifndef FARTS_RENDERER_INSTANCERS_H
-#define FARTS_RENDERER_INSTANCERS_H
+#pragma once
 
 #include "hitable.h"
 
+#include "utility/data_types/aabb.h"
 #include "utility/data_types/vec3.h"
 
 
 class translate
-    :public hitable
+    : public hitable
 {
-  public:
+public:
     translate(
         hitable* p,
         const vec3& displacement);
@@ -32,7 +32,7 @@ class translate
 class rotate_y
     : public hitable
 {
-  public:
+public:
     rotate_y(hitable* p, float angle);
 
     virtual bool hit(
@@ -52,6 +52,3 @@ class rotate_y
     bool hasbox;
     aabb bbox;
 };
-
-
-#endif //FARTS_RENDERER_INSTANCERS_H
