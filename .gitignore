@@ -36,3 +36,6 @@ packages/
 /.idea
 *.ppm
 /image.jpg
+/.vscode
+/cmake-build-debug
+/cmake-build-release
