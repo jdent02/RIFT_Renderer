@@ -1,6 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 #include "scene_generator.h"
 
 #include "hitables/box.h"
@@ -21,6 +18,9 @@
 #include "textures/noise_texture.h"
 #include "textures/sky_gradient.h"
 #include "utility/rng/xoroshiro128.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "third_party/stb_image.h"
 
 
 // Class implementation

@@ -2,7 +2,7 @@
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #define STBI_MSC_SECURE_CRT
-#include "stb_image_write.h"
+#include "third_party/stb_image_write.h"
 
 #include <iostream>
 #include <cmath>
@@ -34,4 +34,6 @@ void jpeg_writer::write(
     {
         std::cout << "Image Write Failed" << std::endl;
     }
+
+    delete[] out_buffer;
 }
