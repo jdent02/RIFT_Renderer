@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/bases/icamera.h"
 #include "core/image_writers/iimage_writer.h"
 #include "utility/rng/igenerator.h"
 
@@ -18,7 +19,7 @@ public:
             int nx,
             int ny,
             int ns,
-            camera* cam,
+            icamera* cam,
             hitable* world);
 
     ~render_controller();
@@ -37,7 +38,7 @@ private:
     const float inv_nx;
     const float inv_ny;
     const float inv_ns;
-    camera* cam;
+    icamera* cam;
     hitable* world;
     igenerator* random_generator;
     iimage_writer* image_writer;

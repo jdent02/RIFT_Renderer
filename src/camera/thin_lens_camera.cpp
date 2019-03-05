@@ -1,11 +1,11 @@
-#include "camera.h"
+#include "thin_lens_camera.h"
 
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
 #include "core/rendering/utility_functions.h"
 
 
-camera::camera(
+thin_lens_camera::thin_lens_camera(
     const vec3 lookfrom,
     const vec3 lookat,
     const vec3 vup,
@@ -32,7 +32,7 @@ camera::camera(
     vertical = 2 * half_height * focus_dist * v;
 }
 
-ray camera::get_ray(float s, float t) const
+ray thin_lens_camera::get_ray(float s, float t) const
 {
     vec3 rd = lens_radius * random_in_unit_disk();
     const vec3 offset = u * rd.x() + v * rd.y();

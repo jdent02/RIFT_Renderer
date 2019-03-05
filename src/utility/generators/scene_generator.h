@@ -1,15 +1,11 @@
 #pragma once
 
 
-#include "camera/camera.h"
+#include "core/data_types/scene.h"
 #include "core/bases/hitable.h"
 
 
-struct scene
-{
-    camera* cam;
-    hitable* world;
-};
+
 
 
 // Utility function to generate a random scene

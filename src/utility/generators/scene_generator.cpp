@@ -1,7 +1,9 @@
 #include "scene_generator.h"
 
+#include "camera/thin_lens_camera.h"
 #include "hitables/box.h"
 #include "core/acceleration_structures/bvh_node.h"
+#include "core/data_types/scene.h"
 #include "hitables/hitable_list.h"
 #include "hitables/instancers.h"
 #include "hitables/sphere.h"
@@ -117,7 +119,7 @@ scene* scene_generator::make_random_scene(int nx, int ny)
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    camera* cam = new camera(
+    icamera* cam = new thin_lens_camera(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -165,7 +167,7 @@ scene* scene_generator::earth_sphere(int x_dim, int y_dim)
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    camera* cam = new camera(
+    icamera* cam = new thin_lens_camera(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -214,7 +216,7 @@ scene* scene_generator::rect_light(int nx, int ny)
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    camera* cam = new camera(
+    icamera* cam = new thin_lens_camera(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -319,7 +321,7 @@ scene* scene_generator::cornell_box(int nx, int ny)
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    camera* cam = new camera(
+    icamera* cam = new thin_lens_camera(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),

@@ -1,12 +1,14 @@
 #pragma once
 
+#include "core/bases/icamera.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
 
-class camera
+class thin_lens_camera
+    : public icamera
 {
 public:
-    camera(
+    thin_lens_camera(
         vec3 lookfrom,
         vec3 lookat,
         vec3 vup,
@@ -17,7 +19,7 @@ public:
         float t0,
         float t1);
 
-    ray get_ray(float s, float t) const;
+    virtual ray get_ray(float s, float t) const override;
 
     // Properties
     vec3 origin;

@@ -2,11 +2,10 @@
 
 #include "core/data_types/vec3.h"
 #include "core/image_writers/jpeg_writer.h"
-#include "utility_functions.h"
-#include "camera/camera.h"
-
-#include "render_unit.h"
-
+#include "core/rendering/utility_functions.h"
+#include "camera/thin_lens_camera.h"
+#include "core/rendering/render_worker.h"
+#include "utility/rng/xoroshiro128.h"
 
 #include <fstream>
 #include <iomanip>
@@ -14,24 +13,23 @@
 
 
 render_controller::render_controller(
-        const char* filename,
-        int nx,
-        int ny,
-        int ns,
-        camera* cam,
-        hitable* world)
-  : nx(nx)
-  , out_filename(filename)
-  , image_writer(new jpeg_writer)
-  , buffer(new float[nx * ny *3])
-  , ny(ny)
-  , ns(ns)
-  , inv_nx(1.f / nx)
-  , inv_ny(1.f / ny)
-  , inv_ns(1.f / ns)
-  , cam(cam)
-  , world(world)
-{}
+    const char* filename,
+    int nx,
+    int ny,
+    int ns,
+    icamera* cam,
+    hitable* world)
+    : buffer(new float[nx * ny * 3])
+    , nx(nx)
+    , ny(ny)
+    , ns(ns)
+    , inv_nx(1.f / nx)
+    , inv_ny(1.f / ny)
+    , inv_ns(1.f / ns)
+    , cam(cam)
+    , world(world)
+    , image_writer(new jpeg_writer)
+    , out_filename(filename) {}
 
 void render_controller::do_render()
 {
@@ -52,16 +50,15 @@ void render_controller::do_render()
 
     for (int i = 0; i < 8; i++)
     {
-        threads.push_back(
-            std::thread(
-                render_worker::run_thread,
-                random_generator->next(),
-                nx,
-                ny,
-                samples_per_thread,
-                buffer,
-                cam,
-                world));
+        threads.emplace_back(
+            render_worker::run_thread,
+            int(random_generator->next()),
+            nx,
+            ny,
+            samples_per_thread,
+            buffer,
+            cam,
+            world);
     }
 
     for (auto& thread : threads)
@@ -71,16 +68,13 @@ void render_controller::do_render()
 
     int buffer_size = nx * ny * 3;
 
-    for (size_t i = 0; i <buffer_size; i++)
+    for (size_t i = 0; i < buffer_size; i++)
     {
         buffer[i] *= inv_ns;
     }
 }
 
-render_controller::~render_controller()
-{
-
-}
+render_controller::~render_controller() {}
 
 void render_controller::cleanup()
 {
@@ -89,7 +83,6 @@ void render_controller::cleanup()
     delete world;
     delete random_generator;
     delete image_writer;
-    delete out_filename;
 
     std::cout << "Renderer Deleted" << std::endl;
 }

@@ -10,8 +10,8 @@ include_directories(
 
 set (
     CAMERA_SOURCES
-    src/camera/camera.h
-    src/camera/camera.cpp
+    src/camera/thin_lens_camera.h
+    src/camera/thin_lens_camera.cpp
 )
 
 source_group(
@@ -20,21 +20,70 @@ source_group(
 )
 
 set (
+	CORE_SOURCES
+	src/core/bases/hitable.h
+	src/core/bases/icamera.h
+	src/core/acceleration_structures/bvh_node.h
+    src/core/acceleration_structures/bvh_node.cpp
+	src/core/bases/material.h
+	src/core/rendering/render_controller.h
+    src/core/rendering/render_controller.cpp
+    src/core/rendering/render_worker.h 
+	src/core/image_writers/jpeg_writer.cpp 
+	src/core/image_writers/jpeg_writer.h 
+	src/core/image_writers/iimage_writer.h
+	src/core/bases/texture.h
+	src/core/data_types/ray.h
+    src/core/data_types/vec3.h
+    src/core/data_types/aabb.h
+    src/core/data_types/aabb.cpp
+	src/core/data_types/scene.h
+	src/core/rendering/utility_functions.h
+    src/core/acceleration_structures/bvh_utils.h
+    src/core/rendering/scatter_functions.h
+	src/core/data_types/hit_record.h
+)
+
+source_group(
+	"src\\core\\acceleration_structures" REGULAR_EXPRESSION
+	src/core/acceleration_structures/.*
+)
+
+source_group(
+	"src\\core\\bases" REGULAR_EXPRESSION
+	src/core/bases/.*
+)
+
+source_group(
+	"src\\core\\rendering" REGULAR_EXPRESSION
+	src/core/rendering/.*
+)
+
+source_group(
+	"src\\core\\image_writers" REGULAR_EXPRESSION
+	src/core/image_writers./*
+)
+
+source_group(
+	"src\\core\\data_types" REGULAR_EXPRESSION
+	src/core/data_types/.*
+)
+
+set (
     HITABLES_SOURCES
-    src/core/bases/hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
     src/hitables/moving_sphere.h
     src/hitables/moving_sphere.cpp
-    src/core/acceleration_structures/bvh_node.h
-    src/core/acceleration_structures/bvh_node.cpp
     src/hitables/rect.cpp
     src/hitables/rect.h
     src/hitables/box.cpp
     src/hitables/box.h
     src/hitables/instancers.cpp
-    src/hitables/instancers.h src/hitables/sky_sphere.h)
+    src/hitables/instancers.h 
+	src/hitables/sky_sphere.h
+)
 
 source_group(
     "src\\hitables" REGULAR_EXPRESSION
@@ -48,7 +97,6 @@ set (
     src/materials/diffuse_light.h
     src/materials/lambertian.h
     src/materials/lambertian.cpp
-    src/core/bases/material.h
     src/materials/metal.h
     src/materials/metal.cpp
 )
@@ -59,25 +107,15 @@ source_group(
 )
 
 set (
-    RENDERING_SOURCES
-    src/core/rendering/render_controller.h
-    src/core/rendering/render_controller.cpp
-    src/core/rendering/render_unit.h src/core/image_writers/jpeg_writer.cpp src/core/image_writers/jpeg_writer.h src/core/image_writers/iimage_writer.h)
-
-source_group(
-    "src\\rendering" REGULAR_EXPRESSION
-    src/rendering/.*
-)
-
-set (
     TEXTURE_SOURCES
     src/textures/constant_tex.h
-    src/core/bases/texture.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
     src/textures/noise_texture.h
     src/textures/image_texture.cpp
-    src/textures/image_texture.h src/textures/sky_gradient.cpp src/textures/sky_gradient.h)
+    src/textures/image_texture.h 
+	src/textures/sky_gradient.cpp 
+	src/textures/sky_gradient.h)
 
 source_group(
     "src\\textures" REGULAR_EXPRESSION
@@ -86,22 +124,15 @@ source_group(
 
 set (
     UTILITY_SOURCES
-    src/core/data_types/ray.h
-    src/core/data_types/vec3.h
-    src/core/data_types/aabb.h
-    src/core/data_types/aabb.cpp
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
-    src/core/rendering/utility_functions.h
-    src/core/acceleration_structures/bvh_utils.h
-    src/core/rendering/scatter_functions.h
     src/utility/rng/xoroshiro128.h
     src/utility/rng/xoroshiro128.cpp
     src/utility/rng/igenerator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
     src/utility/noises/perlin.h
-    src/core/data_types/hit_record.h)
+)
 
 source_group(
     "src\\utilities\\noises" REGULAR_EXPRESSION
@@ -109,18 +140,8 @@ source_group(
 )
 
 source_group(
-    "src\\utilities\\data_types" REGULAR_EXPRESSION
-    src/utility/data_types/.*
-)
-
-source_group(
     "src\\utilities\\generators" REGULAR_EXPRESSION
     src/utility/generators/.*
-)
-
-source_group(
-    "src\\utilities" REGULAR_EXPRESSION
-    src/utility/.*
 )
 
 source_group(
@@ -137,20 +158,15 @@ set (
     CPP_SOURCES
     ${MAIN_SOURCE}
     ${CAMERA_SOURCES}
+	${CORE_SOURCES}
     ${HITABLES_SOURCES}
     ${MATERIAL_SOURCES}
     ${RENDERING_SOURCES}
     ${TEXTURE_SOURCES}
     ${UTILITY_SOURCES}
-    ${RNG_SOURCES}
-)
-
-source_group(
-    "src\\" FILES
-    ${MAIN_SOURCE}
 )
 
 add_executable(
-    FARTS_renderer
+    FARTS
     ${CPP_SOURCES}
 )
