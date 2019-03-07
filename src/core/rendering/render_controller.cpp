@@ -1,11 +1,15 @@
 #include "render_controller.h"
 
 #include "core/image_writers/jpeg_writer.h"
+#include "core/image_writers/png_writer.h"
 #include "core/rendering/render_worker.h"
+#include "utility/rng/xoroshiro128.h"
 
 #include <fstream>
 #include <iomanip>
 #include <thread>
+#include <vector>
+
 
 render_controller::render_controller(
     const char* filename,
@@ -21,7 +25,7 @@ render_controller::render_controller(
   , inv_ns_(1.f / ns)
   , cam_(cam)
   , world_(world)
-  , image_writer_(new jpeg_writer)
+  , image_writer_(new png_writer)
   , out_filename_(filename)
 {}
 

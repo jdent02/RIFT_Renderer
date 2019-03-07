@@ -1,14 +1,14 @@
-#include "jpeg_writer.h"
+#include "png_writer.h"
 
 #include "third_party/stb_image_write.h"
 
 #include <iostream>
 
-void jpeg_writer::write(
-    const float* buffer,
-    const char*  filename,
-    const int    size_x,
-    const int    size_y) const
+void png_writer::write(
+    const float*        buffer,
+    const char*         filename,
+    const int           size_x,
+    const int           size_y) const
 {
     std::cout << "Writing Output" << std::endl;
 
@@ -21,7 +21,7 @@ void jpeg_writer::write(
         out_buffer[i] = static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
     }
 
-    const int success = stbi_write_jpg(filename, size_x, size_y, 3, out_buffer, 90);
+    const int success = stbi_write_png(filename, size_x, size_y, 3, out_buffer, size_x * 3);
 
     if (success != 0)
     {

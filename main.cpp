@@ -9,19 +9,19 @@
 int main()
 {
     const int nx{640};
-    const int ny{480};
+    const int ny{640};
     const int num_samples(50 * 8);
 
     scene_generator generator;
 
-    scene* scene = generator.make_random_scene(nx, ny);
+    scene* scene = generator.cornell_box(nx, ny);
 
     const time_t start_time = time(nullptr);
 
     std::cout << "Rendering....." << std::endl;
 
     auto* engine = new render_controller{
-        "../image.jpg",
+        "../image.png",
         nx,
         ny,
         num_samples,

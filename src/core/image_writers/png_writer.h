@@ -1,11 +1,9 @@
 #pragma once
 
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#define STBI_MSC_SECURE_CRT
-
 #include "core/image_writers/ioutput_writer.h"
 
-class jpeg_writer : public ioutput_writer
+class png_writer 
+  : public ioutput_writer
 {
   public:
     void write(

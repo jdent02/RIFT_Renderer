@@ -20,53 +20,54 @@ source_group(
 )
 
 set (
-	CORE_SOURCES
+    CORE_SOURCES
     src/core/bases/ihitable.h
-	src/core/bases/icamera.h
-	src/core/acceleration_structures/bvh_node.h
+    src/core/bases/icamera.h
+    src/core/acceleration_structures/bvh_node.h
     src/core/acceleration_structures/bvh_node.cpp
-	src/core/bases/imaterial.h
-	src/core/rendering/render_controller.h
+    src/core/bases/imaterial.h
+    src/core/rendering/render_controller.h
     src/core/rendering/render_controller.cpp
-    src/core/rendering/render_worker.h 
-	src/core/image_writers/jpeg_writer.cpp 
-	src/core/image_writers/jpeg_writer.h
-	src/core/image_writers/ioutput_writer.h
-	src/core/bases/itexture.h
-	src/core/data_types/ray.h
+    src/core/rendering/render_worker.h
+    src/core/rendering/render_worker.cpp
+    src/core/image_writers/jpeg_writer.cpp
+    src/core/image_writers/jpeg_writer.h
+    src/core/image_writers/ioutput_writer.h
+    src/core/bases/itexture.h
+    src/core/data_types/ray.h
     src/core/data_types/vec3.h
     src/core/data_types/aabb.h
     src/core/data_types/aabb.cpp
-	src/core/data_types/scene.h
-	src/core/rendering/utility_functions.h
+    src/core/data_types/scene.h
+    src/core/rendering/utility_functions.h
     src/core/acceleration_structures/bvh_utils.h
     src/core/rendering/scatter_functions.h
-	src/core/data_types/hit_record.h
+    src/core/data_types/hit_record.h
+    src/core/image_writers/png_writer.cpp src/core/image_writers/png_writer.h)
+
+source_group(
+    "src\\core\\acceleration_structures" REGULAR_EXPRESSION
+    src/core/acceleration_structures/.*
 )
 
 source_group(
-	"src\\core\\acceleration_structures" REGULAR_EXPRESSION
-	src/core/acceleration_structures/.*
+    "src\\core\\bases" REGULAR_EXPRESSION
+    src/core/bases/.*
 )
 
 source_group(
-	"src\\core\\bases" REGULAR_EXPRESSION
-	src/core/bases/.*
+    "src\\core\\rendering" REGULAR_EXPRESSION
+    src/core/rendering/.*
 )
 
 source_group(
-	"src\\core\\rendering" REGULAR_EXPRESSION
-	src/core/rendering/.*
+    "src\\core\\image_writers" REGULAR_EXPRESSION
+    src/core/image_writers./*
 )
 
 source_group(
-	"src\\core\\image_writers" REGULAR_EXPRESSION
-	src/core/image_writers./*
-)
-
-source_group(
-	"src\\core\\data_types" REGULAR_EXPRESSION
-	src/core/data_types/.*
+    "src\\core\\data_types" REGULAR_EXPRESSION
+    src/core/data_types/.*
 )
 
 set (
@@ -81,8 +82,8 @@ set (
     src/hitables/box.cpp
     src/hitables/box.h
     src/hitables/instancers.cpp
-    src/hitables/instancers.h 
-	src/hitables/sky_sphere.h
+    src/hitables/instancers.h
+    src/hitables/sky_sphere.h
 )
 
 source_group(
@@ -113,9 +114,9 @@ set (
     src/textures/checker_tex.cpp
     src/textures/noise_texture.h
     src/textures/image_texture.cpp
-    src/textures/image_texture.h 
-	src/textures/sky_gradient.cpp 
-	src/textures/sky_gradient.h)
+    src/textures/image_texture.h
+    src/textures/sky_gradient.cpp
+    src/textures/sky_gradient.h)
 
 source_group(
     "src\\textures" REGULAR_EXPRESSION
@@ -158,7 +159,7 @@ set (
     CPP_SOURCES
     ${MAIN_SOURCE}
     ${CAMERA_SOURCES}
-	${CORE_SOURCES}
+    ${CORE_SOURCES}
     ${HITABLES_SOURCES}
     ${MATERIAL_SOURCES}
     ${RENDERING_SOURCES}
