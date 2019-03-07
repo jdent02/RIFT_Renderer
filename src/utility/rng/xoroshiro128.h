@@ -9,15 +9,12 @@
 // Taken from Xoroshiro128
 // Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
 
-static inline uint64_t rotl(
-    const uint64_t x,
-    int k)
+static inline uint64_t rotl(const uint64_t x, int k)
 {
     return (x << k) | (x >> (64 - k));
 }
 
-class xoro_128
-    : public igenerator
+class xoro_128 : public igenerator
 {
   public:
     // Constructors

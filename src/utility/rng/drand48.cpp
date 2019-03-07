@@ -26,14 +26,14 @@ void drand_48::dorand48(unsigned short* xseed)
     unsigned short temp[2];
 
     unsigned long accu = static_cast<unsigned long>(rand48_mult[0]) *
-                         static_cast<unsigned long>(xseed[0]) +
+                             static_cast<unsigned long>(xseed[0]) +
                          static_cast<unsigned long>(rand48_add);
     temp[0] = static_cast<unsigned short>(accu); /* lower 16 bits */
     accu >>= sizeof(unsigned short) * 8;
     accu += static_cast<unsigned long>(rand48_mult[0]) *
-            static_cast<unsigned long>(xseed[1]) +
+                static_cast<unsigned long>(xseed[1]) +
             static_cast<unsigned long>(rand48_mult[1]) *
-            static_cast<unsigned long>(xseed[0]);
+                static_cast<unsigned long>(xseed[0]);
     temp[1] = static_cast<unsigned short>(accu); /* middle 16 bits */
     accu >>= sizeof(unsigned short) * 8;
     accu += rand48_mult[0] * xseed[2] + rand48_mult[1] * xseed[1] +

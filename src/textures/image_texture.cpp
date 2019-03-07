@@ -2,20 +2,15 @@
 
 #include "core/data_types/vec3.h"
 
-image_texture::image_texture(
-    unsigned char* pixels,
-    int A,
-    int B)
-    : data(pixels),
-      nx(A),
-      ny(B) {}
+image_texture::image_texture(unsigned char* pixels, int A, int B)
+  : data(pixels)
+  , nx(A)
+  , ny(B)
+{}
 
-vec3 image_texture::value(
-    float u,
-    float v,
-    const vec3& p) const
+vec3 image_texture::value(float u, float v, const vec3& p) const
 {
-    int i = int((u) * nx);
+    int i = int((u)*nx);
     int j = int((1.f - v) * ny - 0.001f);
     if (i < 0)
     {

@@ -5,10 +5,10 @@
 #include "core/rendering/utility_functions.h"
 
 bool dielectric::scatter(
-    const ray& r_in,
+    const ray&        r_in,
     const hit_record& rec,
-    vec3& attenuation,
-    ray& scattered) const
+    vec3&             attenuation,
+    ray&              scattered) const
 {
     vec3 outward_normal;
 

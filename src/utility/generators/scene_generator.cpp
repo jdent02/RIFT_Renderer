@@ -22,13 +22,11 @@
 #include "third_party/stb_image.h"
 
 // Class implementation
-scene* scene_generator::make_random_scene(
-    const int nx,
-    const int ny)
+scene* scene_generator::make_random_scene(const int nx, const int ny)
 {
     const int n = 500;
 
-    auto** list = new ihitable* [n + 1];
+    auto** list = new ihitable*[n + 1];
 
     igenerator* random_generator = new xoro_128;
 
@@ -36,10 +34,9 @@ scene* scene_generator::make_random_scene(
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
-        new lambertian(
-            new checker_texture(
-                new constant_texture(vec3(0.2f, 0.3f, 0.1f)),
-                new constant_texture(vec3(0.9f, 0.9f, 0.9f)))));
+        new lambertian(new checker_texture(
+            new constant_texture(vec3(0.2f, 0.3f, 0.1f)),
+            new constant_texture(vec3(0.9f, 0.9f, 0.9f)))));
 
     int i = 1;
 
@@ -48,7 +45,7 @@ scene* scene_generator::make_random_scene(
         for (int b = -11; b < 11; b++)
         {
             const float choose_mat = random_generator->next();
-            vec3 center(
+            vec3        center(
                 a + 0.9f * (random_generator->next()),
                 0.2f,
                 b + 0.9f * (random_generator->next()));
@@ -59,19 +56,17 @@ scene* scene_generator::make_random_scene(
                     list[i++] = new moving_sphere(
                         center,
                         center +
-                        vec3(0.f, 0.5f * random_generator->next(), 0.f),
+                            vec3(0.f, 0.5f * random_generator->next(), 0.f),
                         0.f,
                         0.5f,
                         0.2f,
-                        new lambertian(
-                            new constant_texture(
-                                vec3(
-                                    random_generator->next() *
-                                    (random_generator->next()),
-                                    random_generator->next() *
-                                    (random_generator->next()),
-                                    random_generator->next() *
-                                    (random_generator->next())))));
+                        new lambertian(new constant_texture(vec3(
+                            random_generator->next() *
+                                (random_generator->next()),
+                            random_generator->next() *
+                                (random_generator->next()),
+                            random_generator->next() *
+                                (random_generator->next())))));
                 }
                 else if (choose_mat < 0.95f)
                 {
@@ -103,12 +98,11 @@ scene* scene_generator::make_random_scene(
     list[i++] = new sphere(
         vec3(1.f, 1.f, 2.f), 1.f, new metal(vec3(0.7f, 0.6f, 0.5f), 0.03f));
 
-    list[i++] = new flip_normals(
-        new sky_sphere(
-            new sky_gradient(vec3(1.f, 1.f, 1.f), vec3(0.3f, 0.6f, 1.f))));
+    list[i++] = new flip_normals(new sky_sphere(
+        new sky_gradient(vec3(1.f, 1.f, 1.f), vec3(0.3f, 0.6f, 1.f))));
 
-    const vec3 lookfrom(0.f, 2.f, 8.f);
-    const vec3 lookat(0.f, 1.f, 0.f);
+    const vec3  lookfrom(0.f, 2.f, 8.f);
+    const vec3  lookat(0.f, 1.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
@@ -129,7 +123,7 @@ scene* scene_generator::make_random_scene(
 
 ihitable* scene_generator::two_spheres()
 {
-    auto** list = new ihitable* [2];
+    auto** list = new ihitable*[2];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
@@ -140,11 +134,9 @@ ihitable* scene_generator::two_spheres()
     return new hitable_list(list, 2);
 }
 
-scene* scene_generator::earth_sphere(
-    int x_dim,
-    int y_dim)
+scene* scene_generator::earth_sphere(int x_dim, int y_dim)
 {
-    int nx, ny, nn;
+    int            nx, ny, nn;
     unsigned char* tex_data = stbi_load(
         "../world.topo.bathy.200401.3x5400x2700.jpg", &nx, &ny, &nn, 0);
 
@@ -153,8 +145,8 @@ scene* scene_generator::earth_sphere(
         2.f,
         new lambertian(new image_texture(tex_data, nx, ny)));
 
-    const vec3 lookfrom(0.f, 2.f, 8.f);
-    const vec3 lookat(0.f, 1.f, 0.f);
+    const vec3  lookfrom(0.f, 2.f, 8.f);
+    const vec3  lookat(0.f, 1.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
@@ -172,11 +164,9 @@ scene* scene_generator::earth_sphere(
     return new scene{cam, earth_sphere};
 }
 
-scene* scene_generator::rect_light(
-    int nx,
-    int ny)
+scene* scene_generator::rect_light(int nx, int ny)
 {
-    auto** list = new ihitable* [3];
+    auto** list = new ihitable*[3];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
@@ -200,8 +190,8 @@ scene* scene_generator::rect_light(
     //            std::make_unique<constant_texture>(
     //                vec3(4.f, 4.f, 4.f))));
 
-    const vec3 lookfrom(8.f, 2.f, 9.f);
-    const vec3 lookat(1.f, 1.f, 0.f);
+    const vec3  lookfrom(8.f, 2.f, 9.f);
+    const vec3  lookat(1.f, 1.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
@@ -219,12 +209,10 @@ scene* scene_generator::rect_light(
     return new scene{cam, new hitable_list(list, 3)};
 }
 
-scene* scene_generator::cornell_box(
-    int nx,
-    int ny)
+scene* scene_generator::cornell_box(int nx, int ny)
 {
-    auto** list = new ihitable* [8];
-    int i = 0;
+    auto**     list = new ihitable*[8];
+    int        i = 0;
     imaterial* red =
         new lambertian(new constant_texture(vec3(0.65f, 0.05f, 0.05f)));
     imaterial* white =
@@ -254,8 +242,8 @@ scene* scene_generator::cornell_box(
         new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), white), 15),
         vec3(265, 0, 295));
 
-    const vec3 lookfrom(278.f, 278.f, -800.f);
-    const vec3 lookat(278.f, 278.f, 0.f);
+    const vec3  lookfrom(278.f, 278.f, -800.f);
+    const vec3  lookat(278.f, 278.f, 0.f);
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 

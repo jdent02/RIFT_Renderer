@@ -30,16 +30,12 @@ thin_lens_camera::thin_lens_camera(
     vertical = 2 * half_height * focus_dist * v;
 }
 
-ray thin_lens_camera::get_ray(
-    float s, 
-    float t) const
+ray thin_lens_camera::get_ray(float s, float t) const
 {
-    vec3 rd = lens_radius * random_in_unit_disk();
-    const vec3 offset = u * rd.x() + v * rd.y();
+    vec3        rd = lens_radius * random_in_unit_disk();
+    const vec3  offset = u * rd.x() + v * rd.y();
     const float time = time0 + rand() * inv_rand_max * (time1 - time0);
-    return {
-        origin + offset,
-        lower_left_corner + s * horizontal + t * vertical - origin - offset,
-        time
-    };
+    return {origin + offset,
+            lower_left_corner + s * horizontal + t * vertical - origin - offset,
+            time};
 }

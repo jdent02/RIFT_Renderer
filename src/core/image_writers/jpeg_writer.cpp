@@ -18,10 +18,12 @@ void jpeg_writer::write(
 
     for (int i = 0; i < buffer_size; i++)
     {
-        out_buffer[i] = static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
+        out_buffer[i] =
+            static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
     }
 
-    const int success = stbi_write_jpg(filename, size_x, size_y, 3, out_buffer, 90);
+    const int success =
+        stbi_write_jpg(filename, size_x, size_y, 3, out_buffer, 90);
 
     if (success != 0)
     {

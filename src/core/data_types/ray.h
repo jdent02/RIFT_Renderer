@@ -7,10 +7,7 @@ class ray
   public:
     ray() = default;
 
-    ray(
-        const vec3& a, 
-        const vec3& b,
-        const float ti = 0.f)
+    ray(const vec3& a, const vec3& b, const float ti = 0.f)
       : A(a)
       , B(b)
       , _time(ti){};
@@ -24,7 +21,7 @@ class ray
     vec3 point_at_parameter(const float t) const { return A + t * B; }
 
     // properties
-    vec3 A;
-    vec3 B;
+    vec3  A;
+    vec3  B;
     float _time{};
 };

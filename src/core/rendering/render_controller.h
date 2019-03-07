@@ -6,7 +6,6 @@
 
 // Forward declarations
 class camera;
-
 class ihitable;
 
 class render_controller

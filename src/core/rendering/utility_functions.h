@@ -41,10 +41,7 @@ inline vec3 random_in_unit_disk()
     return p;
 }
 
-inline vec3 color(
-    const ray&  r, 
-    ihitable*   world,
-    const int   depth)
+inline vec3 color(const ray& r, ihitable* world, const int depth)
 {
     hit_record rec;
 

@@ -1,10 +1,11 @@
 #pragma once
 
-inline int box_x_compare(
-    const void* a,
-    const void* b)
+#include "core/bases/ihitable.h"
+#include "core/data_types/aabb.h"
+
+inline int box_x_compare(const void* a, const void* b)
 {
-    aabb box_left, box_right;
+    aabb      box_left, box_right;
     ihitable* ah = *(ihitable**)a;
     ihitable* bh = *(ihitable**)b;
     if (!ah->bounding_box(0, 0, box_left) || !bh->bounding_box(0, 0, box_right))
@@ -20,9 +21,7 @@ inline int box_x_compare(
     return 1;
 }
 
-inline int box_y_compare(
-    const void* a,
-    const void* b)
+inline int box_y_compare(const void* a, const void* b)
 {
     aabb box_left, box_right;
 
@@ -41,9 +40,7 @@ inline int box_y_compare(
     return 1;
 }
 
-inline int box_z_compare(
-    const void* a,
-    const void* b)
+inline int box_z_compare(const void* a, const void* b)
 {
     aabb box_left, box_right;
 

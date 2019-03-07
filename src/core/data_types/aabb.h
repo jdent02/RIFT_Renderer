@@ -8,9 +8,7 @@ class aabb
   public:
     aabb() = default;
 
-    aabb(
-        const vec3& a, 
-        const vec3& b)
+    aabb(const vec3& a, const vec3& b)
       : _min(a)
       , _max(b){};
 
@@ -18,10 +16,7 @@ class aabb
 
     vec3 max() const { return _max; }
 
-    bool hit(
-        const ray&  r, 
-        float       tmin, 
-        float       tmax) const;
+    bool hit(const ray& r, float tmin, float tmax) const;
 
     vec3 _min;
     vec3 _max;

@@ -1,9 +1,6 @@
 #include "aabb.h"
 
-bool aabb::hit(
-    const ray&  r, 
-    float       tmin, 
-    float       tmax) const
+bool aabb::hit(const ray& r, float tmin, float tmax) const
 {
     for (int a = 0; a < 3; a++)
     {

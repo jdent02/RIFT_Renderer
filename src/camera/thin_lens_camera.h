@@ -4,8 +4,7 @@
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
 
-class thin_lens_camera 
-  : public icamera 
+class thin_lens_camera : public icamera
 {
   public:
     thin_lens_camera(

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/data_types/vec3.h"
+
 inline bool refract(
     const vec3& v,
     const vec3& n,
@@ -17,16 +19,12 @@ inline bool refract(
     return false;
 }
 
-inline vec3 reflect(
-    const vec3& v, 
-    const vec3& n)
+inline vec3 reflect(const vec3& v, const vec3& n)
 {
     return v - 2 * dot(v, n) * n;
 }
 
-inline float schlick(
-    const float cosine, 
-    const float ref_idx)
+inline float schlick(const float cosine, const float ref_idx)
 {
     float r0 = (1 - ref_idx) / (1 + ref_idx);
     r0 = r0 * r0;

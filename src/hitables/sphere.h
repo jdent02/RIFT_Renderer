@@ -6,15 +6,10 @@
 
 // Forward declarations
 class imaterial;
-
 class ray;
-
 struct hit_record;
 
-inline void get_sphere_uv(
-    const vec3& p,
-    float&      u,
-    float&      v)
+inline void get_sphere_uv(const vec3& p, float& u, float& v)
 {
     float phi = std::atan2(p.z(), p.x());
     float theta = std::asin(p.y());
@@ -22,36 +17,25 @@ inline void get_sphere_uv(
     v = (theta + pi / 2) / pi;
 }
 
-class sphere
-  : public ihitable
+class sphere : public ihitable
 {
   public:
     sphere() = default;
 
-    sphere(
-        const vec3  cen, 
-        const float r, 
-        imaterial*  mat)
+    sphere(const vec3 cen, const float r, imaterial* mat)
       : center(cen)
       , radius(r)
       , material(mat){};
 
     ~sphere() override = default;
 
-    virtual bool
-    hit(
-        const ray&  r,
-        float       t_min,
-        float       t_max,
-        hit_record& rec) const override;
+    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+        const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
-        aabb& box) const override;
+    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
 
     // Properties
-    vec3 center;
-    float radius{};
+    vec3       center;
+    float      radius{};
     imaterial* material{};
 };

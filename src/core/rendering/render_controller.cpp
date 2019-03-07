@@ -10,7 +10,6 @@
 #include <thread>
 #include <vector>
 
-
 render_controller::render_controller(
     const char* filename,
     const int   nx,

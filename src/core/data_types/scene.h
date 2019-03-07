@@ -5,6 +5,6 @@ class ihitable;
 
 struct scene
 {
-    icamera* cam;
+    icamera*  cam;
     ihitable* world;
 };

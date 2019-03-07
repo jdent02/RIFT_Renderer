@@ -2,8 +2,7 @@
 
 #include "core/image_writers/ioutput_writer.h"
 
-class png_writer 
-  : public ioutput_writer
+class png_writer : public ioutput_writer
 {
   public:
     void write(

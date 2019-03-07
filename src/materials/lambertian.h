@@ -5,20 +5,19 @@
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
 
-class lambertian
-    : public imaterial
+class lambertian : public imaterial
 {
   public:
     explicit lambertian(itexture* a)
-        : albedo(a) {};
+      : albedo(a){};
 
     ~lambertian() = default;
 
     virtual bool scatter(
-        const ray& r_in,
+        const ray&        r_in,
         const hit_record& rec,
-        vec3& attenuation,
-        ray& scattered) const override;
+        vec3&             attenuation,
+        ray&              scattered) const override;
 
     itexture* albedo;
 };

@@ -5,10 +5,10 @@
 #include <iostream>
 
 void png_writer::write(
-    const float*        buffer,
-    const char*         filename,
-    const int           size_x,
-    const int           size_y) const
+    const float* buffer,
+    const char*  filename,
+    const int    size_x,
+    const int    size_y) const
 {
     std::cout << "Writing Output" << std::endl;
 
@@ -18,10 +18,12 @@ void png_writer::write(
 
     for (int i = 0; i < buffer_size; i++)
     {
-        out_buffer[i] = static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
+        out_buffer[i] =
+            static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
     }
 
-    const int success = stbi_write_png(filename, size_x, size_y, 3, out_buffer, size_x * 3);
+    const int success =
+        stbi_write_png(filename, size_x, size_y, 3, out_buffer, size_x * 3);
 
     if (success != 0)
     {

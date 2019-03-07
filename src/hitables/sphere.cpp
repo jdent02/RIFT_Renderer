@@ -42,10 +42,7 @@ bool sphere::hit(
     return false;
 }
 
-bool sphere::bounding_box(
-    float t0, 
-    float t1, 
-    aabb& box) const
+bool sphere::bounding_box(float t0, float t1, aabb& box) const
 {
     box = aabb(
         center - vec3(radius, radius, radius),

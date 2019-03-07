@@ -7,7 +7,5 @@ class icamera
   public:
     virtual ~icamera() = default;
 
-    virtual ray get_ray(
-        float s,
-        float t) const = 0;
+    virtual ray get_ray(float s, float t) const = 0;
 };

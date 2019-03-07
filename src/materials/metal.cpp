@@ -4,10 +4,10 @@
 #include "core/rendering/utility_functions.h"
 
 bool metal::scatter(
-    const ray& r_in,
+    const ray&        r_in,
     const hit_record& rec,
-    vec3& attenuation,
-    ray& scattered) const
+    vec3&             attenuation,
+    ray&              scattered) const
 {
     const vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
     scattered =

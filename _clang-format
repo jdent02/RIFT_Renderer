@@ -17,7 +17,7 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakTemplateDeclarations: true
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping:   
@@ -38,10 +38,10 @@ BraceWrapping:
   SplitEmptyNamespace: true
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Custom
-BreakBeforeInheritanceComma: false
+BreakBeforeInheritanceComma: true
 BreakInheritanceList: BeforeComma
 BreakBeforeTernaryOperators: true
-BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializersBeforeComma: true
 BreakConstructorInitializers: BeforeComma
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
