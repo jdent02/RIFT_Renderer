@@ -2,10 +2,13 @@
 
 #include "core/data_types/vec3.h"
 
-image_texture::image_texture(unsigned char* pixels, int A, int B)
-    : data(pixels)
-    , nx(A)
-    , ny(B) {}
+image_texture::image_texture(
+    unsigned char* pixels,
+    int A,
+    int B)
+    : data(pixels),
+      nx(A),
+      ny(B) {}
 
 vec3 image_texture::value(
     float u,

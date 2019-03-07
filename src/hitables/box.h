@@ -1,32 +1,21 @@
 #pragma once
 
-
-#include "core/bases/hitable.h"
+#include "core/bases/ihitable.h"
 #include "core/data_types/hit_record.h"
 
-class box
-    : public hitable
+class box : public ihitable
 {
-public:
+  public:
     box() = default;
-    box(
-        const vec3& p0,
-        const vec3& p1,
-        material* ptr);
+    box(const vec3& p0, const vec3& p1, imaterial* ptr);
 
     ~box() override { delete list_ptr; }
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
-        hit_record& rec) const override;
+    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+        const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
-        aabb& box) const override;
+    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
 
-    vec3 pmin, pmax;
-    hitable* list_ptr;
+    vec3      pmin, pmax;
+    ihitable* list_ptr;
 };

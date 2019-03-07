@@ -21,18 +21,18 @@ source_group(
 
 set (
 	CORE_SOURCES
-	src/core/bases/hitable.h
+    src/core/bases/ihitable.h
 	src/core/bases/icamera.h
 	src/core/acceleration_structures/bvh_node.h
     src/core/acceleration_structures/bvh_node.cpp
-	src/core/bases/material.h
+	src/core/bases/imaterial.h
 	src/core/rendering/render_controller.h
     src/core/rendering/render_controller.cpp
     src/core/rendering/render_worker.h 
 	src/core/image_writers/jpeg_writer.cpp 
-	src/core/image_writers/jpeg_writer.h 
-	src/core/image_writers/iimage_writer.h
-	src/core/bases/texture.h
+	src/core/image_writers/jpeg_writer.h
+	src/core/image_writers/ioutput_writer.h
+	src/core/bases/itexture.h
 	src/core/data_types/ray.h
     src/core/data_types/vec3.h
     src/core/data_types/aabb.h

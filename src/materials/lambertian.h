@@ -1,17 +1,15 @@
 #pragma once
 
-
-#include "core/bases/material.h"
-#include "core/bases/texture.h"
-#include "core/data_types/vec3.h"
+#include "core/bases/imaterial.h"
+#include "core/bases/itexture.h"
 #include "core/data_types/hit_record.h"
+#include "core/data_types/vec3.h"
 
 class lambertian
-    : public material
+    : public imaterial
 {
-public:
-    explicit
-    lambertian(texture* a)
+  public:
+    explicit lambertian(itexture* a)
         : albedo(a) {};
 
     ~lambertian() = default;
@@ -22,5 +20,5 @@ public:
         vec3& attenuation,
         ray& scattered) const override;
 
-    texture* albedo;
+    itexture* albedo;
 };

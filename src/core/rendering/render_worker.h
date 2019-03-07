@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/bases/icamera.h"
-#include "core/bases/hitable.h"
+#include "core/bases/ihitable.h"
 #include "core/data_types/ray.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"
@@ -13,24 +13,24 @@
 
 namespace render_worker
 {
-void run_thread(
-    int seed,
-    int nx,
-    int ny,
-    int ns,
-    float* buffer,
-    icamera* cam,
-    hitable* world)
+inline void run_thread(
+    int       seed,
+    int       nx,
+    int       ny,
+    int       ns,
+    float*    buffer,
+    icamera*  cam,
+    ihitable* world)
 {
     std::mutex mutex;
-    int buffer_size = nx * ny * 3;
+    const int buffer_size = nx * ny * 3;
     std::unique_ptr<igenerator> rn_gen = std::make_unique<xoro_128>();
     rn_gen->seed_gen(static_cast<uint64_t>(seed));
 
-    std::vector<float>* temp_buffer = new std::vector<float>;
+    auto* temp_buffer = new std::vector<float>;
 
-    float inv_nx = 1.f / nx;
-    float inv_ny = 1.f / ny;
+    const float inv_nx = 1.f / nx;
+    const float inv_ny = 1.f / ny;
 
     // Render loop
     for (int j = ny - 1; j >= 0; j--)
@@ -40,9 +40,9 @@ void run_thread(
             vec3 col(0.f, 0.f, 0.f);
             for (int s = 0; s < ns; s++)
             {
-                float u = (i + rn_gen->next()) * inv_nx;
-                float v = (j + rn_gen->next()) * inv_ny;
-                ray r = cam->get_ray(u, v);
+                const float u = (i + rn_gen->next()) * inv_nx;
+                const float v = (j + rn_gen->next()) * inv_ny;
+                ray         r = cam->get_ray(u, v);
                 col += color(r, world, 0);
             }
 
@@ -52,13 +52,13 @@ void run_thread(
         }
     }
 
-    std::lock_guard<std::mutex> lockGuard(mutex);
+    std::lock_guard<std::mutex> lock_guard(mutex);
 
-    for (size_t i = 0; i < buffer_size; i++)
+    for (int i = 0; i < buffer_size; i++)
     {
         buffer[i] += temp_buffer->at(i);
     }
 
     delete temp_buffer;
 }
-} // render_worker namespace
+} // namespace render_worker

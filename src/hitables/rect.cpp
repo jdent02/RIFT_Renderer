@@ -1,14 +1,8 @@
 #include "rect.h"
 
 #include "core/data_types/aabb.h"
-#include "core/data_types/vec3.h"
-#include "core/data_types/hit_record.h"
 
-bool xy_rect::hit(
-    const ray& r,
-    float t0,
-    float t1,
-    hit_record& rec) const
+bool xy_rect::hit(const ray& r, float t0, float t1, hit_record& rec) const
 {
     float t = (k - r.origin().z()) / r.direction().z();
     if (t < t0 || t > t1)
@@ -34,33 +28,28 @@ bool xy_rect::hit(
 
 bool xy_rect::bounding_box(float t0, float t1, aabb& box) const
 {
-    box = aabb(
-        vec3(x0, y0, float(k - 0.0001)),
-        vec3(x1, y1, float(k + 0.0001)));
+    box =
+        aabb(vec3(x0, y0, float(k - 0.0001)), vec3(x1, y1, float(k + 0.0001)));
     return true;
 }
 
 xy_rect::xy_rect(
-    float _x0,
-    float _x1,
-    float _y0,
-    float _y1,
-    float _k,
-    material* mat)
-    : mp(mat)
-    , x0(_x0)
-    , x1(_x1)
-    , y0(_y0)
-    , y1(_y1)
-    , k(_k) {}
-
+    float      _x0,
+    float      _x1,
+    float      _y0,
+    float      _y1,
+    float      _k,
+    imaterial* mat)
+  : mp(mat)
+  , x0(_x0)
+  , x1(_x1)
+  , y0(_y0)
+  , y1(_y1)
+  , k(_k)
+{}
 
 // X_Z rect
-bool xz_rect::hit(
-    const ray& r,
-    float t0,
-    float t1,
-    hit_record& rec) const
+bool xz_rect::hit(const ray& r, float t0, float t1, hit_record& rec) const
 {
     float t = (k - r.origin().y()) / r.direction().y();
     if (t < t0 || t > t1)
@@ -84,36 +73,29 @@ bool xz_rect::hit(
     return true;
 }
 
-bool xz_rect::bounding_box(
-    float t0,
-    float t1,
-    aabb& box) const
+bool xz_rect::bounding_box(float t0, float t1, aabb& box) const
 {
-    box = aabb(
-        vec3(x0, z0, float(k - 0.0001)),
-        vec3(x1, z1, float(k + 0.0001)));
+    box =
+        aabb(vec3(x0, z0, float(k - 0.0001)), vec3(x1, z1, float(k + 0.0001)));
     return true;
 }
 
 xz_rect::xz_rect(
-    float _x0,
-    float _x1,
-    float _z0,
-    float _z1,
-    float _k,
-    material* mat)
-    : mp(mat)
-    , x0(_x0)
-    , x1(_x1)
-    , z0(_z0)
-    , z1(_z1)
-    , k(_k) {}
+    float      _x0,
+    float      _x1,
+    float      _z0,
+    float      _z1,
+    float      _k,
+    imaterial* mat)
+  : mp(mat)
+  , x0(_x0)
+  , x1(_x1)
+  , z0(_z0)
+  , z1(_z1)
+  , k(_k)
+{}
 
-bool yz_rect::hit(
-    const ray& r,
-    float t0,
-    float t1,
-    hit_record& rec) const
+bool yz_rect::hit(const ray& r, float t0, float t1, hit_record& rec) const
 {
     float t = (k - r.origin().x()) / r.direction().x();
     if (t < t0 || t > t1)
@@ -137,36 +119,30 @@ bool yz_rect::hit(
     return true;
 }
 
-bool yz_rect::bounding_box(
-    float t0,
-    float t1,
-    aabb& box) const
+bool yz_rect::bounding_box(float t0, float t1, aabb& box) const
 {
-    box = aabb(
-        vec3(y0, z0, float(k - 0.0001)),
-        vec3(y1, z1, float(k + 0.0001)));
+    box =
+        aabb(vec3(y0, z0, float(k - 0.0001)), vec3(y1, z1, float(k + 0.0001)));
     return true;
 }
 
 yz_rect::yz_rect(
-    float _y0,
-    float _y1,
-    float _z0,
-    float _z1,
-    float _k,
-    material* mat)
-    : mp(mat)
-    , y0(_y0)
-    , y1(_y1)
-    , z0(_z0)
-    , z1(_z1)
-    , k(_k) {}
+    float      _y0,
+    float      _y1,
+    float      _z0,
+    float      _z1,
+    float      _k,
+    imaterial* mat)
+  : mp(mat)
+  , y0(_y0)
+  , y1(_y1)
+  , z0(_z0)
+  , z1(_z1)
+  , k(_k)
+{}
 
-bool flip_normals::hit(
-    const ray& r,
-    float t_min,
-    float t_max,
-    hit_record& rec) const
+bool flip_normals::hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    const
 {
     if (ptr->hit(r, t_min, t_max, rec))
     {

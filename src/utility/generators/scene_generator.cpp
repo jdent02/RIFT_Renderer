@@ -1,35 +1,34 @@
 #include "scene_generator.h"
 
 #include "camera/thin_lens_camera.h"
-#include "hitables/box.h"
 #include "core/acceleration_structures/bvh_node.h"
-#include "core/data_types/scene.h"
+#include "hitables/box.h"
 #include "hitables/hitable_list.h"
 #include "hitables/instancers.h"
-#include "hitables/sphere.h"
 #include "hitables/moving_sphere.h"
 #include "hitables/rect.h"
 #include "hitables/sky_sphere.h"
-#include "materials/diffuse_light.h"
+#include "materials/dielectric.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
-#include "materials/dielectric.h"
-#include "textures/constant_tex.h"
 #include "textures/checker_tex.h"
+#include "textures/constant_tex.h"
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
-#include "textures/sky_gradient.h"
 #include "utility/rng/xoroshiro128.h"
 
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "third_party/stb_image.h"
 
-
 // Class implementation
-scene* scene_generator::make_random_scene(int nx, int ny)
+scene* scene_generator::make_random_scene(
+    const int nx,
+    const int ny)
 {
-    int n = 500;
-    hitable** list = new hitable* [n + 1];
+    const int n = 500;
+
+    auto** list = new ihitable* [n + 1];
 
     igenerator* random_generator = new xoro_128;
 
@@ -59,16 +58,20 @@ scene* scene_generator::make_random_scene(int nx, int ny)
                 {
                     list[i++] = new moving_sphere(
                         center,
-                        center + vec3(0.f, 0.5f * random_generator->next(), 0.f),
+                        center +
+                        vec3(0.f, 0.5f * random_generator->next(), 0.f),
                         0.f,
                         0.5f,
                         0.2f,
                         new lambertian(
                             new constant_texture(
                                 vec3(
-                                    random_generator->next() * (random_generator->next()),
-                                    random_generator->next() * (random_generator->next()),
-                                    random_generator->next() * (random_generator->next())))));
+                                    random_generator->next() *
+                                    (random_generator->next()),
+                                    random_generator->next() *
+                                    (random_generator->next()),
+                                    random_generator->next() *
+                                    (random_generator->next())))));
                 }
                 else if (choose_mat < 0.95f)
                 {
@@ -90,29 +93,19 @@ scene* scene_generator::make_random_scene(int nx, int ny)
         }
     }
 
-    list[i++] = new sphere(
-        vec3(0.f, 1.f, 0.f),
-        1.f,
-        new dielectric(1.5f));
+    list[i++] = new sphere(vec3(0.f, 1.f, 0.f), 1.f, new dielectric(1.5f));
 
     list[i++] = new sphere(
         vec3(-1.f, 1.f, -2.f),
         1.f,
-        new lambertian(
-            new constant_texture(
-                vec3(0.4f, 0.2f, 0.1f))));
+        new lambertian(new constant_texture(vec3(0.4f, 0.2f, 0.1f))));
 
     list[i++] = new sphere(
-        vec3(1.f, 1.f, 2.f),
-        1.f,
-        new metal(
-            vec3(0.7f, 0.6f, 0.5f),
-            0.03f));
+        vec3(1.f, 1.f, 2.f), 1.f, new metal(vec3(0.7f, 0.6f, 0.5f), 0.03f));
 
-    list[i++] = new flip_normals(new sky_sphere(
-            new sky_gradient(
-                vec3(1.f, 1.f, 1.f),
-                vec3(0.3f, 0.6f, 1.f))));
+    list[i++] = new flip_normals(
+        new sky_sphere(
+            new sky_gradient(vec3(1.f, 1.f, 1.f), vec3(0.3f, 0.6f, 1.f))));
 
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);
@@ -134,33 +127,31 @@ scene* scene_generator::make_random_scene(int nx, int ny)
     return new scene{cam, new bvh_node(list, i, 0.f, 0.5f)};
 }
 
-hitable* scene_generator::two_spheres()
+ihitable* scene_generator::two_spheres()
 {
-    hitable** list = new hitable* [2];
+    auto** list = new ihitable* [2];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
         new lambertian(new noise_texture(3.f)));
 
     list[1] = new sphere(
-        vec3(0.f, 2.f, 0.f),
-        2.f,
-        new lambertian(new noise_texture(3.f)));
+        vec3(0.f, 2.f, 0.f), 2.f, new lambertian(new noise_texture(3.f)));
     return new hitable_list(list, 2);
 }
 
-scene* scene_generator::earth_sphere(int x_dim, int y_dim)
+scene* scene_generator::earth_sphere(
+    int x_dim,
+    int y_dim)
 {
     int nx, ny, nn;
     unsigned char* tex_data = stbi_load(
-        "../world.topo.bathy.200401.3x5400x2700.jpg",
-        &nx, &ny, &nn, 0);
+        "../world.topo.bathy.200401.3x5400x2700.jpg", &nx, &ny, &nn, 0);
 
-    hitable* earth_sphere = new sphere(
+    ihitable* earth_sphere = new sphere(
         vec3(0.f, 1.f, 0.f),
         2.f,
-        new lambertian(
-            new image_texture(tex_data, nx, ny)));
+        new lambertian(new image_texture(tex_data, nx, ny)));
 
     const vec3 lookfrom(0.f, 2.f, 8.f);
     const vec3 lookat(0.f, 1.f, 0.f);
@@ -181,18 +172,18 @@ scene* scene_generator::earth_sphere(int x_dim, int y_dim)
     return new scene{cam, earth_sphere};
 }
 
-scene* scene_generator::rect_light(int nx, int ny)
+scene* scene_generator::rect_light(
+    int nx,
+    int ny)
 {
-    hitable** list = new hitable* [3];
+    auto** list = new ihitable* [3];
     list[0] = new sphere(
         vec3(0.f, -1000.f, 0.f),
         1000.f,
         new lambertian(new noise_texture(4.f)));
 
     list[1] = new sphere(
-        vec3(0.f, 2.f, 0.f),
-        2.f,
-        new lambertian(new noise_texture(4.f)));
+        vec3(0.f, 2.f, 0.f), 2.f, new lambertian(new noise_texture(4.f)));
 
     list[2] = new xy_rect(
         3.f,
@@ -200,9 +191,7 @@ scene* scene_generator::rect_light(int nx, int ny)
         1.f,
         3.f,
         -2.f,
-        new diffuse_light(
-            new constant_texture(
-                vec3(4.f, 4.f, 4.f))));
+        new diffuse_light(new constant_texture(vec3(4.f, 4.f, 4.f))));
 
     //    list[3] = new sphere(
     //        vec3(0.f, 7.f, 0.f),
@@ -230,90 +219,39 @@ scene* scene_generator::rect_light(int nx, int ny)
     return new scene{cam, new hitable_list(list, 3)};
 }
 
-scene* scene_generator::cornell_box(int nx, int ny)
+scene* scene_generator::cornell_box(
+    int nx,
+    int ny)
 {
-    hitable** list = new hitable* [8];
+    auto** list = new ihitable* [8];
     int i = 0;
-    material* red = new lambertian(
-        new constant_texture(
-            vec3(0.65f, 0.05f, 0.05f)));
-    material* white = new lambertian(
-        new constant_texture(
-            vec3(0.73f, 0.73f, 0.73f)));
-    material* green = new lambertian(
-        new constant_texture(
-            vec3(0.12f, 0.45f, 0.15f)));
-    material* light = new diffuse_light(
-        new constant_texture(
-            vec3(15.f, 15.f, 15.f)));
+    imaterial* red =
+        new lambertian(new constant_texture(vec3(0.65f, 0.05f, 0.05f)));
+    imaterial* white =
+        new lambertian(new constant_texture(vec3(0.73f, 0.73f, 0.73f)));
+    imaterial* green =
+        new lambertian(new constant_texture(vec3(0.12f, 0.45f, 0.15f)));
+    imaterial* light =
+        new diffuse_light(new constant_texture(vec3(15.f, 15.f, 15.f)));
 
-    list[i++] = new flip_normals(
-        new yz_rect(
-            0,
-            555,
-            0,
-            555,
-            555,
-            green));
+    list[i++] = new flip_normals(new yz_rect(0, 555, 0, 555, 555, green));
 
-    list[i++] = new yz_rect(
-        0,
-        555,
-        0,
-        555,
-        0,
-        red);
+    list[i++] = new yz_rect(0, 555, 0, 555, 0, red);
 
-    list[i++] = new xz_rect(
-        213,
-        343,
-        227,
-        332,
-        554,
-        light);
+    list[i++] = new xz_rect(213, 343, 227, 332, 554, light);
 
-    list[i++] = new flip_normals(
-        new xz_rect(
-            0,
-            555,
-            0,
-            555,
-            555,
-            white));
+    list[i++] = new flip_normals(new xz_rect(0, 555, 0, 555, 555, white));
 
-    list[i++] = new xz_rect(
-        0,
-        555,
-        0,
-        555,
-        0,
-        white);
+    list[i++] = new xz_rect(0, 555, 0, 555, 0, white);
 
-    list[i++] = new flip_normals(
-        new xy_rect(
-            0,
-            555,
-            0,
-            555,
-            555,
-            white));
+    list[i++] = new flip_normals(new xy_rect(0, 555, 0, 555, 555, white));
 
     list[i++] = new translate(
-        new rotate_y(
-            new box(
-                vec3(0, 0, 0),
-                vec3(165, 165, 165),
-                white),
-            -18),
+        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 165, 165), white), -18),
         vec3(130, 0, 65));
 
     list[i++] = new translate(
-        new rotate_y(
-            new box(
-                vec3(0, 0, 0),
-                vec3(165, 330, 165),
-                white),
-            15),
+        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), white), 15),
         vec3(265, 0, 295));
 
     const vec3 lookfrom(278.f, 278.f, -800.f);

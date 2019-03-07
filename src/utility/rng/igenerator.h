@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <cstdint>
 
 class igenerator
@@ -14,4 +13,3 @@ class igenerator
 
     virtual void seed_gen(uint64_t seed) = 0;
 };
-

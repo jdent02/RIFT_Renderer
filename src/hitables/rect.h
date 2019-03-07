@@ -1,114 +1,115 @@
 #pragma once
 
-#include "core/bases/hitable.h"
+#include "core/bases/ihitable.h"
 #include "core/data_types/hit_record.h"
 
-class xy_rect final
-    : public hitable
+class xy_rect final 
+  : public ihitable
 {
-public:
+  public:
     xy_rect() = default;
 
     xy_rect(
-        float _x0,
-        float _x1,
-        float _y0,
-        float _y1,
-        float _k,
-        material* mat);
+        float      _x0,
+        float      _x1,
+        float      _y0,
+        float      _y1,
+        float      _k,
+        imaterial* mat);
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
+    bool hit(
+        const ray& r, 
+        float t_min, 
+        float t_max, 
         hit_record& rec) const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
+    bool bounding_box(
+        float t0, 
+        float t1, 
         aabb& box) const override;
 
-    material* mp;
-    float x0, x1, y0, y1, k;
+    imaterial* mp;
+    float      x0, x1, y0, y1, k;
 };
 
-class xz_rect final
-    : public hitable
+class xz_rect final 
+  : public ihitable
 {
-public:
+  public:
     xz_rect() = default;
 
     xz_rect(
-        float _x0,
-        float _x1,
-        float _z0,
-        float _z1,
-        float _k,
-        material* mat);
+        float      _x0,
+        float      _x1,
+        float      _z0,
+        float      _z1,
+        float      _k,
+        imaterial* mat);
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
+    bool hit(
+        const ray&  r, 
+        float       t_min, 
+        float       t_max, 
         hit_record& rec) const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
+    bool bounding_box(
+        float t0, 
+        float t1, 
         aabb& box) const override;
 
-    material* mp;
-    float x0, x1, z0, z1, k;
+    imaterial* mp;
+    float      x0, x1, z0, z1, k;
 };
 
-class yz_rect final
-    : public hitable
+class yz_rect final 
+  : public ihitable
 {
-public:
+  public:
     yz_rect() = default;
 
     yz_rect(
-        float _y0,
-        float _y1,
-        float _z0,
-        float _z1,
-        float _k,
-        material* mat);
+        float      _y0,
+        float      _y1,
+        float      _z0,
+        float      _z1,
+        float      _k,
+        imaterial* mat);
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
-        hit_record& rec) const override;
+    bool hit(
+        const ray&  r, 
+        float       t_min, 
+        float       t_max, 
+        hit_record& rec)
+        const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
+    bool bounding_box(
+        float t0, 
+        float t1, 
         aabb& box) const override;
 
-    material* mp;
-    float y0, y1, z0, z1, k;
+    imaterial* mp;
+    float      y0, y1, z0, z1, k;
 };
 
-class flip_normals final
-    : public hitable
+class flip_normals final 
+  : public ihitable
 {
-public:
-    explicit
-    flip_normals(hitable* p)
-        : ptr(p) {}
+  public:
+    explicit flip_normals(ihitable* p)
+      : ptr(p)
+    {}
 
+    bool hit(
+        const ray&  r, 
+        float       t_min, 
+        float       t_max, 
+        hit_record& rec)
+        const override;
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
-        hit_record& rec) const override;
-
-    virtual bool bounding_box(
-        float t0,
-        float t1,
+    bool bounding_box(
+        float t0, 
+        float t1, 
         aabb& box) const override;
 
-    hitable* ptr;
+    ihitable* ptr;
 };

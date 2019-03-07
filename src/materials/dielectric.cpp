@@ -1,10 +1,8 @@
 #include "dielectric.h"
 
 #include "core/data_types/ray.h"
-#include "core/rendering/utility_functions.h"
-#include "core/data_types/vec3.h"
 #include "core/rendering/scatter_functions.h"
-#include "core/data_types/hit_record.h"
+#include "core/rendering/utility_functions.h"
 
 bool dielectric::scatter(
     const ray& r_in,
@@ -13,7 +11,9 @@ bool dielectric::scatter(
     ray& scattered) const
 {
     vec3 outward_normal;
+
     float ni_over_nt;
+
     const vec3 reflected = reflect(r_in.direction(), rec.normal);
     attenuation = vec3(1.f, 1.f, 1.f);
     vec3 refracted;
@@ -25,7 +25,8 @@ bool dielectric::scatter(
     {
         outward_normal = -rec.normal;
         ni_over_nt = ref_idx;
-        cosine = ref_idx * dot(r_in.direction(), rec.normal) / r_in.direction().length();
+        cosine = ref_idx * dot(r_in.direction(), rec.normal) /
+                 r_in.direction().length();
     }
     else
     {

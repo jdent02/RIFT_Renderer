@@ -1,28 +1,27 @@
 #pragma once
 
-#include "vec3.h"
+#include "core/data_types/vec3.h"
 
 class ray
 {
-public:
+  public:
     ray() = default;
 
-    ray(const vec3& a, const vec3& b, float ti = 0.f)
-        : A(a)
-        , B(b)
-        , _time(ti) {};
+    ray(
+        const vec3& a, 
+        const vec3& b,
+        const float ti = 0.f)
+      : A(a)
+      , B(b)
+      , _time(ti){};
 
-    vec3
-    origin() const { return A; }
+    vec3 origin() const { return A; }
 
-    vec3
-    direction() const { return B; }
+    vec3 direction() const { return B; }
 
-    float
-    time() const { return _time; }
+    float time() const { return _time; }
 
-    vec3
-    point_at_parameter(float t) const { return A + t * B; }
+    vec3 point_at_parameter(const float t) const { return A + t * B; }
 
     // properties
     vec3 A;

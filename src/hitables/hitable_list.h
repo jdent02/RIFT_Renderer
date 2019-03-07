@@ -1,41 +1,38 @@
 #pragma once
 
-
 #include "core/data_types/aabb.h"
 #include "core/data_types/hit_record.h"
 
-class hitable_list
-    : public hitable
+class hitable_list : public ihitable
 {
-public:
+  public:
     hitable_list() = default;
 
-    hitable_list(hitable** l, int n);
+    hitable_list(ihitable** l, int n);
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec) const override;
+    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+        const override;
 
-    virtual bool bounding_box(
-        float t0,
-        float t1,
-        aabb& box) const override;
+    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
 
-    hitable** list;
-    int list_size;
+    ihitable** list;
+    int        list_size;
 };
 
-inline hitable_list::hitable_list(hitable** l, int n)
-    : list(l)
-    , list_size(n) {}
+inline hitable_list::hitable_list(ihitable** l, int n)
+  : list(l)
+  , list_size(n)
+{}
 
 inline bool hitable_list::hit(
-    const ray& r,
-    float t_min,
-    float t_max,
+    const ray&  r,
+    float       t_min,
+    float       t_max,
     hit_record& rec) const
 {
     hit_record temp_rec;
-    bool hit_anything = false;
-    float closest_so_far = t_max;
+    bool       hit_anything = false;
+    float      closest_so_far = t_max;
     for (auto i = 0; i < list_size; i++)
     {
         if (list[i]->hit(r, t_min, closest_so_far, temp_rec))
@@ -55,8 +52,8 @@ inline bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
     {
         return false;
     }
-    aabb temp_box;
-    bool first_true = list[0]->bounding_box(t0, t1, temp_box);
+    aabb       temp_box;
+    const bool first_true = list[0]->bounding_box(t0, t1, temp_box);
     if (!first_true)
     {
         return false;

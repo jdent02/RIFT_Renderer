@@ -1,8 +1,7 @@
 #pragma once
 
-
-#include "core/rendering/utility_functions.h"
 #include "core/data_types/vec3.h"
+#include "core/rendering/utility_functions.h"
 
 inline float trilinear_interp(
     vec3 c[2][2][2],
@@ -22,12 +21,12 @@ inline float trilinear_interp(
             {
                 vec3 weight_v(u - i, v - j, w - k);
                 accum += (i * uu + (1.f - i) * (1.f - uu)) *
-                    (j * vv + (1.f - j) * (1.f - vv)) *
-                    (k * ww + (1.f - k) * (1.f - ww)) * dot(c[i][j][k], weight_v);
+                         (j * vv + (1.f - j) * (1.f - vv)) *
+                         (k * ww + (1.f - k) * (1.f - ww)) *
+                         dot(c[i][j][k], weight_v);
             }
         }
     }
-
 
     return accum;
 }
@@ -46,7 +45,9 @@ static vec3* perlin_generate()
     return p;
 }
 
-inline void permute(int* p, int n)
+inline void permute(
+    int* p,
+    int n)
 {
     for (int i = n - 1; i > 0; i--)
     {
@@ -68,19 +69,20 @@ static int* perlin_generate_perm()
     return p;
 }
 
-
 class perlin
 {
-public:
+  public:
     perlin()
-        : ranvec(perlin_generate())
-        , perm_x(perlin_generate_perm())
-        , perm_y(perlin_generate_perm())
-        , perm_z(perlin_generate_perm()) {}
+        : ranvec(perlin_generate()),
+          perm_x(perlin_generate_perm()),
+          perm_y(perlin_generate_perm()),
+          perm_z(perlin_generate_perm()) {}
 
     float noise(const vec3& p) const;
 
-    float turb(const vec3& p, const float depth = 7) const;
+    float turb(
+        const vec3& p,
+        float depth = 7) const;
 
     vec3* ranvec;
     int* perm_x;
@@ -104,9 +106,9 @@ inline float perlin::noise(const vec3& p) const
         {
             for (int dk = 0; dk < 2; dk++)
             {
-                c[di][dj][dk] = ranvec[perm_x[(i + di) & 255] ^
-                    perm_y[(j + dj) & 255] ^
-                    perm_z[(k + dk) & 255]];
+                c[di][dj][dk] = ranvec
+                [perm_x[(i + di) & 255] ^ perm_y[(j + dj) & 255] ^
+                 perm_z[(k + dk) & 255]];
             }
         }
     }
@@ -114,7 +116,9 @@ inline float perlin::noise(const vec3& p) const
     return trilinear_interp(c, u, v, w);
 }
 
-float perlin::turb(const vec3& p, const float depth) const
+inline float perlin::turb(
+    const vec3& p,
+    const float depth) const
 {
     float accum = 0;
     vec3 temp_p = p;

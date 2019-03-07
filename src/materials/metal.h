@@ -1,19 +1,18 @@
 #pragma once
 
-
-#include "core/bases/material.h"
-#include "core/data_types/vec3.h"
+#include "core/bases/imaterial.h"
 #include "core/data_types/hit_record.h"
-
+#include "core/data_types/vec3.h"
 
 class metal
-    : public material
+    : public imaterial
 {
-public:
-    explicit
-    metal(const vec3& a, const float& fuzz)
-        : albedo(a)
-        , fuzz(fuzz) {};
+  public:
+    explicit metal(
+        const vec3& a,
+        const float& fuzz)
+        : albedo(a),
+          fuzz(fuzz) {};
 
     virtual ~metal() override = default;
 

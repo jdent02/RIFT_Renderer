@@ -1,14 +1,13 @@
 #pragma once
 
-
-#include "core/bases/texture.h"
-
+#include "core/bases/itexture.h"
 
 class image_texture
-    : public texture
+    : public itexture
 {
-public:
+  public:
     image_texture() = default;
+
     image_texture(
         unsigned char* pixels,
         int A,

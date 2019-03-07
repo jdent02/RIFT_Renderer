@@ -1,46 +1,45 @@
 #pragma once
 
 #include "core/bases/icamera.h"
-#include "core/image_writers/iimage_writer.h"
+#include "core/image_writers/ioutput_writer.h"
 #include "utility/rng/igenerator.h"
-
-#include <vector>
-
 
 // Forward declarations
 class camera;
-class hitable;
+
+class ihitable;
 
 class render_controller
 {
-public:
+  public:
     render_controller(
-            const char* filename,
-            int nx,
-            int ny,
-            int ns,
-            icamera* cam,
-            hitable* world);
+        const char* filename,
+        int         nx,
+        int         ny,
+        int         ns,
+        icamera*    cam,
+        ihitable*   world);
 
-    ~render_controller();
+    ~render_controller() = default;
 
     void do_render();
 
-    void write_output() { image_writer->write(buffer, out_filename, nx, ny);}
+    void write_output() const
+    {
+        image_writer_->write(buffer_, out_filename_, nx_, ny_);
+    }
 
-    void cleanup();
+    void cleanup() const;
 
-private:
-    float* buffer;
-    const int nx;
-    const int ny;
-    const int ns;
-    const float inv_nx;
-    const float inv_ny;
-    const float inv_ns;
-    icamera* cam;
-    hitable* world;
-    igenerator* random_generator;
-    iimage_writer* image_writer;
-    const char* out_filename;
+  private:
+    float*          buffer_;
+    const int       nx_;
+    const int       ny_;
+    const int       ns_;
+    const float     inv_ns_;
+    icamera*        cam_;
+    ihitable*       world_;
+    igenerator*     random_generator_{};
+    ioutput_writer* image_writer_;
+    const char*     out_filename_;
 };

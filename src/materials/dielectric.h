@@ -1,18 +1,16 @@
 #pragma once
 
-
-#include "core/bases/material.h"
+#include "core/bases/imaterial.h"
 #include "core/data_types/hit_record.h"
 
 // Forward declaration
 class vec3;
 
 class dielectric
-    : public material
+    : public imaterial
 {
-public:
-    explicit
-    dielectric(const float ri)
+  public:
+    explicit dielectric(const float ri)
         : ref_idx(ri) {};
 
     virtual ~dielectric() override = default;

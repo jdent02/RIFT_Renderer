@@ -1,17 +1,17 @@
 #pragma once
 
-#include "core/bases/texture.h"
+#include "core/bases/itexture.h"
 #include "core/data_types/vec3.h"
 
 class sky_gradient
-    : public texture
+    : public itexture
 {
   public:
     sky_gradient(
         const vec3& horizon,
         const vec3& zenith)
-        : horizon(horizon)
-        , zenith(zenith) {};
+        : horizon(horizon),
+          zenith(zenith) {};
 
     virtual vec3 value(
         float u,
@@ -21,4 +21,3 @@ class sky_gradient
     vec3 horizon;
     vec3 zenith;
 };
-

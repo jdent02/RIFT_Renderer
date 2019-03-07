@@ -15,7 +15,7 @@ float xoro_128::next()
     return result * inv_uint64;
 }
 
-void xoro_128::seed_gen(uint64_t seed)
+void xoro_128::seed_gen(const uint64_t seed)
 {
     s[0] = seed;
     s[1] = seed << 16;

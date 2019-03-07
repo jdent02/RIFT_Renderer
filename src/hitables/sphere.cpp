@@ -1,16 +1,14 @@
 #include "sphere.h"
 
 #include "core/data_types/aabb.h"
-#include "core/data_types/ray.h"
-#include "core/data_types/hit_record.h"
 
 bool sphere::hit(
-    const ray& r,
+    const ray&  r,
     const float t_min,
     const float t_max,
     hit_record& rec) const
 {
-    const vec3 oc = r.origin() - center;
+    const vec3  oc = r.origin() - center;
     const float a = dot(r.direction(), r.direction());
     const float b = dot(oc, r.direction());
     const float c = dot(oc, oc) - radius * radius;
@@ -44,8 +42,13 @@ bool sphere::hit(
     return false;
 }
 
-bool sphere::bounding_box(float t0, float t1, aabb& box) const
+bool sphere::bounding_box(
+    float t0, 
+    float t1, 
+    aabb& box) const
 {
-    box = aabb(center - vec3(radius, radius, radius), center + vec3(radius, radius, radius));
+    box = aabb(
+        center - vec3(radius, radius, radius),
+        center + vec3(radius, radius, radius));
     return true;
 }

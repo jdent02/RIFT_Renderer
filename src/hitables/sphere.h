@@ -1,19 +1,20 @@
 #pragma once
 
-#include "core/bases/hitable.h"
-
-#include "core/rendering/utility_functions.h"
+#include "core/bases/ihitable.h"
 #include "core/data_types/hit_record.h"
+#include "core/rendering/utility_functions.h"
 
 // Forward declarations
-class material;
+class imaterial;
+
 class ray;
+
 struct hit_record;
 
 inline void get_sphere_uv(
     const vec3& p,
-    float& u,
-    float& v)
+    float&      u,
+    float&      v)
 {
     float phi = std::atan2(p.z(), p.x());
     float theta = std::asin(p.y());
@@ -21,27 +22,27 @@ inline void get_sphere_uv(
     v = (theta + pi / 2) / pi;
 }
 
-
 class sphere
-    : public hitable
+  : public ihitable
 {
-public:
+  public:
     sphere() = default;
 
     sphere(
-        const vec3 cen,
-        const float r,
-        material* mat)
-        : center(cen)
-        , radius(r)
-        , material(mat) {};
+        const vec3  cen, 
+        const float r, 
+        imaterial*  mat)
+      : center(cen)
+      , radius(r)
+      , material(mat){};
 
     ~sphere() override = default;
 
-    virtual bool hit(
-        const ray& r,
-        float t_min,
-        float t_max,
+    virtual bool
+    hit(
+        const ray&  r,
+        float       t_min,
+        float       t_max,
         hit_record& rec) const override;
 
     virtual bool bounding_box(
@@ -51,6 +52,6 @@ public:
 
     // Properties
     vec3 center;
-    float radius;
-    material* material;
+    float radius{};
+    imaterial* material{};
 };

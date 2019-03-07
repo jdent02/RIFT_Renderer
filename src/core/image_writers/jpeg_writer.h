@@ -1,16 +1,14 @@
 #pragma once
 
-#include "iimage_writer.h"
-
+#include "core/image_writers/ioutput_writer.h"
 
 class jpeg_writer
-    :public iimage_writer
+  : public ioutput_writer
 {
   public:
-    virtual void write(
-        const float* buffer,
-        const char* filename,
-        int size_x,
-        int size_y) const override;
-
+    void write(
+        const float*    buffer,
+        const char*     filename,
+        int             size_x,
+        int             size_y) const override;
 };

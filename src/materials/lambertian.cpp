@@ -1,7 +1,6 @@
 #include "lambertian.h"
 
 #include "core/rendering/utility_functions.h"
-#include "core/data_types/hit_record.h"
 
 bool lambertian::scatter(
     const ray& r_in,

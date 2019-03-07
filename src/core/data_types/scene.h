@@ -1,11 +1,10 @@
 #pragma once
 
-#include "core/bases/icamera.h"
-#include "core/bases/hitable.h"
-
+class icamera;
+class ihitable;
 
 struct scene
 {
     icamera* cam;
-    hitable* world;
+    ihitable* world;
 };

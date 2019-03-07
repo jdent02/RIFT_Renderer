@@ -1,12 +1,10 @@
-#include "utility/generators/scene_generator.h"
 #include "core/data_types/scene.h"
 #include "core/rendering/render_controller.h"
+#include "utility/generators/scene_generator.h"
 
+#include <ctime>
 #include <iostream>
 #include <sstream>
-#include <ctime>
-
-
 
 int main()
 {
@@ -18,11 +16,11 @@ int main()
 
     scene* scene = generator.make_random_scene(nx, ny);
 
-    time_t start_time = time(NULL);
+    const time_t start_time = time(nullptr);
 
     std::cout << "Rendering....." << std::endl;
 
-    render_controller* engine = new render_controller{
+    auto* engine = new render_controller{
         "../image.jpg",
         nx,
         ny,
@@ -39,8 +37,9 @@ int main()
     delete engine;
     delete scene;
 
-    time_t end_time = time(NULL);
+    const time_t end_time = time(nullptr);
 
-    std::cout << "Render Finished; Total Time: " << end_time - start_time << std::endl;
+    std::cout << "Render Finished; Total Time: " << end_time - start_time
+              << std::endl;
     return 0;
 }
