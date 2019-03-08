@@ -213,6 +213,7 @@ scene* scene_generator::cornell_box(int nx, int ny)
 {
     auto**     list = new ihitable*[8];
     int        i = 0;
+
     imaterial* red =
         new lambertian(new constant_texture(vec3(0.65f, 0.05f, 0.05f)));
     imaterial* white =

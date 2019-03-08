@@ -8,12 +8,21 @@
 #include <cfloat>
 #include <cmath>
 
-class imaterial;
-
 // global const variables
 constexpr float inv_rand_max = 1.f / RAND_MAX;
 constexpr float pi = 3.14159f;
-constexpr float inv_pi = 1 / 3.14159f;
+constexpr float inv_pi = 1.f / 3.14159f;
+
+inline vec3 random_cosine_direction()
+{
+    float r1 = rand() * inv_rand_max;
+    float r2 = rand() * inv_rand_max;
+    float z = std::sqrt(1 - r2);
+    float phi = 2 * pi * r1;
+    float x = cos(phi) * 2 * std::sqrt(r2);
+    float y = sin(phi) * 2 * std::sqrt(r2);
+    return vec3(x, y, z);
+}
 
 inline vec3 random_in_unit_sphere()
 {
@@ -64,8 +73,6 @@ inline vec3 color(const ray& r, ihitable* world, const int depth)
     if (world->hit(r, 0.001f, FLT_MAX, rec))
     {
         ray scattered;
-
-        vec3 attenuation;
 
         const vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
 

@@ -1,6 +1,8 @@
 #include "lambertian.h"
 
+#include "core/rendering/onb.h"
 #include "core/rendering/utility_functions.h"
+
 
 bool lambertian::scatter(
     const ray&        r_in,
@@ -9,10 +11,12 @@ bool lambertian::scatter(
     ray&              scattered,
     float&            pdf) const
 {
-    vec3 target = rec.p + rec.normal + random_in_unit_sphere();
-    scattered = ray(rec.p, unit_vector(target - rec.p), r_in.time());
+    onb uvw;
+    uvw.build_from_w(rec.normal);
+    vec3 direction = uvw.local(random_cosine_direction());
+    scattered = ray(rec.p, unit_vector(direction), r_in.time());
     alb = albedo->value(rec.u, rec.v, rec.p);
-    pdf = dot(rec.normal, scattered.direction()) * inv_pi;
+    pdf = dot(uvw.w(), scattered.direction()) * inv_pi;
     return true;
 }
 

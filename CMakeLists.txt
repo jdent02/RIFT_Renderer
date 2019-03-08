@@ -25,6 +25,7 @@ set (
     src/core/acceleration_structures/bvh_node.h
     src/core/acceleration_structures/bvh_node.cpp
     src/core/bases/imaterial.h
+    src/core/rendering/onb.h
     src/core/rendering/render_controller.h
     src/core/rendering/render_controller.cpp
     src/core/rendering/render_worker.h
@@ -42,7 +43,8 @@ set (
     src/core/acceleration_structures/bvh_utils.h
     src/core/rendering/scatter_functions.h
     src/core/data_types/hit_record.h
-    src/core/image_writers/png_writer.cpp src/core/image_writers/png_writer.h)
+    src/core/image_writers/png_writer.cpp 
+    src/core/image_writers/png_writer.h)
 
 source_group(
     "src\\core\\acceleration_structures" REGULAR_EXPRESSION
