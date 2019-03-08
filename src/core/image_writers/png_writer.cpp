@@ -2,6 +2,7 @@
 
 #include "third_party/stb_image_write.h"
 
+#include <cmath>
 #include <iostream>
 
 void png_writer::write(

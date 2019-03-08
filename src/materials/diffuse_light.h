@@ -11,13 +11,14 @@ class diffuse_light : public imaterial
     explicit diffuse_light(itexture* a)
       : emit(a){};
 
-    virtual ~diffuse_light() override = default;
+    ~diffuse_light() override = default;
 
-    virtual bool scatter(
+    bool scatter(
         const ray&        r_in,
         const hit_record& rec,
         vec3&             attenuation,
-        ray&              scattered) const override
+        ray&              scattered,
+        float&            pdf) const override
     {
         return false;
     }

@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(FARTS_renderer VERSION 0.1.0)
+project(RIFT_renderer VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
-    ${STB_LIB}
     src
 )
 
@@ -152,7 +151,7 @@ source_group(
 
 set (
     MAIN_SOURCE
-    main.cpp
+    applications/RIFT_cli/main.cpp
 )
 
 set (
@@ -168,6 +167,11 @@ set (
 )
 
 add_executable(
-    FARTS
+    RIFT
     ${CPP_SOURCES}
+)
+
+add_executable(
+    number_generator_test
+    utility_apps/number_generator/main.cpp
 )

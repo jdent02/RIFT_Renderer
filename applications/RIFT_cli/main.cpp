@@ -10,7 +10,7 @@ int main()
 {
     const int nx{640};
     const int ny{640};
-    const int num_samples(50 * 8);
+    const int num_samples(100 * 8);
 
     scene_generator generator;
 

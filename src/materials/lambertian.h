@@ -16,8 +16,14 @@ class lambertian : public imaterial
     virtual bool scatter(
         const ray&        r_in,
         const hit_record& rec,
-        vec3&             attenuation,
-        ray&              scattered) const override;
+        vec3&             alb,
+        ray&              scattered,
+        float&            pdf) const override;
+
+    float scattering_pdf(
+        const ray&        r_in,
+        const hit_record& rec,
+        const ray&        scattered) const override;
 
     itexture* albedo;
 };

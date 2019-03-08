@@ -13,6 +13,7 @@ class imaterial;
 // global const variables
 constexpr float inv_rand_max = 1.f / RAND_MAX;
 constexpr float pi = 3.14159f;
+constexpr float inv_pi = 1 / 3.14159f;
 
 inline vec3 random_in_unit_sphere()
 {
@@ -24,9 +25,24 @@ inline vec3 random_in_unit_sphere()
                       rand() * inv_rand_max,
                       rand() * inv_rand_max) -
             vec3(1.f, 1.f, 1.f);
-    } while (p.squared_length() >= 1.f);
+    } while (dot(p, p) >= 1.f);
 
     return p;
+}
+
+inline vec3 random_on_unit_sphere()
+{
+    vec3 p;
+    do
+    {
+        p = 2.f * vec3(
+                      rand() * inv_rand_max,
+                      rand() * inv_rand_max,
+                      rand() * inv_rand_max) -
+            vec3(1.f, 1.f, 1.f);
+    } while (dot(p, p) >= 1.f);
+
+    return unit_vector(p);
 }
 
 inline vec3 random_in_unit_disk()
@@ -53,10 +69,15 @@ inline vec3 color(const ray& r, ihitable* world, const int depth)
 
         const vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
 
-        if (depth < 10 && rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        float pdf;
+
+        vec3 albedo;
+
+        if (depth < 10 && rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         {
-            return emitted + attenuation * color(scattered, world, depth + 1);
-            //            return attenuation;
+            return emitted +
+                   albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered) *
+                       color(scattered, world, depth + 1) / pdf;
         }
 
         return emitted;

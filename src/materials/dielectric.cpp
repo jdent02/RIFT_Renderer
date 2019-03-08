@@ -8,7 +8,8 @@ bool dielectric::scatter(
     const ray&        r_in,
     const hit_record& rec,
     vec3&             attenuation,
-    ray&              scattered) const
+    ray&              scattered,
+    float&            pdf) const
 {
     vec3 outward_normal;
 

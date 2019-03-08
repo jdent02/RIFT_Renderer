@@ -7,7 +7,8 @@ bool metal::scatter(
     const ray&        r_in,
     const hit_record& rec,
     vec3&             attenuation,
-    ray&              scattered) const
+    ray&              scattered,
+    float&            pdf) const
 {
     const vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
     scattered =
