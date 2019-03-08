@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/bases/icamera.h"
+#include "core/data_types/scene.h"
 #include "core/image_writers/ioutput_writer.h"
 #include "utility/rng/igenerator.h"
 
@@ -16,8 +17,7 @@ class render_controller
         int         nx,
         int         ny,
         int         ns,
-        icamera*    cam,
-        ihitable*   world);
+        scene*  render_scene);
 
     ~render_controller() = default;
 
@@ -36,8 +36,7 @@ class render_controller
     const int       ny_;
     const int       ns_;
     const float     inv_ns_;
-    icamera*        cam_;
-    ihitable*       world_;
+    scene* render_scene_;
     igenerator*     random_generator_{};
     ioutput_writer* image_writer_;
     const char*     out_filename_;

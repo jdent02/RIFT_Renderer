@@ -21,8 +21,9 @@
 
 #include "third_party/stb_image.h"
 
+
 // Class implementation
-scene* scene_generator::make_random_scene(const int nx, const int ny)
+void scene_generator::make_random_scene(scene& in_scene, const int nx, const int ny)
 {
     const int n = 500;
 
@@ -118,9 +119,11 @@ scene* scene_generator::make_random_scene(const int nx, const int ny)
         0.5f);
 
     delete random_generator;
-    return new scene{cam, new bvh_node(list, i, 0.f, 0.5f)};
-}
 
+    in_scene.cam = cam;
+    in_scene.world = new bvh_node(list, i, 0.f, 0.5f);
+}
+/*
 ihitable* scene_generator::two_spheres()
 {
     auto** list = new ihitable*[2];
@@ -208,8 +211,9 @@ scene* scene_generator::rect_light(int nx, int ny)
 
     return new scene{cam, new hitable_list(list, 3)};
 }
+*/
 
-scene* scene_generator::cornell_box(int nx, int ny)
+void scene_generator::cornell_box(scene& in_scene, const int nx, const int ny)
 {
     auto**     list = new ihitable*[8];
     int        i = 0;
@@ -259,5 +263,7 @@ scene* scene_generator::cornell_box(int nx, int ny)
         0.f,
         0.5f);
 
-    return new scene{cam, new hitable_list(list, i)};
+    in_scene.cam = cam;
+    in_scene.world = new hitable_list(list, i);
+
 }

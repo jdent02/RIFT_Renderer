@@ -10,32 +10,29 @@ int main()
 {
     const int nx{640};
     const int ny{640};
-    const int num_samples(100 * 8);
+    const int num_samples(10 * 8);
 
     scene_generator generator;
 
-    scene* scene = generator.cornell_box(nx, ny);
+    scene master_scene{};
+
+    generator.make_random_scene(master_scene, nx, ny);
 
     const time_t start_time = time(nullptr);
 
     std::cout << "Rendering....." << std::endl;
 
-    auto* engine = new render_controller{
+    render_controller engine(
         "../image.png",
         nx,
         ny,
         num_samples,
-        scene->cam,
-        scene->world};
+        &master_scene);
 
-    engine->do_render();
+    engine.do_render();
 
-    engine->write_output();
+    engine.write_output();
 
-    engine->cleanup();
-
-    delete engine;
-    delete scene;
 
     const time_t end_time = time(nullptr);
 

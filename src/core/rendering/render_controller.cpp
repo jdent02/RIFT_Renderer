@@ -15,15 +15,13 @@ render_controller::render_controller(
     const int   nx,
     const int   ny,
     const int   ns,
-    icamera*    cam,
-    ihitable*   world)
+    scene* render_scene)
   : buffer_(new float[nx * ny * 3])
   , nx_(nx)
   , ny_(ny)
   , ns_(ns)
   , inv_ns_(1.f / ns)
-  , cam_(cam)
-  , world_(world)
+  , render_scene_(render_scene)
   , image_writer_(new png_writer)
   , out_filename_(filename)
 {}
@@ -55,8 +53,7 @@ void render_controller::do_render()
             ny_,
             samples_per_thread,
             buffer_,
-            cam_,
-            world_);
+            render_scene_);
     }
 
     for (auto& thread : threads)

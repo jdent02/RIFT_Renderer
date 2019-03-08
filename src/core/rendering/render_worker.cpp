@@ -10,6 +10,7 @@
 #include <memory>
 #include <mutex>
 #include <vector>
+#include "core/data_types/scene.h"
 
 void render_worker::run_thread(
     int       seed,
@@ -17,8 +18,7 @@ void render_worker::run_thread(
     int       ny,
     int       ns,
     float*    buffer,
-    icamera*  cam,
-    ihitable* world)
+    scene* render_scene)
 {
     std::mutex                  mutex;
     const int                   buffer_size = nx * ny * 3;
@@ -40,8 +40,8 @@ void render_worker::run_thread(
             {
                 const float u = (i + rn_gen->next()) * inv_nx;
                 const float v = (j + rn_gen->next()) * inv_ny;
-                ray         r = cam->get_ray(u, v);
-                col += color(r, world, 0);
+                ray         r = render_scene->cam->get_ray(u, v);
+                col += color(r, render_scene->world, 0);
             }
 
             temp_buffer->push_back(col[0]);

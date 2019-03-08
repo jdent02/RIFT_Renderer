@@ -1,5 +1,6 @@
 #pragma once
 
+struct scene;
 class icamera;
 class ihitable;
 
@@ -11,7 +12,6 @@ void run_thread(
     int       ny,
     int       ns,
     float*    buffer,
-    icamera*  cam,
-    ihitable* world);
+    scene* render_scene);
 
 } // namespace render_worker
