@@ -4,9 +4,8 @@
 #include "utility/generators/scene_generator.h"
 #include "command_line_parser.h"
 
+#include <cstdio>
 #include <ctime>
-#include <iostream>
-#include <sstream>
 
 int main(const int argc, char* argv[])
 {
@@ -22,9 +21,9 @@ int main(const int argc, char* argv[])
 
     const time_t start_time = time(nullptr);
 
-    std::cout << "Rendering....." << std::endl;
+    printf("Rendering.....\n");
 
-    render_controller engine(settings, &master_scene);
+    render_controller engine(settings, master_scene);
 
     engine.do_render();
 
@@ -32,8 +31,7 @@ int main(const int argc, char* argv[])
 
     const time_t end_time = time(nullptr);
 
-    std::cout << "Render Finished; Total Time: " << end_time - start_time
-              << std::endl;
-
+    printf("Render Finished; Total Time: %f\n", static_cast<double>(end_time - start_time));
+     
     return 0;
 }

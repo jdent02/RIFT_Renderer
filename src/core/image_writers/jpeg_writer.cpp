@@ -5,10 +5,10 @@
 #include <iostream>
 
 void jpeg_writer::write(
-    const float* buffer,
-    const std::string&  filename,
-    const int    size_x,
-    const int    size_y) const
+    const float*       buffer,
+    const std::string& filename,
+    const int          size_x,
+    const int          size_y) const
 {
     std::cout << "Writing Output" << std::endl;
 

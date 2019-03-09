@@ -5,15 +5,14 @@
 #include "core/rendering/render_worker.h"
 #include "utility/rng/xoroshiro128.h"
 
-#include <iomanip>
+#include <cstdio>
 #include <thread>
 #include <vector>
 
 render_controller::render_controller(
     const render_settings& settings,
-    scene*                 render_scene)
-  : buffer_(new float[settings.resolution_x * settings.resolution_y * 3])
-  , inv_ns_(1.f / settings.samples)
+    scene&                 render_scene)
+  : inv_ns_(1.f / settings.samples)
   , render_scene_(render_scene)
   , settings_(settings)
 {
@@ -29,32 +28,34 @@ render_controller::render_controller(
 
 void render_controller::do_render()
 {
+    printf("Generating Pixels...\n");
+
     const auto seed_1 = static_cast<uint64_t>(time(nullptr));
 
-    random_generator_ = new xoro_128;
-    random_generator_->seed_gen(seed_1);
+    buffer_ = std::make_unique<float[]>(
+        settings_.resolution_x * settings_.resolution_y * 3);
 
-    std::cout << "Generating Pixels..." << std::endl;
+    random_generator_ = std::make_unique<xoro_128>();
+
+    random_generator_->seed_gen(seed_1);
 
     std::vector<std::thread> threads;
 
-    int samples_per_thread = int(settings_.samples / settings_.threads);
-
     threads.reserve(settings_.threads);
 
-    std::cout << "Number of samples per thread: " << samples_per_thread
-              << std::endl;
+    int samples_per_thread = int(settings_.samples / settings_.threads);
+
+    printf("Number of samples per thread: %i\n", samples_per_thread);
 
     for (int i = 0; i < settings_.threads; i++)
     {
         threads.emplace_back(
             render_worker::run_thread,
             int(random_generator_->next()),
-            settings_.resolution_x,
-            settings_.resolution_y,
             samples_per_thread,
-            buffer_,
-            render_scene_);
+            buffer_.get(),
+            std::ref(render_scene_),
+            std::ref(settings_));
     }
 
     for (auto& thread : threads)
@@ -62,19 +63,11 @@ void render_controller::do_render()
         thread.join();
     }
 
+    // Normalize pixel values
     const int buffer_size = settings_.resolution_x * settings_.resolution_y * 3;
 
     for (int i = 0; i < buffer_size; i++)
     {
         buffer_[i] *= inv_ns_;
     }
-}
-
-void render_controller::cleanup() const
-{
-    delete[] buffer_;
-    delete random_generator_;
-    delete image_writer_;
-
-    std::cout << "Renderer Deleted" << std::endl;
 }
