@@ -11,19 +11,13 @@
 #include <vector>
 
 render_controller::render_controller(
-    const char* filename,
-    const int   nx,
-    const int   ny,
-    const int   ns,
-    scene* render_scene)
-  : buffer_(new float[nx * ny * 3])
-  , nx_(nx)
-  , ny_(ny)
-  , ns_(ns)
-  , inv_ns_(1.f / ns)
+    const render_settings& settings,
+    scene*                 render_scene)
+  : buffer_(new float[settings.resolution_x * settings.resolution_y * 3])
+  , inv_ns_(1.f / settings.samples)
   , render_scene_(render_scene)
   , image_writer_(new png_writer)
-  , out_filename_(filename)
+  , settings_(settings)
 {}
 
 void render_controller::do_render()
@@ -37,20 +31,20 @@ void render_controller::do_render()
 
     std::vector<std::thread> threads;
 
-    int samples_per_thread = ns_ / 8;
+    int samples_per_thread = int(settings_.samples / settings_.threads);
 
-    threads.reserve(8);
+    threads.reserve(settings_.threads);
 
     std::cout << "Number of samples per thread: " << samples_per_thread
               << std::endl;
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < settings_.threads; i++)
     {
         threads.emplace_back(
             render_worker::run_thread,
             int(random_generator_->next()),
-            nx_,
-            ny_,
+            settings_.resolution_x,
+            settings_.resolution_y,
             samples_per_thread,
             buffer_,
             render_scene_);
@@ -61,7 +55,7 @@ void render_controller::do_render()
         thread.join();
     }
 
-    const int buffer_size = nx_ * ny_ * 3;
+    const int buffer_size = settings_.resolution_x * settings_.resolution_y * 3;
 
     for (int i = 0; i < buffer_size; i++)
     {

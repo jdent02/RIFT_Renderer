@@ -134,11 +134,24 @@ set (
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
     src/utility/noises/perlin.h
+    src/utility/containers/render_settings.h
+	src/utility/parsers/command_line_parser.h
+	src/utility/parsers/command_line_parser.cpp
+)
+
+source_group(
+	"src\\utilities\\parsers" REGULAR_EXPRESSION
+	src/utility/parsers/.*
 )
 
 source_group(
     "src\\utilities\\noises" REGULAR_EXPRESSION
     src/utility/noises/.*
+)
+
+source_group(
+	"src\\utilities\\containers" REGULAR_EXPRESSION
+	src/utility/containers/.*
 )
 
 source_group(

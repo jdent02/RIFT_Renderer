@@ -20,10 +20,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "third_party/stb_image.h"
-
+#include "utility/containers/render_settings.h"
 
 // Class implementation
-void scene_generator::make_random_scene(scene& in_scene, const int nx, const int ny)
+void scene_generator::make_random_scene(
+    scene&                 in_scene,
+    const render_settings& settings)
 {
     const int n = 500;
 
@@ -112,7 +114,7 @@ void scene_generator::make_random_scene(scene& in_scene, const int nx, const int
         lookat,
         vec3(0.f, 1.f, 0.f),
         40.f,
-        float(nx) / float(ny),
+        float(settings.resolution_x) / float(settings.resolution_y),
         aperture,
         dist_to_focus,
         0.f,
@@ -213,10 +215,10 @@ scene* scene_generator::rect_light(int nx, int ny)
 }
 */
 
-void scene_generator::cornell_box(scene& in_scene, const int nx, const int ny)
+void scene_generator::cornell_box(scene& in_scene, const render_settings& settings)
 {
-    auto**     list = new ihitable*[8];
-    int        i = 0;
+    auto** list = new ihitable*[8];
+    int    i = 0;
 
     imaterial* red =
         new lambertian(new constant_texture(vec3(0.65f, 0.05f, 0.05f)));
@@ -257,7 +259,7 @@ void scene_generator::cornell_box(scene& in_scene, const int nx, const int ny)
         lookat,
         vec3(0.f, 1.f, 0.f),
         40.f,
-        float(nx) / float(ny),
+        float(settings.resolution_x) / float(settings.resolution_y),
         aperture,
         dist_to_focus,
         0.f,
@@ -265,5 +267,4 @@ void scene_generator::cornell_box(scene& in_scene, const int nx, const int ny)
 
     in_scene.cam = cam;
     in_scene.world = new hitable_list(list, i);
-
 }

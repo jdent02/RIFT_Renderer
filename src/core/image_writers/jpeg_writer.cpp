@@ -6,13 +6,15 @@
 
 void jpeg_writer::write(
     const float* buffer,
-    const char*  filename,
+    const std::string&  filename,
     const int    size_x,
     const int    size_y) const
 {
     std::cout << "Writing Output" << std::endl;
 
     const int buffer_size{size_x * size_y * 3};
+
+    std::string out_filename = filename + ".jpg";
 
     auto* out_buffer = new unsigned char[buffer_size];
 
@@ -23,7 +25,7 @@ void jpeg_writer::write(
     }
 
     const int success =
-        stbi_write_jpg(filename, size_x, size_y, 3, out_buffer, 90);
+        stbi_write_jpg(out_filename.c_str(), size_x, size_y, 3, out_buffer, 90);
 
     if (success != 0)
     {

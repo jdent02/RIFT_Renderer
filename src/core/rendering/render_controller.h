@@ -3,6 +3,7 @@
 #include "core/bases/icamera.h"
 #include "core/data_types/scene.h"
 #include "core/image_writers/ioutput_writer.h"
+#include "utility/containers/render_settings.h"
 #include "utility/rng/igenerator.h"
 
 // Forward declarations
@@ -12,12 +13,7 @@ class ihitable;
 class render_controller
 {
   public:
-    render_controller(
-        const char* filename,
-        int         nx,
-        int         ny,
-        int         ns,
-        scene*  render_scene);
+    render_controller(const render_settings& settings, scene* render_scene);
 
     ~render_controller() = default;
 
@@ -25,19 +21,20 @@ class render_controller
 
     void write_output() const
     {
-        image_writer_->write(buffer_, out_filename_, nx_, ny_);
+        image_writer_->write(
+            buffer_,
+            settings_.filepath,
+            settings_.resolution_x,
+            settings_.resolution_y);
     }
 
     void cleanup() const;
 
   private:
-    float*          buffer_;
-    const int       nx_;
-    const int       ny_;
-    const int       ns_;
-    const float     inv_ns_;
-    scene* render_scene_;
-    igenerator*     random_generator_{};
-    ioutput_writer* image_writer_;
-    const char*     out_filename_;
+    float*                buffer_;
+    const float           inv_ns_;
+    scene*                render_scene_;
+    igenerator*           random_generator_{};
+    ioutput_writer*       image_writer_;
+    const render_settings settings_;
 };

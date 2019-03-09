@@ -2,6 +2,12 @@
 
 #include <cstdint>
 
+enum samplers
+{
+    XORO_128,
+    RAND_48
+};
+
 class igenerator
 {
   public:
