@@ -43,6 +43,10 @@ class xz_rect final : public ihitable
 
     bool bounding_box(float t0, float t1, aabb& box) const override;
 
+    float pdf_value(const vec3& o, const vec3& v) const override;
+
+    vec3 random(const vec3& o) const override;
+
     imaterial* mp;
     float      x0, x1, z0, z1, k;
 };

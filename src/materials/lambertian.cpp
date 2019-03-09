@@ -3,7 +3,6 @@
 #include "core/rendering/onb.h"
 #include "core/rendering/utility_functions.h"
 
-
 bool lambertian::scatter(
     const ray&        r_in,
     const hit_record& rec,

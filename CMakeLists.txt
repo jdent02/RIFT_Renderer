@@ -53,7 +53,18 @@ set (
     src/core/rendering/scatter_functions.h
     src/core/data_types/hit_record.h
     src/core/image_writers/png_writer.cpp
-    src/core/image_writers/png_writer.h)
+    src/core/image_writers/png_writer.h
+    src/core/pdfs/pdf.h
+    src/core/pdfs/cosine_pdf.cpp
+    src/core/pdfs/cosine_pdf.h
+	src/core/pdfs/hitable_pdf.h
+	src/core/pdfs/mixture_pdf.h
+)
+
+source_group(
+    "src\\core\\pdfs" REGULAR_EXPRESSION
+    src/core/pdfs/.*
+)
 
 source_group(
     "src\\core\\acceleration_structures" REGULAR_EXPRESSION
@@ -204,4 +215,5 @@ add_executable(
 add_executable(
     number_generator_test
     utility_apps/number_generator/main.cpp
+	src/utility/rng/xoroshiro128.cpp
 )

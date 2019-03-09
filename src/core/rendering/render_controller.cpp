@@ -32,12 +32,12 @@ void render_controller::do_render()
 
     const auto seed_1 = static_cast<uint64_t>(time(nullptr));
 
-    buffer_ = std::make_unique<float[]>(
-        settings_.resolution_x * settings_.resolution_y * 3);
-
-    random_generator_ = std::make_unique<xoro_128>();
+    random_generator_ = new xoro_128;
 
     random_generator_->seed_gen(seed_1);
+
+    buffer_ = std::make_unique<float[]>(
+        settings_.resolution_x * settings_.resolution_y * 3);
 
     std::vector<std::thread> threads;
 
@@ -51,7 +51,7 @@ void render_controller::do_render()
     {
         threads.emplace_back(
             render_worker::run_thread,
-            int(random_generator_->next()),
+            random_generator_->next(),
             samples_per_thread,
             buffer_.get(),
             std::ref(render_scene_),

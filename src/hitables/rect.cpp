@@ -1,6 +1,7 @@
 #include "rect.h"
 
 #include "core/data_types/aabb.h"
+#include "core/rendering/utility_functions.h"
 
 bool xy_rect::hit(const ray& r, float t0, float t1, hit_record& rec) const
 {
@@ -78,6 +79,28 @@ bool xz_rect::bounding_box(float t0, float t1, aabb& box) const
     box =
         aabb(vec3(x0, z0, float(k - 0.0001)), vec3(x1, z1, float(k + 0.0001)));
     return true;
+}
+
+float xz_rect::pdf_value(const vec3& o, const vec3& v) const
+{
+    hit_record rec;
+    if (this->hit(ray(o, v), 0.001, FLT_MAX, rec))
+    {
+        float area = (x1 - x0) * (z1 - z0);
+        float distance_squared = rec.t*rec.t*v.squared_length();
+        float cosine = fabs(dot(v, rec.normal) / v.length());
+        return float(distance_squared / (cosine*area));
+    }
+    return 0.f;
+}
+
+vec3 xz_rect::random(const vec3& o) const
+{
+    vec3 random_point = vec3(
+        x0 + (rand() * inv_rand_max)*(x1 - x0),
+        k,
+        z0 + (rand()*inv_rand_max)*(z1 - z0));
+    return random_point - o;
 }
 
 xz_rect::xz_rect(

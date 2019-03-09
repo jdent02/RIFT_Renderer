@@ -10,10 +10,9 @@
 
 #include <memory>
 #include <mutex>
-#include <vector>
 
 void render_worker::run_thread(
-    const int              seed,
+    const float            seed,
     const int              ns,
     float*                 buffer,
     const scene&           render_scene,
@@ -23,8 +22,7 @@ void render_worker::run_thread(
 
     const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
 
-    std::unique_ptr<igenerator> rn_gen = set_generator(settings, seed);
-
+    std::unique_ptr<igenerator> rn_gen = std::make_unique<xoro_128>();
     rn_gen->seed_gen(static_cast<uint64_t>(seed));
 
     std::unique_ptr<float[]> temp_buffer = std::make_unique<float[]>(
@@ -61,24 +59,4 @@ void render_worker::run_thread(
     {
         buffer[i] += temp_buffer[i];
     }
-}
-
-std::unique_ptr<igenerator> render_worker::set_generator(
-    const render_settings& settings,
-    const int&             seed)
-{
-    std::unique_ptr<igenerator> rn_gen;
-
-    if (settings.sampler == XORO_128)
-    {
-        rn_gen = std::make_unique<xoro_128>();
-        rn_gen->seed_gen(static_cast<uint64_t>(seed));
-    }
-    else if (settings.sampler == RAND_48)
-    {
-        rn_gen = std::make_unique<drand_48>();
-        rn_gen->seed_gen(static_cast<uint64_t>(seed));
-    }
-
-    return rn_gen;
 }

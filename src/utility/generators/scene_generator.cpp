@@ -233,7 +233,7 @@ void scene_generator::cornell_box(scene& in_scene, const render_settings& settin
 
     list[i++] = new yz_rect(0, 555, 0, 555, 0, red);
 
-    list[i++] = new xz_rect(213, 343, 227, 332, 554, light);
+    list[i++] = new flip_normals(new xz_rect(213, 343, 227, 332, 554, light));
 
     list[i++] = new flip_normals(new xz_rect(0, 555, 0, 555, 555, white));
 

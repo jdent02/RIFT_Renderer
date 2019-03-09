@@ -1,8 +1,9 @@
+#include "command_line_parser.h"
+
 #include "core/data_types/scene.h"
 #include "core/rendering/render_controller.h"
 #include "utility/containers/render_settings.h"
 #include "utility/generators/scene_generator.h"
-#include "command_line_parser.h"
 
 #include <cstdio>
 #include <ctime>

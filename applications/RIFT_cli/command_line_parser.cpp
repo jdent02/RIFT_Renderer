@@ -5,7 +5,9 @@
 #include "utility/rng/igenerator.h"
 #include "utility/version/version.h"
 
+#include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <thread>
 
 render_settings command_line_parser::parse(const int argc, char* argv[])

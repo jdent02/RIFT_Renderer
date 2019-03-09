@@ -6,6 +6,8 @@
 // Standard libraries
 #include <cstdint>
 
+constexpr float inv_uint64 = 1.f / UINT64_MAX;
+
 // Taken from Xoroshiro128
 // Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
 
