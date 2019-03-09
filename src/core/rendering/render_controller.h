@@ -35,6 +35,6 @@ class render_controller
     const float           inv_ns_;
     scene*                render_scene_;
     igenerator*           random_generator_{};
-    ioutput_writer*       image_writer_;
+    std::unique_ptr<ioutput_writer>       image_writer_;
     const render_settings settings_;
 };

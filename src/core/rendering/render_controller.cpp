@@ -5,7 +5,6 @@
 #include "core/rendering/render_worker.h"
 #include "utility/rng/xoroshiro128.h"
 
-#include <fstream>
 #include <iomanip>
 #include <thread>
 #include <vector>
@@ -16,9 +15,17 @@ render_controller::render_controller(
   : buffer_(new float[settings.resolution_x * settings.resolution_y * 3])
   , inv_ns_(1.f / settings.samples)
   , render_scene_(render_scene)
-  , image_writer_(new png_writer)
   , settings_(settings)
-{}
+{
+    if (settings.output_writer == PNG)
+    {
+        image_writer_ = std::make_unique<png_writer>();
+    }
+    else if (settings.output_writer == JPEG)
+    {
+        image_writer_ = std::make_unique<jpeg_writer>();
+    }
+}
 
 void render_controller::do_render()
 {

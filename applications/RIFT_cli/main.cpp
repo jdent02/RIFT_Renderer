@@ -2,7 +2,7 @@
 #include "core/rendering/render_controller.h"
 #include "utility/containers/render_settings.h"
 #include "utility/generators/scene_generator.h"
-#include "utility/parsers/command_line_parser.h"
+#include "command_line_parser.h"
 
 #include <ctime>
 #include <iostream>
@@ -34,6 +34,6 @@ int main(const int argc, char* argv[])
 
     std::cout << "Render Finished; Total Time: " << end_time - start_time
               << std::endl;
-    
+
     return 0;
 }

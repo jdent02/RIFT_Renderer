@@ -13,6 +13,7 @@ configure_file (${PROJECT_SOURCE_DIR}/src/utility/version/version.h.in
 
 include_directories(
     src
+    applications/RIFT_cli
 )
 
 set (
@@ -51,7 +52,7 @@ set (
     src/core/acceleration_structures/bvh_utils.h
     src/core/rendering/scatter_functions.h
     src/core/data_types/hit_record.h
-    src/core/image_writers/png_writer.cpp 
+    src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h)
 
 source_group(
@@ -143,18 +144,19 @@ set (
     src/utility/rng/drand48.h
     src/utility/noises/perlin.h
     src/utility/containers/render_settings.h
-	src/utility/parsers/command_line_parser.h
-    src/utility/parsers/command_line_parser.cpp
+    applications/RIFT_cli/command_line_parser.h
+    applications/RIFT_cli/command_line_parser.cpp
+    src/utility/version/version.h
 )
 
 source_group(
-    "src\\utilities\\version"
-    src/utility/version/.*
+    "src\\utilities\\version" FILES
+    src/utility/version/version.h.in
 )
 
 source_group(
-	"src\\utilities\\parsers" REGULAR_EXPRESSION
-	src/utility/parsers/.*
+    "src\\utilities\\parsers" REGULAR_EXPRESSION
+    src/utility/parsers/.*
 )
 
 source_group(
@@ -163,8 +165,8 @@ source_group(
 )
 
 source_group(
-	"src\\utilities\\containers" REGULAR_EXPRESSION
-	src/utility/containers/.*
+    "src\\utilities\\containers" REGULAR_EXPRESSION
+    src/utility/containers/.*
 )
 
 source_group(

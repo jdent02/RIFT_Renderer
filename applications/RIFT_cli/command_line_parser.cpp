@@ -3,9 +3,9 @@
 #include "core/image_writers/ioutput_writer.h"
 #include "utility/containers/render_settings.h"
 #include "utility/rng/igenerator.h"
+#include "utility/version/version.h"
 
 #include <cstdio>
-#include <iostream>
 #include <thread>
 
 render_settings command_line_parser::parse(const int argc, char* argv[])
@@ -48,7 +48,14 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
         }
         else if (!static_cast<bool>(strcmp(argv[i], "--help")))
         {
-            
+            print_help();
+        }
+        else if (!static_cast<bool>(strcmp(argv[i], "--writer")))
+        {
+            if (!static_cast<bool>(strcmp(argv[i + 1], "jpeg")))
+            {
+                out_writer = JPEG;
+            }
         }
     }
 
@@ -88,5 +95,19 @@ int command_line_parser::convert_number(size_t& length, const char* number)
 
 void command_line_parser::print_help()
 {
-    
+    printf(
+        "RIFT Renderer version %s\n\n"
+        "Options:\n\n"
+        "   --threads: Number of rendering threads.  Defaults to system max if "
+        "not specified\n"
+        "   --samples: Number of rendering samples.  This will be split "
+        "amongst "
+        "the available threads\n"
+        "   --resolution: Resolution of the render in width and height\n"
+        "   --filepath: Output filepath for the rendered image.  The extension "
+        "type will be automatically added\n"
+        "   --writer: Image writer for renders, options are png or jpeg\n",
+        VERSION_STRING);
+
+    exit(EXIT_SUCCESS);
 }
