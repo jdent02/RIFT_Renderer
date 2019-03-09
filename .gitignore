@@ -35,7 +35,9 @@ _ReSharper*/
 packages/
 /.idea
 *.ppm
-/image.jpg
+*.jpg
+*.png
 /.vscode
 /cmake-build-debug
 /cmake-build-release
+*version.h

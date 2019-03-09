@@ -1,0 +1,4 @@
+#pragma once
+
+#define VERSION_STRING        \
+    "${version_major}.${version_minor}.${version_patch}-${version_maturity}"

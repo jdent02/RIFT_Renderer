@@ -46,6 +46,10 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
             size_t str_len = strlen(sample_num);
             samples = convert_number(str_len, sample_num);
         }
+        else if (!static_cast<bool>(strcmp(argv[i], "--help")))
+        {
+            
+        }
     }
 
     printf(
@@ -66,4 +70,23 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
                            out_writer,
                            filepath,
                            use_importance_sampling};
+}
+
+int command_line_parser::convert_number(size_t& length, const char* number)
+{
+    int digit{0};
+
+    for (size_t i = 0; i < length - 1; i++)
+    {
+        digit += int((number[i] - '0') * pow(10, length - 1 - i));
+    }
+
+    digit += number[length - 1] - '0';
+
+    return digit;
+}
+
+void command_line_parser::print_help()
+{
+    
 }

@@ -3,6 +3,14 @@ project(RIFT_renderer VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set (version_major    0)
+set (version_minor    1)
+set (version_patch    0)
+set (version_maturity alpha)
+
+configure_file (${PROJECT_SOURCE_DIR}/src/utility/version/version.h.in
+                ${PROJECT_SOURCE_DIR}/src/utility/version/version.h)
+
 include_directories(
     src
 )
@@ -136,7 +144,12 @@ set (
     src/utility/noises/perlin.h
     src/utility/containers/render_settings.h
 	src/utility/parsers/command_line_parser.h
-	src/utility/parsers/command_line_parser.cpp
+    src/utility/parsers/command_line_parser.cpp
+)
+
+source_group(
+    "src\\utilities\\version"
+    src/utility/version/.*
 )
 
 source_group(
