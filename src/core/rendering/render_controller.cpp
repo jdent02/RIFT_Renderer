@@ -32,7 +32,7 @@ void render_controller::do_render()
 
     const auto seed_1 = static_cast<uint64_t>(time(nullptr));
 
-    random_generator_ = new xoro_128;
+    random_generator_ = std::make_unique<xoro_128>();
 
     random_generator_->seed_gen(seed_1);
 

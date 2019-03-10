@@ -57,8 +57,8 @@ set (
     src/core/pdfs/pdf.h
     src/core/pdfs/cosine_pdf.cpp
     src/core/pdfs/cosine_pdf.h
-	src/core/pdfs/hitable_pdf.h
-	src/core/pdfs/mixture_pdf.h
+    src/core/pdfs/hitable_pdf.h
+    src/core/pdfs/mixture_pdf.h
 )
 
 source_group(
@@ -215,5 +215,5 @@ add_executable(
 add_executable(
     number_generator_test
     utility_apps/number_generator/main.cpp
-	src/utility/rng/xoroshiro128.cpp
+    src/utility/rng/xoroshiro128.cpp
 )

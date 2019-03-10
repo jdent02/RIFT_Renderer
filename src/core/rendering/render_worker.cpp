@@ -22,7 +22,8 @@ void render_worker::run_thread(
 
     const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
 
-    std::unique_ptr<igenerator> rn_gen = std::make_unique<xoro_128>();
+    std::unique_ptr<igenerator> rn_gen = std::make_unique<drand_48>();
+
     rn_gen->seed_gen(static_cast<uint64_t>(seed));
 
     std::unique_ptr<float[]> temp_buffer = std::make_unique<float[]>(
@@ -41,10 +42,11 @@ void render_worker::run_thread(
             vec3 col(0.f, 0.f, 0.f);
             for (int s = 0; s < ns; s++)
             {
+
                 const float u = (i + rn_gen->next()) * inv_nx;
                 const float v = (j + rn_gen->next()) * inv_ny;
                 ray         r = render_scene.cam->get_ray(u, v);
-                col += color(r, render_scene.world, 0);
+                col += de_nan(color(r, render_scene.world, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

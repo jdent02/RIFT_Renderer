@@ -87,8 +87,8 @@ inline vec3 color(const ray& r, ihitable* world, const int depth)
         if (depth < 10 &&
             rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf_val))
         {
-            ihitable*   light_shape = new xz_rect(213, 343, 227, 332, 554, 0);
-            hitable_pdf p0(light_shape, rec.p);
+            xz_rect     light_shape(213, 343, 227, 332, 554, 0);
+            hitable_pdf p0(&light_shape, rec.p);
             cosine_pdf  p1(rec.normal);
             mixture_pdf p(&p0, &p1);
             scattered = ray(rec.p, p.generate(), r.time());
@@ -101,4 +101,23 @@ inline vec3 color(const ray& r, ihitable* world, const int depth)
         return emitted;
     }
     return vec3(0.f, 0.f, 0.f);
+}
+
+inline vec3 de_nan(const vec3& c)
+{
+    vec3 temp = c;
+    if (!(temp[0] == temp[0]))
+    {
+        temp[0] = 0;
+    }
+    if (!(temp[1] == temp[1]))
+    {
+        temp[1] = 0;
+    }
+    if (!(temp[2] == temp[2]))
+    {
+        temp[2] = 0;
+    }
+
+    return temp;
 }

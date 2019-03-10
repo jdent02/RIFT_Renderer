@@ -87,9 +87,9 @@ float xz_rect::pdf_value(const vec3& o, const vec3& v) const
     if (this->hit(ray(o, v), 0.001, FLT_MAX, rec))
     {
         float area = (x1 - x0) * (z1 - z0);
-        float distance_squared = rec.t*rec.t*v.squared_length();
+        float distance_squared = rec.t * rec.t * v.squared_length();
         float cosine = fabs(dot(v, rec.normal) / v.length());
-        return float(distance_squared / (cosine*area));
+        return float(distance_squared / (cosine * area));
     }
     return 0.f;
 }
@@ -97,9 +97,9 @@ float xz_rect::pdf_value(const vec3& o, const vec3& v) const
 vec3 xz_rect::random(const vec3& o) const
 {
     vec3 random_point = vec3(
-        x0 + (rand() * inv_rand_max)*(x1 - x0),
+        x0 + (rand() * inv_rand_max) * (x1 - x0),
         k,
-        z0 + (rand()*inv_rand_max)*(z1 - z0));
+        z0 + (rand() * inv_rand_max) * (z1 - z0));
     return random_point - o;
 }
 
