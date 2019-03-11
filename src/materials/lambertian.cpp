@@ -1,7 +1,7 @@
 #include "lambertian.h"
 
-#include "core/rendering/utility_functions.h"
 #include "core/pdfs/cosine_pdf.h"
+#include "core/rendering/utility_functions.h"
 
 bool lambertian::scatter(
     const ray&        r_in,

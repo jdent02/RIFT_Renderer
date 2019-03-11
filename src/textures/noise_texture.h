@@ -1,7 +1,7 @@
 #pragma once
 
-#include "itexture.h"
 #include "core/data_types/vec3.h"
+#include "itexture.h"
 #include "utility/noises/perlin.h"
 
 class noise_texture : public itexture

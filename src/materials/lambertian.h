@@ -1,9 +1,8 @@
 #pragma once
 
+#include "core/data_types/hit_record.h"
 #include "imaterial.h"
 #include "textures/itexture.h"
-#include "core/data_types/hit_record.h"
-#include "core/data_types/vec3.h"
 
 class lambertian : public imaterial
 {
@@ -13,10 +12,8 @@ class lambertian : public imaterial
 
     ~lambertian() = default;
 
-    bool scatter(
-        const ray&        r_in,
-        const hit_record& rec,
-        scatter_record& srec) const override;
+    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+        const override;
 
     float scattering_pdf(
         const ray&        r_in,

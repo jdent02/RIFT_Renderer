@@ -1,7 +1,7 @@
 #pragma once
 
-#include "imaterial.h"
 #include "core/data_types/hit_record.h"
+#include "imaterial.h"
 
 // Forward declaration
 class vec3;
@@ -14,10 +14,8 @@ class dielectric : public imaterial
 
     ~dielectric() override = default;
 
-    bool scatter(
-        const ray&        r_in,
-        const hit_record& rec,
-        scatter_record&   srec) const override;
+    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+        const override;
 
     float ref_idx;
 };

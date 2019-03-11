@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/image_writers/ioutput_writer.h"
-#include "utility/rng/igenerator.h"
+#include "core/samplers/igenerator.h"
 
 #include <thread>
 

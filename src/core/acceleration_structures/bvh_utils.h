@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/acceleration_structures/aabb.h"
 #include "hitables/ihitable.h"
-#include "aabb.h"
 
 inline int box_x_compare(const void* a, const void* b)
 {

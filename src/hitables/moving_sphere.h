@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ihitable.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
+#include "ihitable.h"
 
 class moving_sphere : public ihitable
 {

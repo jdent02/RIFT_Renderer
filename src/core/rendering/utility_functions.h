@@ -1,7 +1,5 @@
 #pragma once
 
-#include "hitables/ihitable.h"
-#include "core/data_types/hit_record.h"
 #include "core/data_types/ray.h"
 
 #include <cmath>
@@ -52,6 +50,17 @@ inline vec3 random_on_unit_sphere()
     return unit_vector(p);
 }
 
+inline vec3 random_to_sphere(const float radius, const float distance_squared)
+{
+    float r1 = rand() * inv_rand_max;
+    float r2 = rand() * inv_rand_max;
+    float z = 1 + r2 * (std::sqrt(1 - radius * radius / distance_squared) - 1);
+    float phi = 2 * pi * r1;
+    float x = cos(phi) * std::sqrt(1 - z * z);
+    float y = sin(phi) * std::sqrt(1 - z * z);
+    return vec3(x, y, z);
+}
+
 inline vec3 random_in_unit_disk()
 {
     vec3 p;
@@ -63,4 +72,3 @@ inline vec3 random_in_unit_disk()
 
     return p;
 }
-

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ihitable.h"
 #include "core/data_types/hit_record.h"
 #include "core/rendering/utility_functions.h"
+#include "ihitable.h"
 
 // Forward declarations
 class imaterial;
@@ -29,11 +29,14 @@ class sphere : public ihitable
 
     ~sphere() override = default;
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
         const override;
 
-    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, aabb& box) const override;
 
+    float pdf_value(const vec3& o, const vec3& v) const override;
+
+    vec3 random(const vec3& o) const override;
     // Properties
     vec3       center;
     float      radius{};

@@ -2,7 +2,7 @@
 
 #include "core/image_writers/ioutput_writer.h"
 #include "utility/containers/render_settings.h"
-#include "utility/rng/igenerator.h"
+#include "core/samplers/igenerator.h"
 #include "utility/version/version.h"
 
 #include <cmath>

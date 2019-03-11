@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ihitable.h"
 #include "core/data_types/hit_record.h"
+#include "ihitable.h"
 
 class xy_rect final : public ihitable
 {

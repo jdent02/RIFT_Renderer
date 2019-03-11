@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
+
+set (CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile;Ship" CACHE STRING "" FORCE)
+
 project(RIFT_renderer VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -61,11 +64,32 @@ set (
     src/core/pdfs/mixture_pdf.h
     src/core/data_types/scatter_record.h
     src/core/rendering/color_functions.h
+    src/core/samplers/rng/xoroshiro128.h
+    src/core/samplers/rng/xoroshiro128.cpp
+    src/core/samplers/igenerator.h
+    src/core/samplers/rng/drand48.cpp
+    src/core/samplers/rng/drand48.h
+    src/core/samplers/sampler.h
 )
 
 source_group(
     "src\\core\\pdfs" REGULAR_EXPRESSION
     src/core/pdfs/.*
+)
+
+source_group(
+    "src\\core\\samplers\\QMC" REGULAR_EXPRESSION
+    src/core/samplers/monte_carlo_sequences/.*
+)
+
+source_group(
+    "src\\core\\samplers\\rng" REGULAR_EXPRESSION
+    src/core/samplers/rng/.*
+)
+
+source_group(
+    "src\\core\\samplers" REGULAR_EXPRESSION
+    src/core/samplers/.*
 )
 
 source_group(
@@ -155,26 +179,15 @@ set (
     UTILITY_SOURCES
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
-    src/utility/rng/xoroshiro128.h
-    src/utility/rng/xoroshiro128.cpp
-    src/utility/rng/igenerator.h
-    src/utility/rng/drand48.cpp
-    src/utility/rng/drand48.h
     src/utility/noises/perlin.h
     src/utility/containers/render_settings.h
-    applications/RIFT_cli/command_line_parser.h
-    applications/RIFT_cli/command_line_parser.cpp
     src/utility/version/version.h
 )
 
 source_group(
     "src\\utilities\\version" FILES
+    src/utility/version/version.h
     src/utility/version/version.h.in
-)
-
-source_group(
-    "src\\utilities\\parsers" REGULAR_EXPRESSION
-    src/utility/parsers/.*
 )
 
 source_group(
@@ -193,13 +206,21 @@ source_group(
 )
 
 source_group(
-    "src\\utilities\\rng" REGULAR_EXPRESSION
-    src/utility/rng/.*
+    "cmd_parser" FILES
+    applications/RIFT_cli/command_line_parser.h
+    applications/RIFT_cli/command_line_parser.cpp
+)
+
+source_group(
+    "main" FILES
+    applications/RIFT_cli/main.cpp
 )
 
 set (
     MAIN_SOURCE
     applications/RIFT_cli/main.cpp
+    applications/RIFT_cli/command_line_parser.h
+    applications/RIFT_cli/command_line_parser.cpp
 )
 
 set (
@@ -222,5 +243,5 @@ add_executable(
 add_executable(
     number_generator_test
     utility_apps/number_generator/main.cpp
-    src/utility/rng/xoroshiro128.cpp
+    src/core/samplers/rng/xoroshiro128.cpp
 )

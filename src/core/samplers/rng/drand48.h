@@ -1,6 +1,6 @@
 #pragma once
 
-#include "igenerator.h"
+#include "core/samplers/igenerator.h"
 
 #include <cstdint>
 
@@ -17,18 +17,20 @@ class drand_48 : public igenerator
   public:
     drand_48() = default;
 
-    virtual ~drand_48() override = default;
+    ~drand_48() override = default;
 
-    virtual float next() override
+    float get_1_d() override
     {
         return static_cast<float>(erand48(rand48_seed));
     }
 
-    virtual void seed_gen(uint64_t seed) override;
+    void seed_gen(uint64_t seed) override;
 
     double erand48(unsigned short xseed[3]);
 
     void dorand48(unsigned short xseed[3]);
+
+    float get_2d() override { return 0.f; }
 
     // Properties
     unsigned short rand48_seed[3] = {RAND48_SEED_0,

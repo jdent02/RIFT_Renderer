@@ -15,7 +15,7 @@
 #include "textures/constant_tex.h"
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
-#include "utility/rng/xoroshiro128.h"
+#include "core/samplers/rng/xoroshiro128.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -47,11 +47,11 @@ void scene_generator::make_random_scene(
     {
         for (int b = -11; b < 11; b++)
         {
-            const float choose_mat = random_generator->next();
+            const float choose_mat = random_generator->get_1_d();
             vec3        center(
-                a + 0.9f * (random_generator->next()),
+                a + 0.9f * (random_generator->get_1_d()),
                 0.2f,
-                b + 0.9f * (random_generator->next()));
+                b + 0.9f * (random_generator->get_1_d()));
             if ((center - vec3(4.f, 0.2f, 0.f)).length() > 0.9f)
             {
                 if (choose_mat < 0.8f)
@@ -59,17 +59,17 @@ void scene_generator::make_random_scene(
                     list[i++] = new moving_sphere(
                         center,
                         center +
-                            vec3(0.f, 0.5f * random_generator->next(), 0.f),
+                            vec3(0.f, 0.5f * random_generator->get_1_d(), 0.f),
                         0.f,
                         0.5f,
                         0.2f,
                         new lambertian(new constant_texture(vec3(
-                            random_generator->next() *
-                                (random_generator->next()),
-                            random_generator->next() *
-                                (random_generator->next()),
-                            random_generator->next() *
-                                (random_generator->next())))));
+                            random_generator->get_1_d() *
+                                (random_generator->get_1_d()),
+                            random_generator->get_1_d() *
+                                (random_generator->get_1_d()),
+                            random_generator->get_1_d() *
+                                (random_generator->get_1_d())))));
                 }
                 else if (choose_mat < 0.95f)
                 {
@@ -78,10 +78,10 @@ void scene_generator::make_random_scene(
                         0.2f,
                         new metal(
                             vec3(
-                                0.5f * (1 + random_generator->next()),
-                                0.5f * (1 + random_generator->next()),
-                                0.5f * (1 + random_generator->next())),
-                            random_generator->next()));
+                                0.5f * (1 + random_generator->get_1_d()),
+                                0.5f * (1 + random_generator->get_1_d()),
+                                0.5f * (1 + random_generator->get_1_d())),
+                            random_generator->get_1_d()));
                 }
                 else
                 {
@@ -231,8 +231,7 @@ void scene_generator::cornell_box(
         new lambertian(new constant_texture(vec3(0.12f, 0.45f, 0.15f)));
     imaterial* light =
         new diffuse_light(new constant_texture(vec3(15.f, 15.f, 15.f)));
-    imaterial* aluminum =
-        new metal(vec3(0.8f, 0.85f, 0.88f), 0.f);
+    imaterial* aluminum = new metal(vec3(0.8f, 0.85f, 0.88f), 0.f);
 
     list[i++] = new flip_normals(new yz_rect(0, 555, 0, 555, 555, green));
 
@@ -251,7 +250,7 @@ void scene_generator::cornell_box(
         vec3(130, 0, 65));
 
     list[i++] = new translate(
-        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), aluminum), 15),
+        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), white), 15),
         vec3(265, 0, 295));
 
     const vec3  lookfrom(278.f, 278.f, -800.f);

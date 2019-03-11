@@ -1,8 +1,6 @@
 #include "xoroshiro128.h"
 
-
-
-float xoro_128::next()
+float xoro_128::get_1_d()
 {
     const uint64_t s0 = s[0];
     uint64_t       s1 = s[1];

@@ -3,7 +3,7 @@
 #include "core/image_writers/jpeg_writer.h"
 #include "core/image_writers/png_writer.h"
 #include "core/rendering/render_worker.h"
-#include "utility/rng/xoroshiro128.h"
+#include "core/samplers/rng/xoroshiro128.h"
 
 #include <cstdio>
 #include <thread>
@@ -51,7 +51,7 @@ void render_controller::do_render()
     {
         threads.emplace_back(
             render_worker::run_thread,
-            random_generator_->next(),
+            random_generator_->get_1_d(),
             samples_per_thread,
             buffer_.get(),
             std::ref(render_scene_),

@@ -15,7 +15,9 @@ class igenerator
 
     virtual ~igenerator() = default;
 
-    virtual float next() = 0;
+    virtual float get_1_d() = 0;
+
+    virtual float get_2d() = 0;
 
     virtual void seed_gen(uint64_t seed) = 0;
 };

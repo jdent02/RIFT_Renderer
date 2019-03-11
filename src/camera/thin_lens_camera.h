@@ -1,8 +1,8 @@
 #pragma once
 
-#include "icamera.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
+#include "icamera.h"
 
 class thin_lens_camera : public icamera
 {

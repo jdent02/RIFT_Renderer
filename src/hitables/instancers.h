@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ihitable.h"
 #include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
+#include "ihitable.h"
 
 class translate : public ihitable
 {

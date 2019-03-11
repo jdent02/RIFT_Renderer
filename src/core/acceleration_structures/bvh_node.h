@@ -1,8 +1,8 @@
 #pragma once
 
-#include "hitables/ihitable.h"
-#include "aabb.h"
+#include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
+#include "hitables/ihitable.h"
 
 class bvh_node : public ihitable
 {

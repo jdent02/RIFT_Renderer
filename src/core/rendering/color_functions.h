@@ -5,7 +5,6 @@
 #include <cfloat>
 #include <core/data_types/ray.h>
 #include <core/data_types/vec3.h>
-#include <core/pdfs/cosine_pdf.h>
 #include <core/pdfs/hitable_pdf.h>
 #include <core/pdfs/mixture_pdf.h>
 #include <hitables/ihitable.h>

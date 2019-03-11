@@ -3,6 +3,8 @@
 #include "core/data_types/ray.h"
 #include "core/pdfs/pdf.h"
 
+#include <memory>
+
 struct scatter_record
 {
     ray                  specular_ray;

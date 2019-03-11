@@ -1,7 +1,7 @@
 #pragma once
 
-#include "itexture.h"
 #include "core/data_types/vec3.h"
+#include "itexture.h"
 
 class sky_gradient : public itexture
 {

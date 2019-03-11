@@ -1,7 +1,7 @@
 
 
-#include "utility/rng/igenerator.h"
-#include "utility/rng/xoroshiro128.h"
+#include "core/samplers/igenerator.h"
+#include "core/samplers/rng/xoroshiro128.h"
 #include <ctime>
 #include <cstdio>
 
@@ -15,8 +15,10 @@ int main()
 
     for (int i = 0; i< 10; i++)
     {
-        printf("seed: %f\n", gen->next());
+        printf("seed: %f\n", gen->get_1_d());
     }
+
+    delete gen;
 
     return 0;
 }
