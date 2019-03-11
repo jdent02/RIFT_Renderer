@@ -2,44 +2,45 @@
 
 #include "materials/imaterial.h"
 
-#include <core/data_types/vec3.h>
-#include <core/data_types/ray.h>
-#include <hitables/ihitable.h>
 #include <cfloat>
-#include <cmath>
-#include <hitables/rect.h>
-#include <core/pdfs/hitable_pdf.h>
+#include <core/data_types/ray.h>
+#include <core/data_types/vec3.h>
 #include <core/pdfs/cosine_pdf.h>
+#include <core/pdfs/hitable_pdf.h>
 #include <core/pdfs/mixture_pdf.h>
+#include <hitables/ihitable.h>
+#include <hitables/rect.h>
 
-
-inline vec3 color(const ray& r, ihitable* world, const int depth)
+inline vec3 color(
+    const ray& r,
+    ihitable*  world,
+    ihitable*  light_shape,
+    const int  depth)
 {
-    hit_record rec;
-
-    if (world->hit(r, 0.001f, FLT_MAX, rec))
+    hit_record hrec;
+    if (world->hit(r, 0.001f, FLT_MAX, hrec))
     {
-        ray scattered;
+        scatter_record srec;
+        const vec3     emitted =
+            hrec.mat_ptr->emitted(r, hrec, hrec.u, hrec.v, hrec.p);
 
-        const vec3 emitted = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
-
-        vec3 albedo;
-
-        float pdf_val;
-
-        if (depth < 10 &&
-            rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf_val))
+        if (depth < 10 && hrec.mat_ptr->scatter(r, hrec, srec))
         {
-            xz_rect     light_shape(213, 343, 227, 332, 554, 0);
-            hitable_pdf p0(&light_shape, rec.p);
-            cosine_pdf  p1(rec.normal);
-            mixture_pdf p(&p0, &p1);
-            scattered = ray(rec.p, p.generate(), r.time());
-            pdf_val = p.value(scattered.direction());
+            if (srec.is_specular)
+            {
+                return srec.attenuation *
+                       color(srec.specular_ray, world, light_shape, depth + 1);
+            }
+            hitable_pdf plight(light_shape, hrec.p);
+            mixture_pdf p(&plight, srec.pdf_ptr.get());
+            ray         scattered(hrec.p, p.generate(), r.time());
+            float       pdf_val = p.value(scattered.direction());
 
             return emitted +
-                   albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered) *
-                       color(scattered, world, depth + 1) / pdf_val;
+                   srec.attenuation *
+                       hrec.mat_ptr->scattering_pdf(r, hrec, scattered) *
+                       color(scattered, world, light_shape, depth + 1) /
+                       pdf_val;
         }
         return emitted;
     }

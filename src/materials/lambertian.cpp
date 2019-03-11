@@ -1,21 +1,16 @@
 #include "lambertian.h"
 
-#include "core/onb/onb.h"
 #include "core/rendering/utility_functions.h"
+#include "core/pdfs/cosine_pdf.h"
 
 bool lambertian::scatter(
     const ray&        r_in,
-    const hit_record& rec,
-    vec3&             alb,
-    ray&              scattered,
-    float&            pdf) const
+    const hit_record& hrec,
+    scatter_record&   srec) const
 {
-    onb uvw;
-    uvw.build_from_w(rec.normal);
-    vec3 direction = uvw.local(random_cosine_direction());
-    scattered = ray(rec.p, unit_vector(direction), r_in.time());
-    alb = albedo->value(rec.u, rec.v, rec.p);
-    pdf = dot(uvw.w(), scattered.direction()) * inv_pi;
+    srec.is_specular = false;
+    srec.attenuation = albedo->value(hrec.u, hrec.v, hrec.p);
+    srec.pdf_ptr = std::make_unique<cosine_pdf>(hrec.normal);
     return true;
 }
 

@@ -69,6 +69,11 @@ source_group(
 )
 
 source_group(
+	"src\\core\\onb" REGULAR_EXPRESSION
+	src/core/onb/.*
+)
+
+source_group(
     "src\\core\\acceleration_structures" REGULAR_EXPRESSION
     src/core/acceleration_structures/.*
 )

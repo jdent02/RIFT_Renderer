@@ -17,9 +17,7 @@ class dielectric : public imaterial
     bool scatter(
         const ray&        r_in,
         const hit_record& rec,
-        vec3&             attenuation,
-        ray&              scattered,
-        float&            pdf) const override;
+        scatter_record&   srec) const override;
 
     float ref_idx;
 };

@@ -1,13 +1,13 @@
 #include "core/rendering/render_worker.h"
 
 #include "camera/icamera.h"
+#include "color_functions.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/scene.h"
 #include "utility/containers/render_settings.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"
 #include "utility_functions.h"
-#include "color_functions.h"
 
 #include <mutex>
 
@@ -46,7 +46,7 @@ void render_worker::run_thread(
                 const float u = (i + rn_gen->next()) * inv_nx;
                 const float v = (j + rn_gen->next()) * inv_ny;
                 ray         r = render_scene.cam->get_ray(u, v);
-                col += de_nan(color(r, render_scene.world, 0));
+                col += de_nan(color(r, render_scene.world, render_scene.light_source, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

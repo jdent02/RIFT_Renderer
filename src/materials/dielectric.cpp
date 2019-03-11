@@ -7,16 +7,14 @@
 bool dielectric::scatter(
     const ray&        r_in,
     const hit_record& rec,
-    vec3&             attenuation,
-    ray&              scattered,
-    float&            pdf) const
+    scatter_record&   srec) const
 {
     vec3 outward_normal;
 
     float ni_over_nt;
 
     const vec3 reflected = reflect(r_in.direction(), rec.normal);
-    attenuation = vec3(1.f, 1.f, 1.f);
+    srec.attenuation = vec3(1.f, 1.f, 1.f);
     vec3 refracted;
 
     float reflect_prob;
@@ -42,17 +40,19 @@ bool dielectric::scatter(
     }
     else
     {
-        scattered = ray(rec.p, reflected, r_in.time());
+        srec.specular_ray = ray(rec.p, reflected, r_in.time());
         reflect_prob = 1.f;
     }
 
     if (rand() * inv_rand_max < reflect_prob)
     {
-        scattered = ray(rec.p, reflected, r_in.time());
+        srec.specular_ray = ray(rec.p, reflected, r_in.time());
+        srec.is_specular = true;
     }
     else
     {
-        scattered = ray(rec.p, refracted, r_in.time());
+        srec.specular_ray = ray(rec.p, refracted, r_in.time());
+        srec.is_specular = true;
     }
 
     return true;

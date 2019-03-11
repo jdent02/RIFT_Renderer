@@ -124,6 +124,7 @@ void scene_generator::make_random_scene(
 
     in_scene.cam = cam;
     in_scene.world = new bvh_node(list, i, 0.f, 0.5f);
+    in_scene.light_source = nullptr;
 }
 /*
 ihitable* scene_generator::two_spheres()
@@ -215,7 +216,9 @@ scene* scene_generator::rect_light(int nx, int ny)
 }
 */
 
-void scene_generator::cornell_box(scene& in_scene, const render_settings& settings)
+void scene_generator::cornell_box(
+    scene&                 in_scene,
+    const render_settings& settings)
 {
     auto** list = new ihitable*[8];
     int    i = 0;
@@ -228,6 +231,8 @@ void scene_generator::cornell_box(scene& in_scene, const render_settings& settin
         new lambertian(new constant_texture(vec3(0.12f, 0.45f, 0.15f)));
     imaterial* light =
         new diffuse_light(new constant_texture(vec3(15.f, 15.f, 15.f)));
+    imaterial* aluminum =
+        new metal(vec3(0.8f, 0.85f, 0.88f), 0.f);
 
     list[i++] = new flip_normals(new yz_rect(0, 555, 0, 555, 555, green));
 
@@ -246,7 +251,7 @@ void scene_generator::cornell_box(scene& in_scene, const render_settings& settin
         vec3(130, 0, 65));
 
     list[i++] = new translate(
-        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), white), 15),
+        new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), aluminum), 15),
         vec3(265, 0, 295));
 
     const vec3  lookfrom(278.f, 278.f, -800.f);
@@ -267,4 +272,5 @@ void scene_generator::cornell_box(scene& in_scene, const render_settings& settin
 
     in_scene.cam = cam;
     in_scene.world = new hitable_list(list, i);
+    in_scene.light_source = new xz_rect(213, 343, 227, 332, 554, nullptr);
 }

@@ -7,4 +7,5 @@ struct scene
 {
     icamera*  cam;
     ihitable* world;
+    ihitable* light_source;
 };

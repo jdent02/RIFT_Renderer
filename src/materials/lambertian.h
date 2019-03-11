@@ -13,12 +13,10 @@ class lambertian : public imaterial
 
     ~lambertian() = default;
 
-    virtual bool scatter(
+    bool scatter(
         const ray&        r_in,
         const hit_record& rec,
-        vec3&             alb,
-        ray&              scattered,
-        float&            pdf) const override;
+        scatter_record& srec) const override;
 
     float scattering_pdf(
         const ray&        r_in,
