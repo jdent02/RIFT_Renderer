@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/data_types/aabb.h"
+#include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
 
 class hitable_list : public ihitable

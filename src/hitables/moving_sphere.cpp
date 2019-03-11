@@ -1,6 +1,6 @@
 #include "moving_sphere.h"
 
-#include "core/data_types/aabb.h"
+#include "core/acceleration_structures/aabb.h"
 
 moving_sphere::moving_sphere(
     vec3       cen0,

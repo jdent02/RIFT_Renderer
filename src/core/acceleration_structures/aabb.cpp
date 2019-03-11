@@ -1,4 +1,4 @@
-#include "aabb.h"
+#include "core/acceleration_structures/aabb.h"
 
 bool aabb::hit(const ray& r, float tmin, float tmax) const
 {

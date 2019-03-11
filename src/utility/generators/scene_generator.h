@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/ihitable.h"
+#include "hitables/ihitable.h"
 #include "core/data_types/scene.h"
 #include "utility/containers/render_settings.h"
 

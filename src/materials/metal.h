@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/imaterial.h"
+#include "imaterial.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
 

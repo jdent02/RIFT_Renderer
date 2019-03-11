@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/ihitable.h"
+#include "ihitable.h"
 #include "core/data_types/hit_record.h"
 #include "core/rendering/utility_functions.h"
 

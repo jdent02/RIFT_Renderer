@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/itexture.h"
+#include "itexture.h"
 
 class image_texture : public itexture
 {

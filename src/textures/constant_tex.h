@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/itexture.h"
+#include "itexture.h"
 #include "core/data_types/vec3.h"
 
 class constant_texture : public itexture

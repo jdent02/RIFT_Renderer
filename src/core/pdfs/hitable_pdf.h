@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/ihitable.h"
+#include "hitables/ihitable.h"
 #include "pdf.h"
 
 class hitable_pdf : public pdf

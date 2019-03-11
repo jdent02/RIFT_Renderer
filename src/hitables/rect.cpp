@@ -1,7 +1,10 @@
 #include "rect.h"
 
-#include "core/data_types/aabb.h"
+#include "core/acceleration_structures/aabb.h"
 #include "core/rendering/utility_functions.h"
+
+#include <cmath>
+#include <cfloat>
 
 bool xy_rect::hit(const ray& r, float t0, float t1, hit_record& rec) const
 {

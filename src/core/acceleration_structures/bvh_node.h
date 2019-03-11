@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/bases/ihitable.h"
-#include "core/data_types/aabb.h"
+#include "hitables/ihitable.h"
+#include "aabb.h"
 #include "core/data_types/hit_record.h"
 
 class bvh_node : public ihitable

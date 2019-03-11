@@ -1,6 +1,8 @@
 #include "instancers.h"
 
 #include "core/rendering/utility_functions.h"
+#include <cmath>
+#include <cfloat>
 
 translate::translate(ihitable* p, const vec3& displacement)
   : ptr(p)

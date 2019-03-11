@@ -1,6 +1,6 @@
 #include "lambertian.h"
 
-#include "core/rendering/onb.h"
+#include "core/onb/onb.h"
 #include "core/rendering/utility_functions.h"
 
 bool lambertian::scatter(

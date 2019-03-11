@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/itexture.h"
+#include "itexture.h"
 
 // Forward declaration
 class vec3;

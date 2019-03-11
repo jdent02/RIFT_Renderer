@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/bases/icamera.h"
+#include "icamera.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
 

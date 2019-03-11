@@ -1,14 +1,14 @@
 #include "core/rendering/render_worker.h"
 
-#include "core/bases/icamera.h"
+#include "camera/icamera.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/scene.h"
 #include "utility/containers/render_settings.h"
 #include "utility/rng/drand48.h"
 #include "utility/rng/xoroshiro128.h"
 #include "utility_functions.h"
+#include "color_functions.h"
 
-#include <memory>
 #include <mutex>
 
 void render_worker::run_thread(

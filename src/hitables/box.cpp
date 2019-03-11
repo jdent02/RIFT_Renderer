@@ -1,6 +1,6 @@
 #include "box.h"
 
-#include "core/data_types/aabb.h"
+#include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
 #include "hitable_list.h"
 #include "rect.h"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/bases/imaterial.h"
-#include "core/bases/itexture.h"
+#include "imaterial.h"
+#include "textures/itexture.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
 

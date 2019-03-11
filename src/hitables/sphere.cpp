@@ -1,6 +1,6 @@
 #include "sphere.h"
 
-#include "core/data_types/aabb.h"
+#include "core/acceleration_structures/aabb.h"
 
 bool sphere::hit(
     const ray&  r,
