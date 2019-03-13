@@ -12,9 +12,11 @@ set (version_patch    0)
 set (version_maturity alpha)
 
 configure_file (${PROJECT_SOURCE_DIR}/src/utility/version/version.h.in
-                ${PROJECT_SOURCE_DIR}/src/utility/version/version.h)
+                ${PROJECT_SOURCE_DIR}/src/utility/version/version.h
+)
 
 include_directories(
+    ${OIIO_DIR}/include/
     src
     applications/RIFT_cli
 )
@@ -238,6 +240,12 @@ set (
 add_executable(
     RIFT
     ${CPP_SOURCES}
+)
+
+target_link_libraries(
+    RIFT
+    ${OIIO_DIR}/lib/OpenImageIO.lib
+    ${OIIO_DIR}/lib/OpenImageIO_Util.lib
 )
 
 add_executable(
