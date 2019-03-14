@@ -5,7 +5,8 @@
 enum output_writers
 {
     JPEG,
-    PNG
+    PNG,
+    OPENEXR
 };
 
 class ioutput_writer

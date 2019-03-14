@@ -1,6 +1,7 @@
 #include "render_controller.h"
 
 #include "core/image_writers/jpeg_writer.h"
+#include "core/image_writers/openexr_writer.h"
 #include "core/image_writers/png_writer.h"
 #include "core/rendering/render_worker.h"
 #include "core/samplers/rng/xoroshiro128.h"
@@ -23,6 +24,10 @@ render_controller::render_controller(
     else if (settings.output_writer == JPEG)
     {
         image_writer_ = std::make_unique<jpeg_writer>();
+    }
+    else if (settings.output_writer == OPENEXR)
+    {
+        image_writer_ = std::make_unique<openexr_writer>();
     }
 }
 

@@ -19,7 +19,7 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
     output_writers out_writer{PNG};
     int            samples{100};
     bool           use_importance_sampling{true};
-    std::string    filepath{};
+    std::string    filepath{"../image_vcpp"};
 
     for (int i = 0; i < argc; i++)
     {
@@ -57,6 +57,10 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
             if (!static_cast<bool>(strcmp(argv[i + 1], "jpeg")))
             {
                 out_writer = JPEG;
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
+            {
+                out_writer = OPENEXR;
             }
         }
     }

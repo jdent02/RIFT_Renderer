@@ -11,14 +11,15 @@ set (version_minor    1)
 set (version_patch    0)
 set (version_maturity alpha)
 
-configure_file (${PROJECT_SOURCE_DIR}/src/utility/version/version.h.in
-                ${PROJECT_SOURCE_DIR}/src/utility/version/version.h
+configure_file (
+    ${PROJECT_SOURCE_DIR}/src/utility/version/version.h.in
+    ${PROJECT_SOURCE_DIR}/src/utility/version/version.h
 )
 
 include_directories(
-    ${OIIO_DIR}/include/
     src
-    applications/RIFT_cli
+    ${DEPENDENCIES_DIR}/openexr-release/include
+    ${DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
 )
 
 set (
@@ -59,6 +60,8 @@ set (
     src/core/data_types/hit_record.h
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
+    src/core/image_writers/openexr_writer.h
+    src/core/image_writers/openexr_writer.cpp
     src/core/pdfs/pdf.h
     src/core/pdfs/cosine_pdf.cpp
     src/core/pdfs/cosine_pdf.h
@@ -244,8 +247,14 @@ add_executable(
 
 target_link_libraries(
     RIFT
-    ${OIIO_DIR}/lib/OpenImageIO.lib
-    ${OIIO_DIR}/lib/OpenImageIO_Util.lib
+    ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImf-2_2.lib
+    ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImfUtil-2_2.lib
+    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Half.lib
+    ${DEPENDENCIES_DIR}/ilmbase-release/lib/IlmThread-2_2.lib
+    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Iex-2_2.lib
+    ${DEPENDENCIES_DIR}/ilmbase-release/lib/IexMath-2_2.lib
+    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Imath-2_2.lib
+    ${DEPENDENCIES_DIR}/zlib-release/lib/zlibstatic.lib
 )
 
 add_executable(
