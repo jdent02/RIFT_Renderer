@@ -112,7 +112,7 @@ void command_line_parser::print_help()
         "   --resolution: Resolution of the render in width and height\n"
         "   --filepath: Output filepath for the rendered image.  The extension "
         "type will be automatically added\n"
-        "   --writer: Image writer for renders, options are png or jpeg\n",
+        "   --writer: Image writer for renders, options are open_exr, png or jpeg\n",
         VERSION_STRING);
 
     exit(EXIT_SUCCESS);
