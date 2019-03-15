@@ -4,8 +4,11 @@
 #include "color_functions.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/scene.h"
-#include "utility/containers/render_settings.h"
+#include "core/lighting_integrators/ilight_integrator.h"
+#include "core/lighting_integrators/light_sampling_pathtracer.h"
+#include "core/lighting_integrators/pathtracer.h"
 #include "core/samplers/rng/drand48.h"
+#include "utility/containers/render_settings.h"
 
 #include <mutex>
 
@@ -17,6 +20,9 @@ void render_worker::run_thread(
     const render_settings& settings)
 {
     std::mutex mutex;
+
+    std::unique_ptr<ilight_integrator> light_integrator =
+        std::make_unique<pathtracer>();
 
     const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
 
@@ -43,9 +49,10 @@ void render_worker::run_thread(
 
                 const float u = (i + rn_gen->get_1_d()) * inv_nx;
                 const float v = (j + rn_gen->get_1_d()) * inv_ny;
-                ray         r = render_scene.cam->get_ray(u, v);
-                col += de_nan(
-                    color(r, render_scene.world, render_scene.light_source, 0));
+
+                ray r = render_scene.cam->get_ray(u, v);
+                col += de_nan(light_integrator->trace(
+                    r, render_scene.world, render_scene.light_source, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

@@ -2,12 +2,20 @@
 
 #include <string>
 
+#ifdef RIFT_USE_OPENEXR
 enum output_writers
 {
     JPEG,
     PNG,
     OPENEXR
 };
+#else
+enum output_writers
+{
+    JPEG,
+    PNG,
+};
+#endif // RIFT_USE_OPENEXR
 
 class ioutput_writer
 {

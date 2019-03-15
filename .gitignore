@@ -42,3 +42,4 @@ packages/
 /cmake-build-release
 *version.h
 *.exr
+*CMakeSettings.json

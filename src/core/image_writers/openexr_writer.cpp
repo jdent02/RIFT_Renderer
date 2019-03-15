@@ -2,6 +2,8 @@
 
 #include "OpenEXR/ImfRgbaFile.h"
 
+#include <cstdio>
+
 using namespace Imf_2_2;
 
 void openexr_writer::write(
@@ -10,6 +12,7 @@ void openexr_writer::write(
     int                size_x,
     int                size_y) const
 {
+    printf("Writing Output EXR");
     std::string out_filename = filename + ".exr";
     const int   pixel_count{size_x * size_y};
     Rgba*       out_buffer = new Rgba[pixel_count];
@@ -30,4 +33,6 @@ void openexr_writer::write(
     RgbaOutputFile file(out_filename.c_str(), size_x, size_y, WRITE_RGBA);
     file.setFrameBuffer(out_buffer, 1, size_x);
     file.writePixels(size_y);
+
+    printf("File written");
 }

@@ -37,6 +37,7 @@ endif()
 
 set (
     CAMERA_SOURCES
+    src/camera/icamera.h
     src/camera/thin_lens_camera.h
     src/camera/thin_lens_camera.cpp
 )
@@ -48,38 +49,46 @@ source_group(
 
 set (
     CORE_SOURCES
-    src/hitables/ihitable.h
-    src/camera/icamera.h
     src/core/acceleration_structures/bvh_node.h
     src/core/acceleration_structures/bvh_node.cpp
-    src/materials/imaterial.h
+    src/core/acceleration_structures/aabb.h
+    src/core/acceleration_structures/aabb.cpp
+    src/core/acceleration_structures/bvh_utils.h
+
+    src/core/lighting_integrators/ilight_integrator.h
+    src/core/lighting_integrators/pathtracer.h
+    src/core/lighting_integrators/pathtracer.cpp
+    src/core/lighting_integrators/light_sampling_pathtracer.cpp 
+    src/core/lighting_integrators/light_sampling_pathtracer.h
+    
     src/core/onb/onb.h
+
+    src/core/rendering/utility_functions.h
     src/core/rendering/render_controller.h
     src/core/rendering/render_controller.cpp
     src/core/rendering/render_worker.h
     src/core/rendering/render_worker.cpp
+    src/core/rendering/scatter_functions.h
+    src/core/rendering/color_functions.h
+
     src/core/image_writers/jpeg_writer.cpp
     src/core/image_writers/jpeg_writer.h
     src/core/image_writers/ioutput_writer.h
-    src/textures/itexture.h
-    src/core/data_types/ray.h
-    src/core/data_types/vec3.h
-    src/core/acceleration_structures/aabb.h
-    src/core/acceleration_structures/aabb.cpp
-    src/core/data_types/scene.h
-    src/core/rendering/utility_functions.h
-    src/core/acceleration_structures/bvh_utils.h
-    src/core/rendering/scatter_functions.h
-    src/core/data_types/hit_record.h
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
+
+    src/core/data_types/ray.h
+    src/core/data_types/vec3.h
+    src/core/data_types/scene.h
+    src/core/data_types/hit_record.h
+    src/core/data_types/scatter_record.h
+
     src/core/pdfs/pdf.h
     src/core/pdfs/cosine_pdf.cpp
     src/core/pdfs/cosine_pdf.h
     src/core/pdfs/hitable_pdf.h
     src/core/pdfs/mixture_pdf.h
-    src/core/data_types/scatter_record.h
-    src/core/rendering/color_functions.h
+    
     src/core/samplers/rng/xoroshiro128.h
     src/core/samplers/rng/xoroshiro128.cpp
     src/core/samplers/igenerator.h
@@ -101,6 +110,11 @@ source_group(
 )
 
 source_group(
+    "src\\core\\lighting_integrators"
+    src/core/lighting_integrators/.*
+)
+
+source_group(
     "src\\core\\samplers\\QMC" REGULAR_EXPRESSION
     src/core/samplers/monte_carlo_sequences/.*
 )
@@ -116,8 +130,8 @@ source_group(
 )
 
 source_group(
-	"src\\core\\onb" REGULAR_EXPRESSION
-	src/core/onb/.*
+    "src\\core\\onb" REGULAR_EXPRESSION
+    src/core/onb/.*
 )
 
 source_group(
@@ -147,6 +161,7 @@ source_group(
 
 set (
     HITABLES_SOURCES
+    src/hitables/ihitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
@@ -168,6 +183,7 @@ source_group(
 
 set (
     MATERIAL_SOURCES
+    src/materials/imaterial.h
     src/materials/dielectric.h
     src/materials/dielectric.cpp
     src/materials/diffuse_light.h
@@ -184,6 +200,7 @@ source_group(
 
 set (
     TEXTURE_SOURCES
+    src/textures/itexture.h
     src/textures/constant_tex.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp
