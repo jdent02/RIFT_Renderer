@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ilight_integrator.h"
+#include "core/lighting_integrators/ilight_integrator.h"
 
-class light_sampling_pathtracer : public ilight_integrator
+class direct_lighting : public ilight_integrator
 {
   public:
-    light_sampling_pathtracer() = default;
+    direct_lighting() = default;
     vec3 trace(
         const ray& r,
         ihitable*  world,

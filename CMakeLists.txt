@@ -55,6 +55,8 @@ set (
     src/core/acceleration_structures/aabb.cpp
     src/core/acceleration_structures/bvh_utils.h
 
+    src/core/lighting_integrators/direct_lighting.cpp
+    src/core/lighting_integrators/direct_lighting.h
     src/core/lighting_integrators/ilight_integrator.h
     src/core/lighting_integrators/pathtracer.h
     src/core/lighting_integrators/pathtracer.cpp

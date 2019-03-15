@@ -4,6 +4,7 @@
 #include "color_functions.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/scene.h"
+#include "core/lighting_integrators/direct_lighting.h"
 #include "core/lighting_integrators/ilight_integrator.h"
 #include "core/lighting_integrators/light_sampling_pathtracer.h"
 #include "core/lighting_integrators/pathtracer.h"
@@ -22,7 +23,7 @@ void render_worker::run_thread(
     std::mutex mutex;
 
     std::unique_ptr<ilight_integrator> light_integrator =
-        std::make_unique<pathtracer>();
+        std::make_unique<direct_lighting>();
 
     const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
 

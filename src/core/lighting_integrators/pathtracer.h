@@ -3,8 +3,8 @@
 
 class pathtracer : public ilight_integrator
 {
-
   public:
+    pathtracer() = default;
     vec3 trace(
         const ray& r,
         ihitable*  world,
