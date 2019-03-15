@@ -22,8 +22,20 @@ void render_worker::run_thread(
 {
     std::mutex mutex;
 
-    std::unique_ptr<ilight_integrator> light_integrator =
-        std::make_unique<direct_lighting>();
+    std::unique_ptr<ilight_integrator> light_integrator;
+
+    if (settings.light_integrator == PATH_TRACING)
+    {
+        light_integrator = std::make_unique<direct_lighting>();
+    }
+    else if (settings.light_integrator == LIGHT_SAMPLE_PATH_TRACING)
+    {
+        light_integrator = std::make_unique<light_sampling_pathtracer>();
+    }
+    else if (settings.light_integrator == DIRECT_LIGHTING)
+    {
+        light_integrator = std::make_unique<direct_lighting>();
+    }
 
     const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
 

@@ -4,6 +4,13 @@ class ihitable;
 class ray;
 class vec3;
 
+enum lighting_integrator
+{
+    DIRECT_LIGHTING,
+    PATH_TRACING,
+    LIGHT_SAMPLE_PATH_TRACING
+};
+
 class ilight_integrator
 {
   public:

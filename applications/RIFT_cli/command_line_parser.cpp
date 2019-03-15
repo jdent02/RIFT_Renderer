@@ -1,8 +1,8 @@
 #include "command_line_parser.h"
 
 #include "core/image_writers/ioutput_writer.h"
-#include "utility/containers/render_settings.h"
 #include "core/samplers/igenerator.h"
+#include "utility/containers/render_settings.h"
 #include "utility/version/version.h"
 
 #include <cmath>
@@ -13,13 +13,14 @@
 render_settings command_line_parser::parse(const int argc, char* argv[])
 {
     int temp_threads{static_cast<int>(std::thread::hardware_concurrency())};
-    samplers       sampler{XORO_128};
-    int            x_res{1920};
-    int            y_res{1080};
-    output_writers out_writer{PNG};
-    int            samples{100};
-    bool           use_importance_sampling{true};
-    std::string    filepath{"../image_vcpp"};
+    samplers            sampler{XORO_128};
+    int                 x_res{1920};
+    int                 y_res{1080};
+    lighting_integrator light_integrator{LIGHT_SAMPLE_PATH_TRACING};
+    output_writers      out_writer{PNG};
+    int                 samples{100};
+    bool                use_importance_sampling{true};
+    std::string         filepath{"../image_vcpp"};
 
     for (int i = 0; i < argc; i++)
     {
@@ -47,6 +48,21 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
             char*  sample_num = argv[i + 1];
             size_t str_len = strlen(sample_num);
             samples = convert_number(str_len, sample_num);
+        }
+        else if (!static_cast<bool>(strcmp(argv[i], "--integrator")))
+        {
+            if (!static_cast<bool>(strcmp(argv[i + 1], "path")))
+            {
+                light_integrator = PATH_TRACING;
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "light_sample")))
+            {
+                light_integrator = LIGHT_SAMPLE_PATH_TRACING;
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "direct")))
+            {
+                light_integrator = DIRECT_LIGHTING;
+            }
         }
         else if (!static_cast<bool>(strcmp(argv[i], "--help")))
         {
@@ -78,6 +94,7 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
     return render_settings{x_res,
                            y_res,
                            samples,
+                           light_integrator,
                            temp_threads,
                            sampler,
                            out_writer,
@@ -112,7 +129,8 @@ void command_line_parser::print_help()
         "   --resolution: Resolution of the render in width and height\n"
         "   --filepath: Output filepath for the rendered image.  The extension "
         "type will be automatically added\n"
-        "   --writer: Image writer for renders, options are open_exr, png or jpeg\n",
+        "   --writer: Image writer for renders, options are open_exr, png or "
+        "jpeg\n",
         VERSION_STRING);
 
     exit(EXIT_SUCCESS);
