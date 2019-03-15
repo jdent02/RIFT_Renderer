@@ -16,11 +16,24 @@ configure_file (
     ${PROJECT_SOURCE_DIR}/src/utility/version/version.h
 )
 
+# Options
+option(USE_OPENEXR "Enable OpenEXR file input and output" Off)
+set(DEPENDENCIES_DIR "" CACHE PATH "Path to dependencies dirctory")
+
+if (USE_OPENEXR)
+    add_definitions(-DRIFT_USE_OPENEXR)
+endif()
+ 
 include_directories(
     src
-    ${DEPENDENCIES_DIR}/openexr-release/include
-    ${DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
 )
+
+if (USE_OPENEXR)
+    include_directories(
+        ${DEPENDENCIES_DIR}/openexr-release/include
+        ${DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
+    )
+endif()
 
 set (
     CAMERA_SOURCES
@@ -60,8 +73,6 @@ set (
     src/core/data_types/hit_record.h
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
-    src/core/image_writers/openexr_writer.h
-    src/core/image_writers/openexr_writer.cpp
     src/core/pdfs/pdf.h
     src/core/pdfs/cosine_pdf.cpp
     src/core/pdfs/cosine_pdf.h
@@ -76,6 +87,13 @@ set (
     src/core/samplers/rng/drand48.h
     src/core/samplers/sampler.h
 )
+
+if(USE_OPENEXR)
+    list(APPEND CORE_SOURCES
+        src/core/image_writers/openexr_writer.h
+        src/core/image_writers/openexr_writer.cpp
+    )
+endif()
 
 source_group(
     "src\\core\\pdfs" REGULAR_EXPRESSION
@@ -245,17 +263,33 @@ add_executable(
     ${CPP_SOURCES}
 )
 
-target_link_libraries(
-    RIFT
-    ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImf-2_2.lib
-    ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImfUtil-2_2.lib
-    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Half.lib
-    ${DEPENDENCIES_DIR}/ilmbase-release/lib/IlmThread-2_2.lib
-    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Iex-2_2.lib
-    ${DEPENDENCIES_DIR}/ilmbase-release/lib/IexMath-2_2.lib
-    ${DEPENDENCIES_DIR}/ilmbase-release/lib/Imath-2_2.lib
-    ${DEPENDENCIES_DIR}/zlib-release/lib/zlibstatic.lib
-)
+
+# Optional libraries for OpenEXR
+if(USE_OPENEXR)
+    set(OPEN_EXR_LIBS
+        ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImf-2_2.lib
+        ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImfUtil-2_2.lib
+    )
+
+    set(ILM_BASE_LIBS
+        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Half.lib
+        ${DEPENDENCIES_DIR}/ilmbase-release/lib/IlmThread-2_2.lib
+        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Iex-2_2.lib
+        ${DEPENDENCIES_DIR}/ilmbase-release/lib/IexMath-2_2.lib
+        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Imath-2_2.lib
+    )
+
+    set(ZLIB_LIBS
+        ${DEPENDENCIES_DIR}/zlib-release/lib/zlibstatic.lib
+    )
+
+    target_link_libraries(
+        RIFT
+        ${OPEN_EXR_LIBS}
+        ${ILM_BASE_LIBS}
+        ${ZLIB_LIBS}
+    )
+endif()
 
 add_executable(
     number_generator_test
