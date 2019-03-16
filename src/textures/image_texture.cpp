@@ -24,16 +24,16 @@
 
 #include "core/data_types/vec3.h"
 
-image_texture::image_texture(unsigned char* pixels, int A, int B)
-  : data(pixels)
-  , nx(A)
-  , ny(B)
+ImageTexture::ImageTexture(unsigned char* pixels, const int a, const int b)
+  : m_data_(pixels)
+  , m_nx_(a)
+  , m_ny_(b)
 {}
 
-vec3 image_texture::value(float u, float v, const vec3& p) const
+Vec3 ImageTexture::value(const float u, const float v, const Vec3& p) const
 {
-    int i = int((u)*nx);
-    int j = int((1.f - v) * ny - 0.001f);
+    int i = int((u)*m_nx_);
+    int j = int((1.f - v) * m_ny_ - 0.001f);
     if (i < 0)
     {
         i = 0;
@@ -42,17 +42,17 @@ vec3 image_texture::value(float u, float v, const vec3& p) const
     {
         j = 0;
     }
-    if (i > nx - 1.f)
+    if (i > m_nx_ - 1.f)
     {
-        i = int(nx - 1.f);
+        i = int(m_nx_ - 1.f);
     }
-    if (j > ny - 1.f)
+    if (j > m_ny_ - 1.f)
     {
-        j = int(ny - 1.f);
+        j = int(m_ny_ - 1.f);
     }
     float col_inv = 1.f / 255;
-    float r = int(data[3 * i + 3 * nx * j]) * col_inv;
-    float g = int(data[3 * i + 3 * nx * j + 1]) * col_inv;
-    float b = int(data[3 * i + 3 * nx * j + 2]) * col_inv;
-    return vec3(r, g, b);
+    float r = int(m_data_[3 * i + 3 * m_nx_ * j]) * col_inv;
+    float g = int(m_data_[3 * i + 3 * m_nx_ * j + 1]) * col_inv;
+    float b = int(m_data_[3 * i + 3 * m_nx_ * j + 2]) * col_inv;
+    return Vec3(r, g, b);
 }

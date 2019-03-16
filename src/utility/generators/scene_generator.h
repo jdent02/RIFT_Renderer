@@ -22,25 +22,25 @@
 
 #pragma once
 
-#include "hitables/ihitable.h"
-#include "utility/containers/render_settings.h"
 #include "utility/containers/scene.h"
 
-// Utility function to generate a random scene
-class scene_generator
+struct RenderSettings;
+
+// Utility function to generate a random Scene
+class SceneGenerator
 {
   public:
-    scene_generator() = default;
+    SceneGenerator() = default;
 
-    ~scene_generator() = default;
+    ~SceneGenerator() = default;
 
-    void make_random_scene(scene* in_scene, const render_settings& settings);
+    void make_random_scene(Scene* in_scene, const RenderSettings& settings);
 
-    // ihitable* two_spheres();
+    // IHitable* two_spheres();
     //
-    // scene* earth_sphere(int x_dim, int y_dim);
+    // Scene* earth_sphere(int x_dim, int y_dim);
     //
-    // scene* rect_light(int nx, int ny);
+    // Scene* rect_light(int m_nx, int m_ny);
 
-    void cornell_box(scene* in_scene, const render_settings& settings);
+    void cornell_box(Scene* in_scene, const RenderSettings& settings);
 };

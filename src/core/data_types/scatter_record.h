@@ -23,14 +23,15 @@
 #pragma once
 
 #include "core/data_types/ray.h"
+#include "core/data_types/vec3.h"
 #include "core/pdfs/pdf.h"
 
 #include <memory>
 
-struct scatter_record
+struct ScatterRecord
 {
-    ray                  specular_ray;
-    bool                 is_specular;
-    vec3                 attenuation;
-    std::unique_ptr<pdf> pdf_ptr;
+    Ray                  m_specular_ray;
+    bool                 m_is_specular;
+    Vec3                 m_attenuation;
+    std::unique_ptr<PDF> m_pdf_ptr;
 };

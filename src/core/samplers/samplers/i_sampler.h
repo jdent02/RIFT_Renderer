@@ -22,24 +22,13 @@
 
 #pragma once
 
-class ihitable;
-class ray;
-class vec3;
+#include "core/samplers/rng/i_rand_generator.h"
 
-enum lighting_integrator
-{
-    DIRECT_LIGHTING,
-    PATH_TRACING,
-    LIGHT_SAMPLE_PATH_TRACING
-};
+#include <memory>
 
-class ilight_integrator
+class ISampler
 {
   public:
-    virtual ~ilight_integrator() = default;
-    virtual vec3 trace(
-        const ray& r,
-        ihitable*  world,
-        ihitable*  light_shape,
-        const int  depth) const = 0;
+    std::unique_ptr<IRandGenerator> m_rand_gen;
+    std::unique_ptr<IRandGenerator> m_mc_gen;
 };

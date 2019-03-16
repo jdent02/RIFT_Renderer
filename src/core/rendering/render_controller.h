@@ -22,44 +22,36 @@
 
 #pragma once
 
-#include "core/image_writers/ioutput_writer.h"
-#include "core/samplers/igenerator.h"
+#include "core/image_writers/i_out_writer.h"
+#include "core/samplers/rng/i_rand_generator.h"
 #include "utility/containers/render_settings.h"
 #include "utility/containers/scene.h"
 
 #include <memory>
 
-// Forward declarations
-struct scene;
-struct render_settings;
-class camera;
-class ihitable;
-
-class render_controller
+class RenderController
 {
   public:
-    render_controller(
-        const render_settings& settings,
-        const scene*           render_scene);
+    RenderController(const RenderSettings& settings, const Scene* render_scene);
 
-    ~render_controller() = default;
+    ~RenderController() = default;
 
     void do_render();
 
     void write_output() const
     {
-        image_writer_->write(
-            buffer_.get(),
-            settings_.filepath,
-            settings_.resolution_x,
-            settings_.resolution_y);
+        m_image_writer->write(
+            m_buffer.get(),
+            m_settings.m_filepath,
+            m_settings.m_resolution_x,
+            m_settings.m_resolution_y);
     }
 
   private:
-    std::unique_ptr<float[]>        buffer_;
-    const float                     inv_ns_;
-    const scene*                    render_scene_;
-    std::unique_ptr<igenerator>     random_generator_{};
-    std::unique_ptr<ioutput_writer> image_writer_;
-    const render_settings           settings_;
+    std::unique_ptr<float[]>        m_buffer;
+    const float                     m_inv_ns;
+    const Scene*                    m_render_scene;
+    std::unique_ptr<IRandGenerator> m_random_generator{};
+    std::unique_ptr<IOutWriter>     m_image_writer;
+    const RenderSettings            m_settings;
 };

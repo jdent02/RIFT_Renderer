@@ -25,12 +25,12 @@
 #include "core/data_types/vec3.h"
 
 inline bool refract(
-    const vec3& v,
-    const vec3& n,
+    const Vec3& v,
+    const Vec3& n,
     const float ni_over_nt,
-    vec3&       refracted)
+    Vec3&       refracted)
 {
-    const vec3  uv = unit_vector(v);
+    const Vec3  uv = unit_vector(v);
     const float dt = dot(uv, n);
     const float discriminant = 1.f - ni_over_nt * ni_over_nt * (1 - dt * dt);
     if (discriminant > 0)
@@ -41,7 +41,7 @@ inline bool refract(
     return false;
 }
 
-inline vec3 reflect(const vec3& v, const vec3& n)
+inline Vec3 reflect(const Vec3& v, const Vec3& n)
 {
     return v - 2 * dot(v, n) * n;
 }

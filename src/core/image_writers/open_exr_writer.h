@@ -22,24 +22,15 @@
 
 #pragma once
 
-#include <cstdint>
+#include "core/image_writers/i_out_writer.h"
 
-enum samplers
+class OpenEXRWriter : public IOutWriter
 {
-    XORO_128,
-    RAND_48
-};
 
-class igenerator
-{
   public:
-    igenerator() = default;
-
-    virtual ~igenerator() = default;
-
-    virtual float get_1_d() = 0;
-
-    virtual float get_2d() = 0;
-
-    virtual void seed_gen(uint64_t seed) = 0;
+    void write(
+        const float*       buffer,
+        const std::string& filename,
+        int                size_x,
+        int                size_y) const override;
 };

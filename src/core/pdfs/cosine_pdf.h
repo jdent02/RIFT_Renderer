@@ -25,12 +25,13 @@
 #include "core/onb/onb.h"
 #include "core/pdfs/pdf.h"
 
-class cosine_pdf final : public pdf
+class CosinePDF final : public PDF
 {
   public:
-    explicit cosine_pdf(const vec3& w) { uvw.build_from_w(w); }
-    float value(const vec3& direction) const override;
-    vec3  generate() const override;
+    explicit CosinePDF(const Vec3& w) { m_uvw_.build_from_w(w); }
+    float value(const Vec3& direction) const override;
+    Vec3  generate() const override;
 
-    onb uvw;
+  private:
+    ONB m_uvw_;
 };

@@ -22,22 +22,25 @@
 
 #pragma once
 
+#include "core/data_types/Vec3.h"
 #include "core/data_types/hit_record.h"
-#include "core/data_types/vec3.h"
-#include "imaterial.h"
+#include "materials/i_material.h"
 
-class metal : public imaterial
+struct ScatterRecord;
+
+class Metal : public IMaterial
 {
   public:
-    explicit metal(const vec3& a, const float& fuzz)
-      : albedo(a)
-      , fuzz(fuzz){};
+    explicit Metal(const Vec3& a, const float& fuzz)
+      : m_albedo_(a)
+      , m_fuzz_(fuzz){};
 
-    ~metal() override = default;
+    ~Metal() override = default;
 
-    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+    bool scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
         const override;
 
-    vec3  albedo;
-    float fuzz;
+  private:
+    Vec3  m_albedo_;
+    float m_fuzz_;
 };

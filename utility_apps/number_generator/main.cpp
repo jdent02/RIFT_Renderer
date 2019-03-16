@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "core/samplers/igenerator.h"
+#include "core/samplers/rng/i_rand_generator.h"
 #include "core/samplers/rng/xoroshiro128.h"
 
 #include <cstdio>
@@ -28,7 +28,7 @@
 
 int main()
 {
-    igenerator* gen = new xoro_128;
+    IRandGenerator* gen = new Xoro128;
 
     time_t seed = time(nullptr);
 

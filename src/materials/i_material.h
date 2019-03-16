@@ -22,13 +22,39 @@
 
 #pragma once
 
-// Forward declaration
-class vec3;
+#include "core/data_types/Ray.h"
+#include "core/data_types/Vec3.h"
+#include "core/data_types/hit_record.h"
+#include "core/data_types/scatter_record.h"
 
-class itexture
+class IMaterial
 {
   public:
-    virtual ~itexture() = default;
+    virtual ~IMaterial() = default;
 
-    virtual vec3 value(float u, float v, const vec3& p) const = 0;
+    virtual bool scatter(
+        const Ray&       r_in,
+        const HitRecord& hrec,
+        ScatterRecord&   srec) const
+    {
+        return false;
+    }
+
+    virtual float scattering_pdf(
+        const Ray&       r_in,
+        const HitRecord& hrec,
+        const Ray&       scattered) const
+    {
+        return false;
+    }
+
+    virtual Vec3 emitted(
+        const Ray&       r_in,
+        const HitRecord& rec,
+        float            u,
+        float            v,
+        const Vec3&      p) const
+    {
+        return Vec3(0.f, 0.f, 0.f);
+    }
 };

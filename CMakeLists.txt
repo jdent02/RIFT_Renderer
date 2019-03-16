@@ -37,7 +37,7 @@ endif()
 
 set (
     CAMERA_SOURCES
-    src/camera/icamera.h
+    src/camera/i_camera.h
     src/camera/thin_lens_camera.h
     src/camera/thin_lens_camera.cpp
 )
@@ -57,12 +57,12 @@ set (
 
     src/core/lighting_integrators/direct_lighting.cpp
     src/core/lighting_integrators/direct_lighting.h
-    src/core/lighting_integrators/ilight_integrator.h
-    src/core/lighting_integrators/pathtracer.h
-    src/core/lighting_integrators/pathtracer.cpp
-    src/core/lighting_integrators/light_sampling_pathtracer.cpp 
-    src/core/lighting_integrators/light_sampling_pathtracer.h
-    
+    src/core/lighting_integrators/i_light_integrator.h
+    src/core/lighting_integrators/path_tracer.h
+    src/core/lighting_integrators/path_tracer.cpp
+    src/core/lighting_integrators/light_sample_path.cpp
+    src/core/lighting_integrators/light_sample_path.h
+
     src/core/onb/onb.h
 
     src/core/rendering/utility_functions.h
@@ -75,7 +75,9 @@ set (
 
     src/core/image_writers/jpeg_writer.cpp
     src/core/image_writers/jpeg_writer.h
-    src/core/image_writers/ioutput_writer.h
+    src/core/image_writers/i_out_writer.h
+    src/core/image_writers/oiio_writer.h
+    src/core/image_writers/oiio_writer.cpp
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
 
@@ -92,16 +94,16 @@ set (
     
     src/core/samplers/rng/xoroshiro128.h
     src/core/samplers/rng/xoroshiro128.cpp
-    src/core/samplers/igenerator.h
+    src/core/samplers/rng/i_rand_generator.h
     src/core/samplers/rng/drand48.cpp
     src/core/samplers/rng/drand48.h
-    src/core/samplers/sampler.h
+    src/core/samplers/samplers/i_sampler.h
 )
 
 if(USE_OPENEXR)
     list(APPEND CORE_SOURCES
-        src/core/image_writers/openexr_writer.h
-        src/core/image_writers/openexr_writer.cpp
+         src/core/image_writers/open_exr_writer.h
+         src/core/image_writers/open_exr_writer.cpp
     )
 endif()
 
@@ -162,7 +164,7 @@ source_group(
 
 set (
     HITABLES_SOURCES
-    src/hitables/ihitable.h
+    src/hitables/i_hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
     src/hitables/sphere.cpp
@@ -184,7 +186,7 @@ source_group(
 
 set (
     MATERIAL_SOURCES
-    src/materials/imaterial.h
+    src/materials/i_material.h
     src/materials/dielectric.h
     src/materials/dielectric.cpp
     src/materials/diffuse_light.h
@@ -201,7 +203,7 @@ source_group(
 
 set (
     TEXTURE_SOURCES
-    src/textures/itexture.h
+    src/textures/i_texture.h
     src/textures/constant_tex.h
     src/textures/checker_tex.h
     src/textures/checker_tex.cpp

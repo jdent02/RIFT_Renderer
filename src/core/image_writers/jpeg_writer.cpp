@@ -26,7 +26,7 @@
 
 #include <iostream>
 
-void jpeg_writer::write(
+void JpegWriter::write(
     const float*       buffer,
     const std::string& filename,
     const int          size_x,

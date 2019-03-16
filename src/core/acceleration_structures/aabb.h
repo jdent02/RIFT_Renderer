@@ -25,34 +25,34 @@
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
 
-class aabb
+class AABB
 {
   public:
-    aabb() = default;
+    AABB() = default;
 
-    aabb(const vec3& a, const vec3& b)
-      : _min(a)
-      , _max(b){};
+    AABB(const Vec3& a, const Vec3& b)
+      : m_min(a)
+      , m_max(b){};
 
-    vec3 min() const { return _min; }
+    Vec3 min() const { return m_min; }
 
-    vec3 max() const { return _max; }
+    Vec3 max() const { return m_max; }
 
-    bool hit(const ray& r, float tmin, float tmax) const;
+    bool hit(const Ray& r, float tmin, float tmax) const;
 
-    vec3 _min;
-    vec3 _max;
+    Vec3 m_min;
+    Vec3 m_max;
 };
 
-inline aabb surrounding_box(aabb box0, aabb box1)
+inline AABB surrounding_box(AABB box0, AABB box1)
 {
-    const vec3 small(
+    const Vec3 small(
         std::fmin(box0.min().x(), box1.min().x()),
         std::fmin(box0.min().y(), box1.min().y()),
         std::fmin(box0.min().z(), box1.min().z()));
-    const vec3 big(
+    const Vec3 big(
         std::fmax(box0.max().x(), box1.max().x()),
         std::fmax(box0.max().y(), box1.max().y()),
         std::fmax(box0.max().z(), box1.max().z()));
-    return aabb(small, big);
+    return AABB(small, big);
 }

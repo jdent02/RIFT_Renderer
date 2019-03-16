@@ -23,22 +23,24 @@
 #pragma once
 
 #include "core/acceleration_structures/aabb.h"
-#include "core/data_types/hit_record.h"
-#include "hitables/ihitable.h"
+#include "hitables/i_hitable.h"
 
-class bvh_node : public ihitable
+struct HitRecord;
+
+class BVHNode : public IHitable
 {
   public:
-    bvh_node() {}
+    BVHNode() = default;
 
-    bvh_node(ihitable** l, int n, float time0, float time1);
+    BVHNode(IHitable** l, int n, float time0, float time1);
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& b) const override;
 
-    ihitable* left{};
-    ihitable* right{};
-    aabb      box;
+  private:
+    IHitable* m_left_{};
+    IHitable* m_right_{};
+    AABB      m_box_;
 };

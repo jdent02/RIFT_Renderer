@@ -22,72 +22,75 @@
 
 #include "core/rendering/render_worker.h"
 
-#include "camera/icamera.h"
+#include "camera/i_camera.h"
 #include "color_functions.h"
-#include "core/data_types/ray.h"
+#include "core/data_types/Ray.h"
 #include "core/lighting_integrators/direct_lighting.h"
-#include "core/lighting_integrators/ilight_integrator.h"
-#include "core/lighting_integrators/light_sampling_pathtracer.h"
-#include "core/lighting_integrators/pathtracer.h"
+#include "core/lighting_integrators/i_light_integrator.h"
+#include "core/lighting_integrators/light_sample_path.h"
+#include "core/lighting_integrators/path_tracer.h"
 #include "core/samplers/rng/drand48.h"
-#include "utility/containers/render_settings.h"
 #include "utility/containers/scene.h"
+#include "utility/containers/render_settings.h"
 
 #include <mutex>
 
 void render_worker::run_thread(
-    const float            seed,
-    const int              ns,
-    float*                 buffer,
-    const scene*           render_scene,
-    const render_settings& settings)
+    const float           seed,
+    const int             ns,
+    float*                buffer,
+    const Scene*          render_scene,
+    const RenderSettings& settings)
 {
     std::mutex mutex;
 
-    std::unique_ptr<ilight_integrator> light_integrator;
+    std::unique_ptr<ILightIntegrator> light_integrator;
 
-    if (settings.light_integrator == PATH_TRACING)
+    if (settings.m_light_integrator == PATH_TRACING)
     {
-        light_integrator = std::make_unique<pathtracer>();
+        light_integrator = std::make_unique<PathTracer>();
     }
-    else if (settings.light_integrator == LIGHT_SAMPLE_PATH_TRACING)
+    else if (settings.m_light_integrator == LIGHT_SAMPLE_PATH_TRACING)
     {
-        light_integrator = std::make_unique<light_sampling_pathtracer>();
+        light_integrator = std::make_unique<LightSamplePath>();
     }
-    else if (settings.light_integrator == DIRECT_LIGHTING)
+    else if (settings.m_light_integrator == DIRECT_LIGHTING)
     {
-        light_integrator = std::make_unique<direct_lighting>();
+        light_integrator = std::make_unique<DirectLighting>();
     }
 
-    const int buffer_size = settings.resolution_x * settings.resolution_y * 3;
+    const int buffer_size = settings.m_resolution_x * settings.m_resolution_y * 3;
 
-    std::unique_ptr<igenerator> rn_gen = std::make_unique<drand_48>();
+    std::unique_ptr<IRandGenerator> rn_gen = std::make_unique<DRand48>();
 
     rn_gen->seed_gen(static_cast<uint64_t>(seed));
 
     std::unique_ptr<float[]> temp_buffer = std::make_unique<float[]>(
-        settings.resolution_x * settings.resolution_y * 3);
+        settings.m_resolution_x * settings.m_resolution_y * 3);
 
-    const float inv_nx = 1.f / settings.resolution_x;
-    const float inv_ny = 1.f / settings.resolution_y;
+    const float inv_nx = 1.f / settings.m_resolution_x;
+    const float inv_ny = 1.f / settings.m_resolution_y;
 
     // Render loop
     int buffer_pos{0};
 
-    for (int j = settings.resolution_y - 1; j >= 0; j--)
+    for (int j = settings.m_resolution_y - 1; j >= 0; j--)
     {
-        for (int i = 0; i < settings.resolution_x; i++)
+        for (int i = 0; i < settings.m_resolution_x; i++)
         {
-            vec3 col(0.f, 0.f, 0.f);
+            Vec3 col(0.f, 0.f, 0.f);
             for (int s = 0; s < ns; s++)
             {
 
                 const float u = (i + rn_gen->get_1_d()) * inv_nx;
                 const float v = (j + rn_gen->get_1_d()) * inv_ny;
 
-                ray r = render_scene->cam->get_ray(u, v);
+                Ray r = render_scene->m_cam->get_ray(u, v);
                 col += de_nan(light_integrator->trace(
-                    r, render_scene->world.get(), render_scene->light_source, 0));
+                    r,
+                    render_scene->m_world.get(),
+                    render_scene->m_light_source,
+                    0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

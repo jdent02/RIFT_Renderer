@@ -23,21 +23,22 @@
 #pragma once
 
 #include "core/data_types/hit_record.h"
-#include "imaterial.h"
+#include "materials/i_material.h"
 
 // Forward declaration
-class vec3;
+class Vec3;
 
-class dielectric : public imaterial
+class Dielectric : public IMaterial
 {
   public:
-    explicit dielectric(const float ri)
-      : ref_idx(ri){};
+    explicit Dielectric(const float ri)
+      : m_ref_idx_(ri){};
 
-    ~dielectric() override = default;
+    ~Dielectric() override = default;
 
-    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+    bool scatter(const Ray& r_in, const HitRecord& rec, ScatterRecord& srec)
         const override;
 
-    float ref_idx;
+  private:
+    float m_ref_idx_;
 };

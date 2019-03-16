@@ -27,7 +27,7 @@
 #include <cmath>
 #include <iostream>
 
-void png_writer::write(
+void PngWriter::write(
     const float*       buffer,
     const std::string& filename,
     const int          size_x,

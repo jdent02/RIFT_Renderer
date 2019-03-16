@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
+#include "core/data_types/Vec3.h"
 #include "core/rendering/utility_functions.h"
 
-inline float trilinear_interp(vec3 c[2][2][2], float u, float v, float w)
+inline float trilinear_interp(Vec3 c[2][2][2], float u, float v, float w)
 {
     float uu = u * u * (3 - 2 * u);
     float vv = v * v * (3 - 2 * v);
@@ -37,7 +37,7 @@ inline float trilinear_interp(vec3 c[2][2][2], float u, float v, float w)
         {
             for (int k = 0; k < 2; k++)
             {
-                vec3 weight_v(u - i, v - j, w - k);
+                Vec3 weight_v(u - i, v - j, w - k);
                 accum += (i * uu + (1.f - i) * (1.f - uu)) *
                          (j * vv + (1.f - j) * (1.f - vv)) *
                          (k * ww + (1.f - k) * (1.f - ww)) *
@@ -49,12 +49,12 @@ inline float trilinear_interp(vec3 c[2][2][2], float u, float v, float w)
     return accum;
 }
 
-static vec3* perlin_generate()
+static Vec3* perlin_generate()
 {
-    vec3* p = new vec3[256];
+    Vec3* p = new Vec3[256];
     for (int i = 0; i < 256; ++i)
     {
-        p[i] = unit_vector(vec3(
+        p[i] = unit_vector(Vec3(
             -1 + 2 * (rand() * inv_rand_max),
             -1 + 2 * (rand() * inv_rand_max),
             -1 + 2 * (rand() * inv_rand_max)));
@@ -84,27 +84,28 @@ static int* perlin_generate_perm()
     return p;
 }
 
-class perlin
+class Perlin
 {
   public:
-    perlin()
-      : ranvec(perlin_generate())
-      , perm_x(perlin_generate_perm())
-      , perm_y(perlin_generate_perm())
-      , perm_z(perlin_generate_perm())
+    Perlin()
+      : ranvec_(perlin_generate())
+      , perm_x_(perlin_generate_perm())
+      , perm_y_(perlin_generate_perm())
+      , perm_z_(perlin_generate_perm())
     {}
 
-    float noise(const vec3& p) const;
+    float noise(const Vec3& p) const;
 
-    float turb(const vec3& p, float depth = 7) const;
+    float turb(const Vec3& p, float depth = 7) const;
 
-    vec3* ranvec;
-    int*  perm_x;
-    int*  perm_y;
-    int*  perm_z;
+  private:
+    Vec3* ranvec_;
+    int*  perm_x_;
+    int*  perm_y_;
+    int*  perm_z_;
 };
 
-inline float perlin::noise(const vec3& p) const
+inline float Perlin::noise(const Vec3& p) const
 {
     float u = p.x() - floor(p.x());
     float v = p.y() - floor(p.y());
@@ -113,16 +114,16 @@ inline float perlin::noise(const vec3& p) const
     int   j = floor(p.y());
     int   k = floor(p.z());
 
-    vec3 c[2][2][2];
+    Vec3 c[2][2][2];
     for (int di = 0; di < 2; di++)
     {
         for (int dj = 0; dj < 2; dj++)
         {
             for (int dk = 0; dk < 2; dk++)
             {
-                c[di][dj][dk] = ranvec
-                    [perm_x[(i + di) & 255] ^ perm_y[(j + dj) & 255] ^
-                     perm_z[(k + dk) & 255]];
+                c[di][dj][dk] = ranvec_
+                    [perm_x_[(i + di) & 255] ^ perm_y_[(j + dj) & 255] ^
+                     perm_z_[(k + dk) & 255]];
             }
         }
     }
@@ -130,10 +131,10 @@ inline float perlin::noise(const vec3& p) const
     return trilinear_interp(c, u, v, w);
 }
 
-inline float perlin::turb(const vec3& p, const float depth) const
+inline float Perlin::turb(const Vec3& p, const float depth) const
 {
     float accum = 0;
-    vec3  temp_p = p;
+    Vec3  temp_p = p;
     float weight = 1.f;
     for (int i = 0; i < depth; i++)
     {

@@ -20,41 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "openexr_writer.h"
+#pragma once
 
-#include "OpenEXR/ImfRgbaFile.h"
+#include "core/data_types/hit_record.h"
 
-#include <cstdio>
+class Ray;
+class AABB;
+class IMaterial;
 
-using namespace Imf_2_2;
-
-void openexr_writer::write(
-    const float*       buffer,
-    const std::string& filename,
-    int                size_x,
-    int                size_y) const
+class IHitable
 {
-    printf("Writing Output EXR");
-    std::string out_filename = filename + ".exr";
-    const int   pixel_count{size_x * size_y};
-    Rgba*       out_buffer = new Rgba[pixel_count];
+  public:
+    virtual ~IHitable() = default;
 
-    int buffer_index{0};
-    for (int i = 0; i < pixel_count; i++)
-    {
-        Rgba temp;
+    virtual bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const = 0;
 
-        temp.r = buffer[buffer_index++];
-        temp.g = buffer[buffer_index++];
-        temp.b = buffer[buffer_index++];
-        temp.a = 1.f;
+    virtual bool bounding_box(float t0, float t1, AABB& box) const = 0;
 
-        out_buffer[i] = temp;
-    }
+    virtual float pdf_value(const Vec3& o, const Vec3& v) const { return 0.f; }
 
-    RgbaOutputFile file(out_filename.c_str(), size_x, size_y, WRITE_RGBA);
-    file.setFrameBuffer(out_buffer, 1, size_x);
-    file.writePixels(size_y);
-
-    printf("File written");
-}
+    virtual Vec3 random(const Vec3& o) const { return Vec3(1.f, 0.f, 0.f); }
+};

@@ -22,11 +22,11 @@
 
 #pragma once
 
-#include "core/image_writers/ioutput_writer.h"
+#include "core/image_writers/i_out_writer.h"
 
 #include <string>
 
-class png_writer : public ioutput_writer
+class PngWriter : public IOutWriter
 {
   public:
     void write(

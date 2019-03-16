@@ -23,21 +23,22 @@
 #pragma once
 
 #include "core/data_types/hit_record.h"
-#include "ihitable.h"
+#include "hitables/i_hitable.h"
 
-class box : public ihitable
+class Box : public IHitable
 {
   public:
-    box() = default;
-    box(const vec3& p0, const vec3& p1, imaterial* ptr);
+    Box() = default;
+    Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr);
 
-    ~box() override { delete list_ptr; }
+    ~Box() override { delete m_list_ptr_; }
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    vec3      pmin, pmax;
-    ihitable* list_ptr;
+  private:
+    Vec3      m_pmin_, m_pmax_;
+    IHitable* m_list_ptr_;
 };

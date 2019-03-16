@@ -22,10 +22,10 @@
 
 #pragma once
 
-struct render_settings;
-struct scene;
-class icamera;
-class ihitable;
+struct RenderSettings;
+struct Scene;
+class ICamera;
+class IHitable;
 
 namespace render_worker
 {
@@ -33,7 +33,7 @@ void run_thread(
     float                  seed,
     int                    ns,
     float*                 buffer,
-    const scene*           render_scene,
-    const render_settings& settings);
+    const Scene*           render_scene,
+    const RenderSettings& settings);
 
 } // namespace render_worker

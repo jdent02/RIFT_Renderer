@@ -22,14 +22,14 @@
 
 #include "core/acceleration_structures/aabb.h"
 
-bool aabb::hit(const ray& r, float tmin, float tmax) const
+bool AABB::hit(const Ray& r, float tmin, float tmax) const
 {
     for (int a = 0; a < 3; a++)
     {
         const float inv_d = 1.f / r.direction()[a];
 
-        float t0 = (_min[a] - r.origin()[a]) * inv_d;
-        float t1 = (_max[a] - r.origin()[a]) * inv_d;
+        float t0 = (m_min[a] - r.origin()[a]) * inv_d;
+        float t1 = (m_max[a] - r.origin()[a]) * inv_d;
         if (inv_d < 0.f)
         {
             std::swap(t0, t1);

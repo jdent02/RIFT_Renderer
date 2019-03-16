@@ -22,26 +22,27 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
-#include "itexture.h"
+#include "core/data_types/Vec3.h"
+#include "textures/i_texture.h"
 #include "utility/noises/perlin.h"
 
-class noise_texture : public itexture
+class NoiseTexture : public ITexture
 {
   public:
-    noise_texture() = default;
+    NoiseTexture() = default;
 
-    explicit noise_texture(float sc)
-      : scale(sc){};
+    explicit NoiseTexture(float sc)
+      : m_scale_(sc){};
 
-    virtual vec3 value(float u, float v, const vec3& p) const override
+    Vec3 value(float u, float v, const Vec3& p) const override
     {
-        //        return vec3(1.f, 1.f, 1.f) * 0.5f * (1 + noise.turb(scale *
-        //        p)); return vec3(1.f, 1.f, 1.f) * noise.turb(scale * p);
-        return vec3(1.f, 1.f, 1.f) * 0.5f *
-               (1 + sin(scale * p.z() + 10.f * noise.turb(p)));
+        //        return Vec3(1.f, 1.f, 1.f) * 0.5f * (1 + noise.turb(m_scale *
+        //        p)); return Vec3(1.f, 1.f, 1.f) * noise.turb(m_scale * p);
+        return Vec3(1.f, 1.f, 1.f) * 0.5f *
+               (1 + sin(m_scale_ * p.z() + 10.f * m_noise_.turb(p)));
     }
 
-    perlin noise;
-    float  scale{1.f};
+  private:
+    Perlin m_noise_;
+    float  m_scale_{1.f};
 };

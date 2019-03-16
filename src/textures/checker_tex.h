@@ -22,24 +22,25 @@
 
 #pragma once
 
-#include "itexture.h"
+#include "textures/i_texture.h"
 
 // Forward declaration
-class vec3;
+class Vec3;
 
-class checker_texture : public itexture
+class CheckerTexture : public ITexture
 {
   public:
-    checker_texture() = default;
+    CheckerTexture() = default;
 
-    checker_texture(itexture* t0, itexture* t1)
-      : odd(t1)
-      , even(t0){};
+    CheckerTexture(ITexture* t0, ITexture* t1)
+      : m_odd_(t1)
+      , m_even_(t0){};
 
-    virtual ~checker_texture() override = default;
+    ~CheckerTexture() override = default;
 
-    virtual vec3 value(float u, float v, const vec3& p) const override;
+    Vec3 value(float u, float v, const Vec3& p) const override;
 
-    itexture* odd{};
-    itexture* even{};
+  private:
+    ITexture* m_odd_{};
+    ITexture* m_even_{};
 };

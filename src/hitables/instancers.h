@@ -25,35 +25,37 @@
 #include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
-#include "ihitable.h"
+#include "hitables/i_hitable.h"
 
-class translate : public ihitable
+class Translate : public IHitable
 {
   public:
-    translate(ihitable* p, const vec3& displacement);
+    Translate(IHitable* p, const Vec3& displacement);
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    ihitable* ptr;
-    vec3      offset;
+  private:
+    IHitable* m_ptr_;
+    Vec3      m_offset_;
 };
 
-class rotate_y : public ihitable
+class RotateY : public IHitable
 {
   public:
-    rotate_y(ihitable* p, float angle);
+    RotateY(IHitable* p, float angle);
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    ihitable* ptr;
-    float     sin_theta;
-    float     cos_theta;
-    bool      hasbox;
-    aabb      bbox;
+  private:
+    IHitable* m_ptr_;
+    float     m_sin_theta_;
+    float     m_cos_theta_;
+    bool      m_hasbox_;
+    AABB      m_bbox_;
 };

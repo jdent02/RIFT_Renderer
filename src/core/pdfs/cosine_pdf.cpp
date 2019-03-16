@@ -24,9 +24,9 @@
 
 #include "core/rendering/utility_functions.h"
 
-float cosine_pdf::value(const vec3& direction) const
+float CosinePDF::value(const Vec3& direction) const
 {
-    float cosine = dot(unit_vector(direction), uvw.w());
+    float cosine = dot(unit_vector(direction), m_uvw_.w());
     if (cosine > 0)
     {
         return cosine * inv_pi;
@@ -34,7 +34,7 @@ float cosine_pdf::value(const vec3& direction) const
     return 0;
 }
 
-vec3 cosine_pdf::generate() const
+Vec3 CosinePDF::generate() const
 {
-    return uvw.local(random_cosine_direction());
+    return m_uvw_.local(random_cosine_direction());
 }

@@ -22,13 +22,12 @@
 
 #pragma once
 
-#include "igenerator.h"
+#include "core/data_types/Ray.h"
 
-#include <memory>
-
-class sampler
+class ICamera
 {
   public:
-    std::unique_ptr<igenerator> rand_gen;
-    std::unique_ptr<igenerator> monte_carlo_gen;
+    virtual ~ICamera() = default;
+
+    virtual Ray get_ray(float s, float t) const = 0;
 };

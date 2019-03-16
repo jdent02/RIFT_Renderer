@@ -23,22 +23,23 @@
 #pragma once
 
 #include "core/data_types/vec3.h"
-#include "itexture.h"
+#include "textures/i_texture.h"
 
-class constant_texture : public itexture
+class ConstantTexture : public ITexture
 {
   public:
-    constant_texture() = default;
+    ConstantTexture() = default;
 
-    explicit constant_texture(vec3 c)
-      : color(c){};
+    explicit ConstantTexture(const Vec3 c)
+      : m_color_(c){};
 
-    virtual ~constant_texture() override = default;
+    ~ConstantTexture() override = default;
 
-    virtual vec3 value(float u, float v, const vec3& p) const override
+    Vec3 value(float u, float v, const Vec3& p) const override
     {
-        return color;
+        return m_color_;
     };
 
-    vec3 color;
+  private:
+    Vec3 m_color_;
 };

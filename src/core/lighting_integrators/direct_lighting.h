@@ -22,15 +22,15 @@
 
 #pragma once
 
-#include "core/lighting_integrators/ilight_integrator.h"
+#include "core/lighting_integrators/i_light_integrator.h"
 
-class direct_lighting : public ilight_integrator
+class DirectLighting : public ILightIntegrator
 {
   public:
-    direct_lighting() = default;
-    vec3 trace(
-        const ray& r,
-        ihitable*  world,
-        ihitable*  light_shape,
-        const int  depth) const override;
+    DirectLighting() = default;
+    Vec3 trace(
+        const Ray& r,
+        IHitable*  world,
+        IHitable*  light_shape,
+        int        depth) const override;
 };

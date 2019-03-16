@@ -27,16 +27,16 @@
 
 #include <cfloat>
 
-bool sphere::hit(
-    const ray&  r,
+bool Sphere::hit(
+    const Ray&  r,
     const float t_min,
     const float t_max,
-    hit_record& rec) const
+    HitRecord&  rec) const
 {
-    const vec3  oc = r.origin() - center;
+    const Vec3  oc = r.origin() - m_center_;
     const float a = dot(r.direction(), r.direction());
     const float b = dot(oc, r.direction());
-    const float c = dot(oc, oc) - radius * radius;
+    const float c = dot(oc, oc) - m_radius_ * m_radius_;
     const float discriminant = b * b - a * c;
 
     if (discriminant > 0)
@@ -44,22 +44,22 @@ bool sphere::hit(
         float temp = (-b - std::sqrt(discriminant)) / a;
         if (temp < t_max && temp > t_min)
         {
-            rec.t = temp;
-            rec.p = r.point_at_parameter(rec.t);
-            rec.normal = (rec.p - center) / radius;
-            rec.mat_ptr = material;
-            get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
+            rec.m_t = temp;
+            rec.m_p = r.point_at_parameter(rec.m_t);
+            rec.m_normal = (rec.m_p - m_center_) / m_radius_;
+            rec.m_mat_ptr = m_material_;
+            get_sphere_uv((rec.m_p - m_center_) / m_radius_, rec.m_u, rec.m_v);
             return true;
         }
 
         temp = (-b + std::sqrt(discriminant)) / a;
         if (temp < t_max && temp > t_min)
         {
-            rec.t = temp;
-            rec.p = r.point_at_parameter(rec.t);
-            rec.normal = (rec.p - center) / radius;
-            rec.mat_ptr = material;
-            get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
+            rec.m_t = temp;
+            rec.m_p = r.point_at_parameter(rec.m_t);
+            rec.m_normal = (rec.m_p - m_center_) / m_radius_;
+            rec.m_mat_ptr = m_material_;
+            get_sphere_uv((rec.m_p - m_center_) / m_radius_, rec.m_u, rec.m_v);
             return true;
         }
     }
@@ -67,32 +67,32 @@ bool sphere::hit(
     return false;
 }
 
-bool sphere::bounding_box(float t0, float t1, aabb& box) const
+bool Sphere::bounding_box(float t0, float t1, AABB& box) const
 {
-    box = aabb(
-        center - vec3(radius, radius, radius),
-        center + vec3(radius, radius, radius));
+    box = AABB(
+        m_center_ - Vec3(m_radius_, m_radius_, m_radius_),
+        m_center_ + Vec3(m_radius_, m_radius_, m_radius_));
     return true;
 }
 
-float sphere::pdf_value(const vec3& o, const vec3& v) const
+float Sphere::pdf_value(const Vec3& o, const Vec3& v) const
 {
-    hit_record rec;
-    if (this->hit(ray(o, v), 0.001, FLT_MAX, rec))
+    HitRecord rec;
+    if (this->hit(Ray(o, v), 0.001, FLT_MAX, rec))
     {
         float cos_theta_max =
-            std::sqrt(1 - radius * radius / (center - o).squared_length());
+            std::sqrt(1 - m_radius_ * m_radius_ / (m_center_ - o).squared_length());
         float solid_angle = 2 * pi * (1 - cos_theta_max);
         return 1 / solid_angle;
     }
     return 0;
 }
 
-vec3 sphere::random(const vec3& o) const
+Vec3 Sphere::random(const Vec3& o) const
 {
-    vec3  direction = center - o;
+    Vec3  direction = m_center_ - o;
     float distance_squared = direction.squared_length();
-    onb   uvw;
+    ONB   uvw;
     uvw.build_from_w(direction);
-    return uvw.local(random_to_sphere(radius, distance_squared));
+    return uvw.local(random_to_sphere(m_radius_, distance_squared));
 }

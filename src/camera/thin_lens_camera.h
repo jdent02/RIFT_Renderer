@@ -22,17 +22,17 @@
 
 #pragma once
 
+#include "camera/i_camera.h"
 #include "core/data_types/ray.h"
 #include "core/data_types/vec3.h"
-#include "icamera.h"
 
-class thin_lens_camera : public icamera
+class ThinLensCamera : public ICamera
 {
   public:
-    thin_lens_camera(
-        vec3  lookfrom,
-        vec3  lookat,
-        vec3  vup,
+    ThinLensCamera(
+        Vec3  lookfrom,
+        Vec3  lookat,
+        Vec3  vup,
         float vfov,
         float aspect,
         float aperture,
@@ -40,14 +40,14 @@ class thin_lens_camera : public icamera
         float t0,
         float t1);
 
-    virtual ray get_ray(float s, float t) const override;
+    Ray get_ray(float s, float t) const override;
 
-    // Properties
-    vec3  origin;
-    vec3  lower_left_corner;
-    vec3  horizontal;
-    vec3  vertical;
-    vec3  u, v, w;
-    float lens_radius;
-    float time0, time1;
+  private:
+    Vec3  m_origin_;
+    Vec3  m_lower_left_corner_;
+    Vec3  m_horizontal_;
+    Vec3  m_vertical_;
+    Vec3  m_u_, m_v_, m_w_;
+    float m_lens_radius_;
+    float m_time0_, m_time1_;
 };

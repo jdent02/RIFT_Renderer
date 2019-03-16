@@ -22,18 +22,19 @@
 
 #include "metal.h"
 
+#include "core/data_types/scatter_record.h"
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 
-bool metal::scatter(
-    const ray&        r_in,
-    const hit_record& hrec,
-    scatter_record&   srec) const
+bool Metal::scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
+    const
 {
-    const vec3 reflected = reflect(unit_vector(r_in.direction()), hrec.normal);
-    srec.specular_ray = ray(hrec.p, reflected + fuzz * random_in_unit_sphere());
-    srec.attenuation = albedo;
-    srec.is_specular = true;
-    srec.pdf_ptr = nullptr;
+    const Vec3 reflected =
+        reflect(unit_vector(r_in.direction()), hrec.m_normal);
+    srec.m_specular_ray =
+        Ray(hrec.m_p, reflected + m_fuzz_ * random_in_unit_sphere());
+    srec.m_attenuation = m_albedo_;
+    srec.m_is_specular = true;
+    srec.m_pdf_ptr = nullptr;
     return true;
 }

@@ -22,38 +22,38 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
 #include "core/data_types/vec3.h"
-#include "imaterial.h"
-#include "textures/itexture.h"
+#include "core/data_types/hit_record.h"
+#include "materials/i_material.h"
+#include "textures/i_texture.h"
 
-class diffuse_light : public imaterial
+class DiffuseLight : public IMaterial
 {
   public:
-    explicit diffuse_light(itexture* a)
+    explicit DiffuseLight(ITexture* a)
       : emit(a){};
 
-    ~diffuse_light() override = default;
+    ~DiffuseLight() override = default;
 
-    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+    bool scatter(const Ray& r_in, const HitRecord& rec, ScatterRecord& srec)
         const override
     {
         return false;
     }
 
-    virtual vec3 emitted(
-        const ray&        r_in,
-        const hit_record& rec,
-        float             u,
-        float             v,
-        const vec3&       p) const override
+    virtual Vec3 emitted(
+        const Ray&       r_in,
+        const HitRecord& rec,
+        float            u,
+        float            v,
+        const Vec3&      p) const override
     {
-        if (dot(rec.normal, r_in.direction()) < 0.0)
+        if (dot(rec.m_normal, r_in.direction()) < 0.0)
         {
             return emit->value(u, v, p);
         }
-        return vec3(0.f, 0.f, 0.f);
+        return Vec3(0.f, 0.f, 0.f);
     }
 
-    itexture* emit;
+    ITexture* emit;
 };

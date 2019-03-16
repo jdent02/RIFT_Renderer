@@ -23,80 +23,82 @@
 #include "render_controller.h"
 
 #include "core/image_writers/jpeg_writer.h"
-#include "core/image_writers/png_writer.h"
 #include "core/rendering/render_worker.h"
 #include "core/samplers/rng/xoroshiro128.h"
-
 #ifdef RIFT_USE_OPENEXR
-#include "core/image_writers/openexr_writer.h"
+#include "core/image_writers/open_exr_writer.h"
 #endif
+#include "core/image_writers/i_out_writer.h"
+#include "core/image_writers/png_writer.h"
+#include "core/lighting_integrators/i_light_integrator.h"
+#include "utility/containers/render_settings.h"
 
 #include <cstdio>
 #include <thread>
 #include <vector>
 
-render_controller::render_controller(
-    const render_settings& settings,
-    const scene*           render_scene)
-  : inv_ns_(1.f / settings.samples)
-  , render_scene_(render_scene)
-  , settings_(settings)
+RenderController::RenderController(
+    const RenderSettings& settings,
+    const Scene*          render_scene)
+  : m_inv_ns(1.f / settings.m_samples)
+  , m_render_scene(render_scene)
+  , m_settings(settings)
 {
-    if (settings_.light_integrator != PATH_TRACING &&
-        render_scene_->light_source == nullptr)
+    if (m_settings.m_light_integrator != PATH_TRACING &&
+        m_render_scene->m_light_source == nullptr)
     {
         printf("Scene has no discreet light sources, switching integrator to "
                "path tracer\n");
-        settings_.light_integrator = PATH_TRACING;
+        m_settings.m_light_integrator = PATH_TRACING;
     }
 
-    if (settings.output_writer == PNG)
+    if (settings.m_output_writer == PNG)
     {
-        image_writer_ = std::make_unique<png_writer>();
+        m_image_writer = std::make_unique<PngWriter>();
     }
-    else if (settings.output_writer == JPEG)
+    else if (settings.m_output_writer == JPEG)
     {
-        image_writer_ = std::make_unique<jpeg_writer>();
+        m_image_writer = std::make_unique<JpegWriter>();
     }
 #ifdef RIFT_USE_OPENEXR
-    else if (settings.output_writer == OPENEXR)
+    else if (settings.m_output_writer == OPENEXR)
     {
-        image_writer_ = std::make_unique<openexr_writer>();
+        m_image_writer = std::make_unique<OpenEXRWriter>();
     }
 #endif
 }
 
-void render_controller::do_render()
+void RenderController::do_render()
 {
     printf("Starting Render.....\n");
     printf("Generating Pixels...\n");
 
     const auto seed_1 = static_cast<uint64_t>(time(nullptr));
 
-    random_generator_ = std::make_unique<xoro_128>();
+    m_random_generator = std::make_unique<Xoro128>();
 
-    random_generator_->seed_gen(seed_1);
+    m_random_generator->seed_gen(seed_1);
 
-    buffer_ = std::make_unique<float[]>(
-        settings_.resolution_x * settings_.resolution_y * 3);
+    m_buffer = std::make_unique<float[]>(
+        m_settings.m_resolution_x * m_settings.m_resolution_y * 3);
 
     std::vector<std::thread> threads;
 
-    threads.reserve(settings_.threads);
+    threads.reserve(m_settings.m_threads);
 
-    int samples_per_thread = int(settings_.samples / settings_.threads);
+    int samples_per_thread = int(m_settings.m_samples / m_settings.m_threads);
 
     printf("Number of samples per thread: %i\n", samples_per_thread);
 
-    for (int i = 0; i < settings_.threads; i++)
+    for (int i = 0; i < m_settings.m_threads; i++)
     {
         threads.emplace_back(
             render_worker::run_thread,
-            random_generator_->get_1_d(),
+            m_random_generator->get_1_d(),
             samples_per_thread,
-            buffer_.get(),
-            render_scene_,
-            std::ref(settings_));
+            m_buffer.get(),
+            m_render_scene,
+            std::ref(m_settings));
     }
 
     for (auto& thread : threads)
@@ -105,10 +107,11 @@ void render_controller::do_render()
     }
 
     // Normalize pixel values
-    const int buffer_size = settings_.resolution_x * settings_.resolution_y * 3;
+    const int buffer_size =
+        m_settings.m_resolution_x * m_settings.m_resolution_y * 3;
 
     for (int i = 0; i < buffer_size; i++)
     {
-        buffer_[i] *= inv_ns_;
+        m_buffer[i] *= m_inv_ns;
     }
 }

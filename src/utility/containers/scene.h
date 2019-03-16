@@ -22,12 +22,12 @@
 
 #pragma once
 
-#include "camera/icamera.h"
-#include "hitables/ihitable.h"
+#include "camera/i_camera.h"
+#include "hitables/i_hitable.h"
 
-struct scene
+struct Scene
 {
-    std::unique_ptr<icamera>  cam;
-    std::unique_ptr<ihitable> world;
-    ihitable* light_source;
+    std::unique_ptr<ICamera>  m_cam;
+    std::unique_ptr<IHitable> m_world;
+    std::unique_ptr<IHitable> m_light_source;
 };

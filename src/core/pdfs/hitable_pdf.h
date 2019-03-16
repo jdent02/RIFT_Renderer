@@ -22,24 +22,25 @@
 
 #pragma once
 
-#include "hitables/ihitable.h"
-#include "pdf.h"
+#include "core/pdfs/pdf.h"
+#include "hitables/i_hitable.h"
 
-class hitable_pdf : public pdf
+class HitablePDF : public PDF
 {
   public:
-    hitable_pdf(ihitable* p, const vec3& origin)
-      : o(origin)
-      , ptr(p)
+    HitablePDF(IHitable* p, const Vec3& origin)
+      : m_o_(origin)
+      , m_ptr_(p)
     {}
 
-    float value(const vec3& direction) const override
+    float value(const Vec3& direction) const override
     {
-        return ptr->pdf_value(o, direction);
+        return m_ptr_->pdf_value(m_o_, direction);
     }
 
-    vec3 generate() const override { return ptr->random(o); };
+    Vec3 generate() const override { return m_ptr_->random(m_o_); };
 
-    vec3      o;
-    ihitable* ptr;
+  private:
+    Vec3      m_o_;
+    IHitable* m_ptr_;
 };

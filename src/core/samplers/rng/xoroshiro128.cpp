@@ -22,7 +22,7 @@
 
 #include "xoroshiro128.h"
 
-float xoro_128::get_1_d()
+float Xoro128::get_1_d()
 {
     const uint64_t s0 = s[0];
     uint64_t       s1 = s[1];
@@ -35,7 +35,7 @@ float xoro_128::get_1_d()
     return result * inv_uint64;
 }
 
-void xoro_128::seed_gen(const uint64_t seed)
+void Xoro128::seed_gen(const uint64_t seed)
 {
     s[0] = seed;
     s[1] = seed << 16;

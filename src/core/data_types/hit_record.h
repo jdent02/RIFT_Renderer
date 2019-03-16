@@ -24,14 +24,14 @@
 
 #include "core/data_types/vec3.h"
 
-class imaterial;
+class IMaterial;
 
-struct hit_record
+struct HitRecord
 {
-    float      t{};
-    float      u{};
-    float      v{};
-    vec3       p;
-    vec3       normal;
-    imaterial* mat_ptr{};
+    float      m_t{};
+    float      m_u{};
+    float      m_v{};
+    Vec3       m_p;
+    Vec3       m_normal;
+    IMaterial* m_mat_ptr{};
 };

@@ -11,5 +11,5 @@ class command_line_parser
 
     void print_help();
 
-    render_settings parse(const int argc, char* argv[]);
+    RenderSettings parse(int argc, char* argv[]);
 };

@@ -22,31 +22,24 @@
 
 #pragma once
 
-#include <string>
+#include <cstdint>
 
-#ifdef RIFT_USE_OPENEXR
-enum output_writers
+enum samplers
 {
-    JPEG,
-    PNG,
-    OPENEXR
+    XORO_128,
+    RAND_48
 };
-#else
-enum output_writers
-{
-    JPEG,
-    PNG,
-};
-#endif // RIFT_USE_OPENEXR
 
-class ioutput_writer
+class IRandGenerator
 {
   public:
-    virtual ~ioutput_writer() = default;
+    IRandGenerator() = default;
 
-    virtual void write(
-        const float*       buffer,
-        const std::string& filename,
-        int                size_x,
-        int                size_y) const = 0;
+    virtual ~IRandGenerator() = default;
+
+    virtual float get_1_d() = 0;
+
+    virtual float get_2d() = 0;
+
+    virtual void seed_gen(uint64_t seed) = 0;
 };

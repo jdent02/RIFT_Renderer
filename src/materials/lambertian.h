@@ -23,24 +23,27 @@
 #pragma once
 
 #include "core/data_types/hit_record.h"
-#include "imaterial.h"
-#include "textures/itexture.h"
+#include "materials/i_material.h"
+#include "textures/i_texture.h"
 
-class lambertian : public imaterial
+struct ScatterRecord;
+
+class Lambertian : public IMaterial
 {
   public:
-    explicit lambertian(itexture* a)
-      : albedo(a){};
+    explicit Lambertian(ITexture* a)
+      : m_albedo_(a){};
 
-    ~lambertian() = default;
+    ~Lambertian() = default;
 
-    bool scatter(const ray& r_in, const hit_record& rec, scatter_record& srec)
+    bool scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
         const override;
 
     float scattering_pdf(
-        const ray&        r_in,
-        const hit_record& rec,
-        const ray&        scattered) const override;
+        const Ray&       r_in,
+        const HitRecord& rec,
+        const Ray&       scattered) const override;
 
-    itexture* albedo;
+  private:
+    ITexture* m_albedo_;
 };

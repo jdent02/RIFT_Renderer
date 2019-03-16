@@ -24,14 +24,14 @@
 
 #include "core/data_types/hit_record.h"
 #include "core/rendering/utility_functions.h"
-#include "ihitable.h"
+#include "hitables/i_hitable.h"
 
 // Forward declarations
-class imaterial;
-class ray;
-struct hit_record;
+class IMaterial;
+class Ray;
+struct HitRecord;
 
-inline void get_sphere_uv(const vec3& p, float& u, float& v)
+inline void get_sphere_uv(const Vec3& p, float& u, float& v)
 {
     float phi = std::atan2(p.z(), p.x());
     float theta = std::asin(p.y());
@@ -39,28 +39,29 @@ inline void get_sphere_uv(const vec3& p, float& u, float& v)
     v = (theta + pi / 2) / pi;
 }
 
-class sphere : public ihitable
+class Sphere : public IHitable
 {
   public:
-    sphere() = default;
+    Sphere() = default;
 
-    sphere(const vec3 cen, const float r, imaterial* mat)
-      : center(cen)
-      , radius(r)
-      , material(mat){};
+    Sphere(const Vec3 cen, const float r, IMaterial* mat)
+      : m_center_(cen)
+      , m_radius_(r)
+      , m_material_(mat){};
 
-    ~sphere() override = default;
+    ~Sphere() override = default;
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    float pdf_value(const vec3& o, const vec3& v) const override;
+    float pdf_value(const Vec3& o, const Vec3& v) const override;
 
-    vec3 random(const vec3& o) const override;
-    // Properties
-    vec3       center;
-    float      radius{};
-    imaterial* material{};
+    Vec3 random(const Vec3& o) const override;
+
+  private:
+    Vec3       m_center_;
+    float      m_radius_{};
+    IMaterial* m_material_{};
 };

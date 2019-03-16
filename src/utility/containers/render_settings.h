@@ -22,21 +22,20 @@
 
 #pragma once
 
-#include "core/image_writers/ioutput_writer.h"
-#include "core/lighting_integrators/ilight_integrator.h"
-#include "core/samplers/igenerator.h"
+#include "core/image_writers/i_out_writer.h"
+#include "core/lighting_integrators/i_light_integrator.h"
+#include "core/samplers/rng/i_rand_generator.h"
 
 #include <thread>
 
-struct render_settings
+struct RenderSettings
 {
-    const int                   resolution_x;
-    const int                   resolution_y;
-    const int                   samples;
-    mutable lighting_integrator light_integrator;
-    const int                   threads;
-    const samplers              sampler;
-    const output_writers        output_writer;
-    const std::string           filepath;
-    const bool                  use_important_sampling;
+    const int                   m_resolution_x;
+    const int                   m_resolution_y;
+    const int                   m_samples;
+    mutable lighting_integrator m_light_integrator;
+    const int                   m_threads;
+    const samplers              m_sampler;
+    const output_writers        m_output_writer;
+    const std::string           m_filepath;
 };

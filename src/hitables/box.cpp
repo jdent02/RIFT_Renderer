@@ -24,33 +24,37 @@
 
 #include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
-#include "hitable_list.h"
-#include "rect.h"
+#include "hitables/hitable_list.h"
+#include "hitables/rect.h"
 
-bool box::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
+bool Box::hit(
+    const Ray&  r,
+    const float t_min,
+    const float t_max,
+    HitRecord&  rec) const
 {
-    return list_ptr->hit(r, t_min, t_max, rec);
+    return m_list_ptr_->hit(r, t_min, t_max, rec);
 }
 
-bool box::bounding_box(float t0, float t1, aabb& box) const
+bool Box::bounding_box(float t0, float t1, AABB& box) const
 {
-    box = aabb(pmin, pmax);
+    box = AABB(m_pmin_, m_pmax_);
     return true;
 }
 
-box::box(const vec3& p0, const vec3& p1, imaterial* ptr)
-  : pmin(p0)
-  , pmax(p1)
+Box::Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr)
+  : m_pmin_(p0)
+  , m_pmax_(p1)
 {
-    auto** list = new ihitable*[6];
-    list[0] = new xy_rect(p0.x(), p1.x(), p0.y(), p1.y(), p1.z(), ptr);
-    list[1] = new flip_normals(
-        new xy_rect(p0.x(), p1.x(), p0.y(), p1.y(), p0.z(), ptr));
-    list[2] = new xz_rect(p0.x(), p1.x(), p0.z(), p1.z(), p1.y(), ptr);
-    list[3] = new flip_normals(
-        new xz_rect(p0.x(), p1.x(), p0.z(), p1.z(), p0.y(), ptr));
-    list[4] = new yz_rect(p0.y(), p1.y(), p0.z(), p1.z(), p1.x(), ptr);
-    list[5] = new flip_normals(
-        new yz_rect(p0.y(), p1.y(), p0.z(), p1.z(), p0.x(), ptr));
-    list_ptr = new hitable_list(list, 6);
+    auto** list = new IHitable*[6];
+    list[0] = new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p1.z(), ptr);
+    list[1] = new FlipNormals(
+        new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p0.z(), ptr));
+    list[2] = new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p1.y(), ptr);
+    list[3] = new FlipNormals(
+        new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p0.y(), ptr));
+    list[4] = new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p1.x(), ptr);
+    list[5] = new FlipNormals(
+        new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p0.x(), ptr));
+    m_list_ptr_ = new HitableList(list, 6);
 }

@@ -23,89 +23,91 @@
 #pragma once
 
 #include "core/data_types/hit_record.h"
-#include "ihitable.h"
+#include "hitables/i_hitable.h"
 
-class xy_rect final : public ihitable
+class XYRect final : public IHitable
 {
   public:
-    xy_rect() = default;
+    XYRect() = default;
 
-    xy_rect(
+    XYRect(
         float      _x0,
         float      _x1,
         float      _y0,
         float      _y1,
         float      _k,
-        imaterial* mat);
+        IMaterial* mat);
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    imaterial* mp;
-    float      x0, x1, y0, y1, k;
+  private:
+    IMaterial* m_mp_;
+    float      m_x0_, m_x1_, m_y0_, m_y1_, m_k_;
 };
 
-class xz_rect final : public ihitable
+class XZRect final : public IHitable
 {
   public:
-    xz_rect() = default;
+    XZRect() = default;
 
-    xz_rect(
+    XZRect(
         float      _x0,
         float      _x1,
         float      _z0,
         float      _z1,
         float      _k,
-        imaterial* mat);
+        IMaterial* mat);
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
-        const override;
+    bool hit(const Ray& r, float t0, float t1, HitRecord& rec) const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    float pdf_value(const vec3& o, const vec3& v) const override;
+    float pdf_value(const Vec3& o, const Vec3& v) const override;
 
-    vec3 random(const vec3& o) const override;
+    Vec3 random(const Vec3& o) const override;
 
-    imaterial* mp;
-    float      x0, x1, z0, z1, k;
+  private:
+    IMaterial* m_mp_;
+    float      m_x0_, m_x1_, m_z0_, m_z1_, m_k_;
 };
 
-class yz_rect final : public ihitable
+class YZRect final : public IHitable
 {
   public:
-    yz_rect() = default;
+    YZRect() = default;
 
-    yz_rect(
+    YZRect(
         float      _y0,
         float      _y1,
         float      _z0,
         float      _z1,
         float      _k,
-        imaterial* mat);
+        IMaterial* mat);
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
-        const override;
+    bool hit(const Ray& r, float t0, float t1, HitRecord& rec) const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    imaterial* mp;
-    float      y0, y1, z0, z1, k;
+  private:
+    IMaterial* m_mp_;
+    float      m_y0_, m_y1_, m_z0_, m_z1_, m_k_;
 };
 
-class flip_normals final : public ihitable
+class FlipNormals final : public IHitable
 {
   public:
-    explicit flip_normals(ihitable* p)
-      : ptr(p)
+    explicit FlipNormals(IHitable* p)
+      : m_ptr_(p)
     {}
 
-    bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    ihitable* ptr;
+  private:
+    IHitable* m_ptr_;
 };

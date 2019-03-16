@@ -22,12 +22,13 @@
 
 #pragma once
 
-#include "core/data_types/ray.h"
+// Forward declaration
+class Vec3;
 
-class icamera
+class ITexture
 {
   public:
-    virtual ~icamera() = default;
+    virtual ~ITexture() = default;
 
-    virtual ray get_ray(float s, float t) const = 0;
+    virtual Vec3 value(float u, float v, const Vec3& p) const = 0;
 };

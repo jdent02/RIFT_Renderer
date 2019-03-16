@@ -22,17 +22,18 @@
 
 #pragma once
 
-#include "itexture.h"
+#include "textures/i_texture.h"
 
-class image_texture : public itexture
+class ImageTexture : public ITexture
 {
   public:
-    image_texture() = default;
+    ImageTexture() = default;
 
-    image_texture(unsigned char* pixels, int A, int B);
+    ImageTexture(unsigned char* pixels, int a, int b);
 
-    virtual vec3 value(float u, float v, const vec3& p) const override;
+    Vec3 value(float u, float v, const Vec3& p) const override;
 
-    unsigned char* data;
-    int            nx, ny;
+  private:
+    unsigned char* m_data_;
+    int            m_nx_, m_ny_;
 };

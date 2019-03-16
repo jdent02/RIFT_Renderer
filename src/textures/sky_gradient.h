@@ -23,17 +23,18 @@
 #pragma once
 
 #include "core/data_types/vec3.h"
-#include "itexture.h"
+#include "textures/i_texture.h"
 
-class sky_gradient : public itexture
+class SkyGradient : public ITexture
 {
   public:
-    sky_gradient(const vec3& horizon, const vec3& zenith)
-      : horizon(horizon)
-      , zenith(zenith){};
+    SkyGradient(const Vec3& horizon, const Vec3& zenith)
+      : m_horizon_(horizon)
+      , m_zenith_(zenith){};
 
-    virtual vec3 value(float u, float v, const vec3& p) const override;
+    Vec3 value(float u, float v, const Vec3& p) const override;
 
-    vec3 horizon;
-    vec3 zenith;
+  private:
+    Vec3 m_horizon_;
+    Vec3 m_zenith_;
 };

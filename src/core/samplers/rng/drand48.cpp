@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-void drand_48::seed_gen(const uint64_t seed)
+void DRand48::seed_gen(const uint64_t seed)
 {
     rand48_seed[0] = RAND48_SEED_0;
     rand48_seed[1] = static_cast<unsigned short>(seed);
@@ -35,7 +35,7 @@ void drand_48::seed_gen(const uint64_t seed)
     rand48_add = RAND48_ADD;
 }
 
-double drand_48::erand48(unsigned short* xseed)
+double DRand48::erand48(unsigned short* xseed)
 {
     dorand48(xseed);
     return ldexp(static_cast<double>(xseed[0]), -48) +
@@ -43,7 +43,7 @@ double drand_48::erand48(unsigned short* xseed)
            ldexp(static_cast<double>(xseed[2]), -16);
 }
 
-void drand_48::dorand48(unsigned short* xseed)
+void DRand48::dorand48(unsigned short* xseed)
 {
     unsigned short temp[2];
 

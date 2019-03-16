@@ -22,15 +22,24 @@
 
 #pragma once
 
-#include "ilight_integrator.h"
+class IHitable;
+class Ray;
+class Vec3;
 
-class light_sampling_pathtracer : public ilight_integrator
+enum lighting_integrator
+{
+    DIRECT_LIGHTING,
+    PATH_TRACING,
+    LIGHT_SAMPLE_PATH_TRACING
+};
+
+class ILightIntegrator
 {
   public:
-    light_sampling_pathtracer() = default;
-    vec3 trace(
-        const ray& r,
-        ihitable*  world,
-        ihitable*  light_shape,
-        const int  depth) const override;
+    virtual ~ILightIntegrator() = default;
+    virtual Vec3 trace(
+        const Ray& r,
+        IHitable*  world,
+        IHitable*  light_shape,
+        const int  depth) const = 0;
 };

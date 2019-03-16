@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "core/samplers/igenerator.h"
+#include "core/samplers/rng/i_rand_generator.h"
 
 #include <cstdint>
 
@@ -34,12 +34,12 @@
 #define RAND48_MULT_2 0x0005
 #define RAND48_ADD 0x000b
 
-class drand_48 : public igenerator
+class DRand48 : public IRandGenerator
 {
   public:
-    drand_48() = default;
+    DRand48() = default;
 
-    ~drand_48() override = default;
+    ~DRand48() override = default;
 
     float get_1_d() override
     {

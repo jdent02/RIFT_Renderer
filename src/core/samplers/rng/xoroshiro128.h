@@ -23,7 +23,7 @@
 #pragma once
 
 // Local libraries
-#include "core/samplers/igenerator.h"
+#include "core/samplers/rng/i_rand_generator.h"
 
 // Standard libraries
 #include <cstdint>
@@ -38,14 +38,14 @@ static uint64_t rotl(const uint64_t x, int k)
     return (x << k) | (x >> (64 - k));
 }
 
-class xoro_128 : public igenerator
+class Xoro128 : public IRandGenerator
 {
   public:
     // Constructors
-    xoro_128() = default;
+    Xoro128() = default;
 
     // Destructor
-    ~xoro_128() override = default;
+    ~Xoro128() override = default;
 
     float get_1_d() override;
 

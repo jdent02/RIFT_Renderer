@@ -26,55 +26,56 @@
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 
-bool dielectric::scatter(
-    const ray&        r_in,
-    const hit_record& rec,
-    scatter_record&   srec) const
+bool Dielectric::scatter(
+    const Ray&       r_in,
+    const HitRecord& rec,
+    ScatterRecord&   srec) const
 {
-    vec3 outward_normal;
+    Vec3 outward_normal;
 
     float ni_over_nt;
 
-    const vec3 reflected = reflect(r_in.direction(), rec.normal);
-    srec.attenuation = vec3(1.f, 1.f, 1.f);
-    vec3 refracted;
+    const Vec3 reflected = reflect(r_in.direction(), rec.m_normal);
+    srec.m_attenuation = Vec3(1.f, 1.f, 1.f);
+    Vec3 refracted;
 
     float reflect_prob;
     float cosine;
 
-    if (dot(r_in.direction(), rec.normal) > 0)
+    if (dot(r_in.direction(), rec.m_normal) > 0)
     {
-        outward_normal = -rec.normal;
-        ni_over_nt = ref_idx;
-        cosine = ref_idx * dot(r_in.direction(), rec.normal) /
+        outward_normal = -rec.m_normal;
+        ni_over_nt = m_ref_idx_;
+        cosine = m_ref_idx_ * dot(r_in.direction(), rec.m_normal) /
                  r_in.direction().length();
     }
     else
     {
-        outward_normal = rec.normal;
-        ni_over_nt = 1.f / ref_idx;
-        cosine = -dot(r_in.direction(), rec.normal) / r_in.direction().length();
+        outward_normal = rec.m_normal;
+        ni_over_nt = 1.f / m_ref_idx_;
+        cosine =
+            -dot(r_in.direction(), rec.m_normal) / r_in.direction().length();
     }
 
     if (refract(r_in.direction(), outward_normal, ni_over_nt, refracted))
     {
-        reflect_prob = schlick(cosine, ref_idx);
+        reflect_prob = schlick(cosine, m_ref_idx_);
     }
     else
     {
-        srec.specular_ray = ray(rec.p, reflected, r_in.time());
+        srec.m_specular_ray = Ray(rec.m_p, reflected, r_in.time());
         reflect_prob = 1.f;
     }
 
     if (rand() * inv_rand_max < reflect_prob)
     {
-        srec.specular_ray = ray(rec.p, reflected, r_in.time());
-        srec.is_specular = true;
+        srec.m_specular_ray = Ray(rec.m_p, reflected, r_in.time());
+        srec.m_is_specular = true;
     }
     else
     {
-        srec.specular_ray = ray(rec.p, refracted, r_in.time());
-        srec.is_specular = true;
+        srec.m_specular_ray = Ray(rec.m_p, refracted, r_in.time());
+        srec.m_is_specular = true;
     }
 
     return true;

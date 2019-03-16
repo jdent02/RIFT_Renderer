@@ -24,43 +24,45 @@
 
 #include "core/acceleration_structures/aabb.h"
 #include "core/data_types/hit_record.h"
+#include "hitables/i_hitable.h"
 
-class hitable_list : public ihitable
+class HitableList : public IHitable
 {
   public:
-    hitable_list() = default;
+    HitableList() = default;
 
-    hitable_list(ihitable** l, int n);
+    HitableList(IHitable** l, int n);
 
-    virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
 
-    virtual bool bounding_box(float t0, float t1, aabb& box) const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    ihitable** list;
-    int        list_size;
+  private:
+    IHitable** m_list_;
+    int        m_list_size_;
 };
 
-inline hitable_list::hitable_list(ihitable** l, int n)
-  : list(l)
-  , list_size(n)
+inline HitableList::HitableList(IHitable** l, int n)
+  : m_list_(l)
+  , m_list_size_(n)
 {}
 
-inline bool hitable_list::hit(
-    const ray&  r,
-    float       t_min,
-    float       t_max,
-    hit_record& rec) const
+inline bool HitableList::hit(
+    const Ray& r,
+    float      t_min,
+    float      t_max,
+    HitRecord& rec) const
 {
-    hit_record temp_rec;
-    bool       hit_anything = false;
-    float      closest_so_far = t_max;
-    for (auto i = 0; i < list_size; i++)
+    HitRecord temp_rec;
+    bool      hit_anything = false;
+    float     closest_so_far = t_max;
+    for (auto i = 0; i < m_list_size_; i++)
     {
-        if (list[i]->hit(r, t_min, closest_so_far, temp_rec))
+        if (m_list_[i]->hit(r, t_min, closest_so_far, temp_rec))
         {
             hit_anything = true;
-            closest_so_far = temp_rec.t;
+            closest_so_far = temp_rec.m_t;
             rec = temp_rec;
         }
     }
@@ -68,14 +70,14 @@ inline bool hitable_list::hit(
     return hit_anything;
 }
 
-inline bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
+inline bool HitableList::bounding_box(float t0, float t1, AABB& box) const
 {
-    if (list_size < 1)
+    if (m_list_size_ < 1)
     {
         return false;
     }
-    aabb       temp_box;
-    const bool first_true = list[0]->bounding_box(t0, t1, temp_box);
+    AABB       temp_box;
+    const bool first_true = m_list_[0]->bounding_box(t0, t1, temp_box);
     if (!first_true)
     {
         return false;
@@ -84,9 +86,9 @@ inline bool hitable_list::bounding_box(float t0, float t1, aabb& box) const
     {
         box = temp_box;
     }
-    for (int i = 0; i < list_size; i++)
+    for (int i = 0; i < m_list_size_; i++)
     {
-        if (list[0]->bounding_box(t0, t1, temp_box))
+        if (m_list_[0]->bounding_box(t0, t1, temp_box))
         {
             box = surrounding_box(box, temp_box);
         }

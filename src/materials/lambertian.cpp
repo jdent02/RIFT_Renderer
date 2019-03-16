@@ -22,26 +22,27 @@
 
 #include "lambertian.h"
 
+#include "core/data_types/scatter_record.h"
 #include "core/pdfs/cosine_pdf.h"
 #include "core/rendering/utility_functions.h"
 
-bool lambertian::scatter(
-    const ray&        r_in,
-    const hit_record& hrec,
-    scatter_record&   srec) const
+bool Lambertian::scatter(
+    const Ray&       r_in,
+    const HitRecord& hrec,
+    ScatterRecord&   srec) const
 {
-    srec.is_specular = false;
-    srec.attenuation = albedo->value(hrec.u, hrec.v, hrec.p);
-    srec.pdf_ptr = std::make_unique<cosine_pdf>(hrec.normal);
+    srec.m_is_specular = false;
+    srec.m_attenuation = m_albedo_->value(hrec.m_u, hrec.m_v, hrec.m_p);
+    srec.m_pdf_ptr = std::make_unique<CosinePDF>(hrec.m_normal);
     return true;
 }
 
-float lambertian::scattering_pdf(
-    const ray&        r_in,
-    const hit_record& rec,
-    const ray&        scattered) const
+float Lambertian::scattering_pdf(
+    const Ray&       r_in,
+    const HitRecord& rec,
+    const Ray&       scattered) const
 {
-    float cosine = dot(rec.normal, unit_vector(scattered.direction()));
+    float cosine = dot(rec.m_normal, unit_vector(scattered.direction()));
     if (cosine < 0)
     {
         cosine = 0;
