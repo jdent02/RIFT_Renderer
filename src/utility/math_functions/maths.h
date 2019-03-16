@@ -22,12 +22,15 @@
 
 #pragma once
 
+#include "utility/math_functions/scalars.h"
+
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
 
-typedef unsigned int uint32;
-typedef signed int   int32;
+typedef unsigned int         uint32;
+typedef signed int           int32;
+typedef signed long long int int64;
 
 // Original copyright
 //*= ====================================================================*
@@ -69,6 +72,8 @@ typedef signed int   int32;
 // *                                                                     *
 // * Contact: Paul Mineiro <paul@mineiro.com>                            *
 // *=====================================================================*/
+
+// Implementation code borrowed from appleseed (http://www.appleseedhq.net)
 
 // Fast approximations of 2^p.
 float fast_pow2(const float p);

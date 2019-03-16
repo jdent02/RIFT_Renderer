@@ -221,10 +221,16 @@ set (
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
     src/utility/math_functions/maths.h
+    src/utility/math_functions/scalars.h
     src/utility/noises/perlin.h
     src/utility/containers/scene.h
     src/utility/containers/render_settings.h
     src/utility/version/version.h
+)
+
+source_group(
+    "src\\utilities\\math_functions" REGULAR_EXPRESSION
+    src/utility/math_functions/.*
 )
 
 source_group(
