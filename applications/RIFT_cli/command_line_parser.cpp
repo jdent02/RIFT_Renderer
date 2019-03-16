@@ -21,6 +21,7 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
     int                 samples{100};
     bool                use_importance_sampling{true};
     std::string         filepath{"../image_vcpp"};
+    std::string         light_sampler{"Importance Sampling Path Tracer"};
 
     for (int i = 0; i < argc; i++)
     {
@@ -74,10 +75,12 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
             {
                 out_writer = JPEG;
             }
+#ifdef RIFT_USE_OPENEXR
             else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
             {
                 out_writer = OPENEXR;
             }
+#endif
         }
     }
 
@@ -85,10 +88,12 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
         "Render Settings:\n"
         "Resolution: %i %i\n"
         "Number of Samples: %i\n"
+        "Integrator: %s\n"
         "Rendering Threads: %i\n",
         x_res,
         y_res,
         samples,
+        light_sampler.c_str(),
         temp_threads);
 
     return render_settings{x_res,

@@ -38,13 +38,16 @@
 #include "textures/constant_tex.h"
 #include "textures/image_texture.h"
 #include "textures/noise_texture.h"
+#include "utility/containers/render_settings.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "third_party/stb_image.h"
-#include "utility/containers/render_settings.h"
+
+#include <memory>
 
 // Class implementation
+/*
 void scene_generator::make_random_scene(
     scene&                 in_scene,
     const render_settings& settings)
@@ -148,7 +151,7 @@ void scene_generator::make_random_scene(
     in_scene.world = new bvh_node(list, i, 0.f, 0.5f);
     in_scene.light_source = nullptr;
 }
-/*
+
 ihitable* scene_generator::two_spheres()
 {
     auto** list = new ihitable*[2];
@@ -239,7 +242,7 @@ scene* scene_generator::rect_light(int nx, int ny)
 */
 
 void scene_generator::cornell_box(
-    scene&                 in_scene,
+    scene*                 in_scene,
     const render_settings& settings)
 {
     auto** list = new ihitable*[8];
@@ -280,7 +283,7 @@ void scene_generator::cornell_box(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    icamera* cam = new thin_lens_camera(
+    in_scene->cam = new thin_lens_camera(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -290,8 +293,6 @@ void scene_generator::cornell_box(
         dist_to_focus,
         0.f,
         0.5f);
-
-    in_scene.cam = cam;
-    in_scene.world = new hitable_list(list, i);
-    in_scene.light_source = new xz_rect(213, 343, 227, 332, 554, nullptr);
+    in_scene->world = new hitable_list(list, i);
+    in_scene->light_source = new xz_rect(213, 343, 227, 332, 554, nullptr);
 }

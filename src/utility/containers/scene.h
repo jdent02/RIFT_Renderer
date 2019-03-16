@@ -22,8 +22,8 @@
 
 #pragma once
 
-class icamera;
-class ihitable;
+#include "camera/icamera.h"
+#include "hitables/ihitable.h"
 
 struct scene
 {

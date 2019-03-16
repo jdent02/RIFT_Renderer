@@ -34,7 +34,7 @@ class scene_generator
 
     ~scene_generator() = default;
 
-    void make_random_scene(scene& in_scene, const render_settings& settings);
+    // void make_random_scene(scene& in_scene, const render_settings& settings);
 
     // ihitable* two_spheres();
     //
@@ -42,5 +42,5 @@ class scene_generator
     //
     // scene* rect_light(int nx, int ny);
 
-    void cornell_box(scene& in_scene, const render_settings& settings);
+    void cornell_box(scene* in_scene, const render_settings& settings);
 };

@@ -25,13 +25,13 @@
 #include "camera/icamera.h"
 #include "color_functions.h"
 #include "core/data_types/ray.h"
-#include "core/data_types/scene.h"
 #include "core/lighting_integrators/direct_lighting.h"
 #include "core/lighting_integrators/ilight_integrator.h"
 #include "core/lighting_integrators/light_sampling_pathtracer.h"
 #include "core/lighting_integrators/pathtracer.h"
 #include "core/samplers/rng/drand48.h"
 #include "utility/containers/render_settings.h"
+#include "utility/containers/scene.h"
 
 #include <mutex>
 
@@ -39,7 +39,7 @@ void render_worker::run_thread(
     const float            seed,
     const int              ns,
     float*                 buffer,
-    const scene&           render_scene,
+    const scene*           render_scene,
     const render_settings& settings)
 {
     std::mutex mutex;
@@ -48,7 +48,7 @@ void render_worker::run_thread(
 
     if (settings.light_integrator == PATH_TRACING)
     {
-        light_integrator = std::make_unique<direct_lighting>();
+        light_integrator = std::make_unique<pathtracer>();
     }
     else if (settings.light_integrator == LIGHT_SAMPLE_PATH_TRACING)
     {
@@ -85,9 +85,9 @@ void render_worker::run_thread(
                 const float u = (i + rn_gen->get_1_d()) * inv_nx;
                 const float v = (j + rn_gen->get_1_d()) * inv_ny;
 
-                ray r = render_scene.cam->get_ray(u, v);
+                ray r = render_scene->cam->get_ray(u, v);
                 col += de_nan(light_integrator->trace(
-                    r, render_scene.world, render_scene.light_source, 0));
+                    r, render_scene->world, render_scene->light_source, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

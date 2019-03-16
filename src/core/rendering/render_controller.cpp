@@ -40,7 +40,7 @@
 
 render_controller::render_controller(
     const render_settings& settings,
-    scene&                 render_scene)
+    scene*                 render_scene)
   : inv_ns_(1.f / settings.samples)
   , render_scene_(render_scene)
   , settings_(settings)
@@ -89,7 +89,7 @@ void render_controller::do_render()
             random_generator_->get_1_d(),
             samples_per_thread,
             buffer_.get(),
-            std::ref(render_scene_),
+            render_scene_,
             std::ref(settings_));
     }
 
