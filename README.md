@@ -7,4 +7,4 @@ Compiles with all major compilers: VC++, GCC and Clang.  Clang seems to be the f
 
 Includes headers from the STB image library: https://github.com/nothings/stb
 
-Also requires OpenEXR version 2.2 or later.
+For OpenEXR reading and writing, OpenEXR 2.2 or later is needed.  If you do not intend to use this function, please pass "-DUSE_OPENEXR=OFF" to CMake.

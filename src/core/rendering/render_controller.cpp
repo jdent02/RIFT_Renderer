@@ -23,16 +23,13 @@
 #include "render_controller.h"
 
 #include "core/image_writers/jpeg_writer.h"
-
-#ifdef RIFT_USE_OPENEXR
-#include "core/image_writers/openexr_writer.h"
-
-
-#endif
-
 #include "core/image_writers/png_writer.h"
 #include "core/rendering/render_worker.h"
 #include "core/samplers/rng/xoroshiro128.h"
+
+#ifdef RIFT_USE_OPENEXR
+#include "core/image_writers/openexr_writer.h"
+#endif
 
 #include <cstdio>
 #include <thread>
@@ -40,11 +37,19 @@
 
 render_controller::render_controller(
     const render_settings& settings,
-    scene*                 render_scene)
+    const scene*           render_scene)
   : inv_ns_(1.f / settings.samples)
   , render_scene_(render_scene)
   , settings_(settings)
 {
+    if (settings_.light_integrator != PATH_TRACING &&
+        render_scene_->light_source == nullptr)
+    {
+        printf("Scene has no discreet light sources, switching integrator to "
+               "path tracer\n");
+        settings_.light_integrator = PATH_TRACING;
+    }
+
     if (settings.output_writer == PNG)
     {
         image_writer_ = std::make_unique<png_writer>();
@@ -63,6 +68,7 @@ render_controller::render_controller(
 
 void render_controller::do_render()
 {
+    printf("Starting Render.....\n");
     printf("Generating Pixels...\n");
 
     const auto seed_1 = static_cast<uint64_t>(time(nullptr));

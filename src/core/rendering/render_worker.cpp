@@ -87,7 +87,7 @@ void render_worker::run_thread(
 
                 ray r = render_scene->cam->get_ray(u, v);
                 col += de_nan(light_integrator->trace(
-                    r, render_scene->world, render_scene->light_source, 0));
+                    r, render_scene->world.get(), render_scene->light_source, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

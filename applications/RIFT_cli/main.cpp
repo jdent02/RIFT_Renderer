@@ -7,28 +7,27 @@
 
 #include <cstdio>
 #include <ctime>
+#include <memory>
 
 int main(const int argc, char* argv[])
 {
     command_line_parser parser;
 
-    const render_settings settings = parser.parse(argc, argv);
+    render_settings settings = parser.parse(argc, argv);
 
-    scene_generator generator;
+    std::unique_ptr<scene_generator> generator = std::make_unique<scene_generator>();
 
-    scene master_scene;
+    std::unique_ptr<scene> master_scene = std::make_unique<scene>();
 
-    generator.cornell_box(&master_scene, settings);
+    generator->make_random_scene(master_scene.get(), settings);
 
     const time_t start_time = time(nullptr);
 
-    printf("Rendering.....\n");
+    std::unique_ptr<render_controller> engine = std::make_unique<render_controller>(settings, master_scene.get());
 
-    render_controller engine(settings, &master_scene);
+    engine->do_render();
 
-    engine.do_render();
-
-    engine.write_output();
+    engine->write_output();
 
     const time_t end_time = time(nullptr);
 

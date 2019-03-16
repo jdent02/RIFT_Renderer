@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include "utility/containers/scene.h"
 #include "core/image_writers/ioutput_writer.h"
 #include "core/samplers/igenerator.h"
 #include "utility/containers/render_settings.h"
+#include "utility/containers/scene.h"
 
 #include <memory>
 
@@ -38,7 +38,9 @@ class ihitable;
 class render_controller
 {
   public:
-    render_controller(const render_settings& settings, scene* render_scene);
+    render_controller(
+        const render_settings& settings,
+        const scene*           render_scene);
 
     ~render_controller() = default;
 
@@ -56,7 +58,7 @@ class render_controller
   private:
     std::unique_ptr<float[]>        buffer_;
     const float                     inv_ns_;
-    scene*                          render_scene_;
+    const scene*                    render_scene_;
     std::unique_ptr<igenerator>     random_generator_{};
     std::unique_ptr<ioutput_writer> image_writer_;
     const render_settings           settings_;

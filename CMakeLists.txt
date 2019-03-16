@@ -220,6 +220,7 @@ set (
     UTILITY_SOURCES
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
+    src/utility/math_functions/maths.h
     src/utility/noises/perlin.h
     src/utility/containers/scene.h
     src/utility/containers/render_settings.h

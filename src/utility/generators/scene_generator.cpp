@@ -47,9 +47,8 @@
 #include <memory>
 
 // Class implementation
-/*
 void scene_generator::make_random_scene(
-    scene&                 in_scene,
+    scene*                 in_scene,
     const render_settings& settings)
 {
     const int n = 500;
@@ -134,7 +133,7 @@ void scene_generator::make_random_scene(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    icamera* cam = new thin_lens_camera(
+    std::unique_ptr<icamera> cam = std::make_unique<thin_lens_camera>(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -147,11 +146,11 @@ void scene_generator::make_random_scene(
 
     delete random_generator;
 
-    in_scene.cam = cam;
-    in_scene.world = new bvh_node(list, i, 0.f, 0.5f);
-    in_scene.light_source = nullptr;
+    in_scene->cam = std::move(cam);
+    in_scene->world = std::make_unique<bvh_node>(list, i, 0.f, 0.5f);
+    in_scene->light_source = nullptr;
 }
-
+/*
 ihitable* scene_generator::two_spheres()
 {
     auto** list = new ihitable*[2];
@@ -283,7 +282,7 @@ void scene_generator::cornell_box(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    in_scene->cam = new thin_lens_camera(
+    in_scene->cam = std::make_unique<thin_lens_camera>(
         lookfrom,
         lookat,
         vec3(0.f, 1.f, 0.f),
@@ -293,6 +292,6 @@ void scene_generator::cornell_box(
         dist_to_focus,
         0.f,
         0.5f);
-    in_scene->world = new hitable_list(list, i);
+    in_scene->world = std::make_unique<hitable_list>(list, i);
     in_scene->light_source = new xz_rect(213, 343, 227, 332, 554, nullptr);
 }

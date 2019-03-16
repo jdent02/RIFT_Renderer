@@ -80,6 +80,13 @@ render_settings command_line_parser::parse(const int argc, char* argv[])
             {
                 out_writer = OPENEXR;
             }
+#else
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
+            {
+                printf("ERROR: OpenEXR writer is not available.  Please "
+                       "compile RIFT with OpenEXR support\n");
+                exit(EXIT_FAILURE);
+            }
 #endif
         }
     }
@@ -134,7 +141,8 @@ void command_line_parser::print_help()
         "   --resolution: Resolution of the render in width and height\n"
         "   --filepath: Output filepath for the rendered image.  The extension "
         "type will be automatically added\n"
-        "   --writer: Image writer for renders, options are open_exr, png or "
+        "   --writer: Image writer for renders, options are open_exr (if RIFT "
+        "was compiled with OpenEXR support), png or "
         "jpeg\n",
         VERSION_STRING);
 

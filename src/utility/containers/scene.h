@@ -27,7 +27,7 @@
 
 struct scene
 {
-    icamera*  cam;
-    ihitable* world;
+    std::unique_ptr<icamera>  cam;
+    std::unique_ptr<ihitable> world;
     ihitable* light_source;
 };
