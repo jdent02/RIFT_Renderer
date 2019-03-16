@@ -81,7 +81,6 @@ set (
 
     src/core/data_types/ray.h
     src/core/data_types/vec3.h
-    src/core/data_types/scene.h
     src/core/data_types/hit_record.h
     src/core/data_types/scatter_record.h
 
@@ -222,6 +221,7 @@ set (
     src/utility/generators/scene_generator.h
     src/utility/generators/scene_generator.cpp
     src/utility/noises/perlin.h
+    src/utility/containers/scene.h
     src/utility/containers/render_settings.h
     src/utility/version/version.h
 )
