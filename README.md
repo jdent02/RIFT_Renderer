@@ -9,7 +9,7 @@ With plugins enabled, only VC++ is supported at this time (cause that's the only
 
 Includes headers from the STB image library: https://github.com/nothings/stb
 
-Current plugins and versions:
+Current (optional) plugins and versions:
 
 * Boost - 1.66
 * OpenImageIO - 2.0.6

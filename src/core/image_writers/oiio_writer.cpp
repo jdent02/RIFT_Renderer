@@ -42,8 +42,6 @@ void OIIOWriter::write(
 
     for (int i = 0; i < xres * yres * 3; i++)
     {
-        // pixels[i] = static_cast<unsigned char>(int(255 *
-        // std::sqrt(buffer[i])));
         pixels[i] = static_cast<half>(buffer[i]);
     }
 
