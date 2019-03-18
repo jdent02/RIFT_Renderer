@@ -313,13 +313,27 @@ set (
     ${UTILITY_SOURCES}
 )
 
+set(
+    CMAKE_C_FLAGS_RELEASE
+    "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
+)
+
+set(
+    CMAKE_CXX_FLAGS_RELEASE
+    "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
+)
+
+set(
+    CMAKE_EXE_LINKER_FLAGS_RELEASE
+    "/OPT:REF /OPT:ICF /LTCG /INCREMENTAL:NO"
+)
+
 add_executable(
     RIFT
     ${CPP_SOURCES}
 )
 
-
-# Optional libraries for OpenEXR
+# Optional libraries for OpenImageIO
 if(USE_PLUGINS)
     set(
         OPEN_EXR_LIBS

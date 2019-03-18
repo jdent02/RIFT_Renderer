@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #include "oiio_writer.h"
 
 #include "OpenImageIO/imageio.h"
+
 #include <half.h>
 
 using namespace OpenImageIO_v2_0;
@@ -42,7 +42,8 @@ void OIIOWriter::write(
 
     for (int i = 0; i < xres * yres * 3; i++)
     {
-        // pixels[i] = static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
+        // pixels[i] = static_cast<unsigned char>(int(255 *
+        // std::sqrt(buffer[i])));
         pixels[i] = static_cast<half>(buffer[i]);
     }
 
