@@ -22,24 +22,14 @@
 
 #pragma once
 
-#include <string>
+#include "core/image_writers/i_out_writer.h"
 
-enum output_writers
-{
-    JPEG,
-    PNG,
-    OPENEXR,
-    OPENIMAGEIO
-};
-
-class IOutWriter
+class OIIOWriter : public IOutWriter
 {
   public:
-    virtual ~IOutWriter() = default;
-
-    virtual void write(
+    void write(
         const float*       buffer,
         const std::string& filename,
         int                size_x,
-        int                size_y) const = 0;
+        int                size_y) const override;
 };

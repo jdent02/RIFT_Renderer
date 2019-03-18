@@ -1,3 +1,25 @@
+# Released under MIT License
+
+# Copyright (c) 2018 Jonathan Dent.
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 cmake_minimum_required(VERSION 3.0.0)
 
 set (CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile;Ship" CACHE STRING "" FORCE)
@@ -17,21 +39,26 @@ configure_file (
 )
 
 # Options
-option(USE_OPENEXR "Enable OpenEXR file input and output" Off)
-set(DEPENDENCIES_DIR "" CACHE PATH "Path to dependencies dirctory")
+option(USE_PLUGINS "Enable external plugins" Off)
+set(RIFT_DEPENDENCIES_DIR "" CACHE PATH "Path to dependencies dirctory")
 
-if (USE_OPENEXR)
-    add_definitions(-DRIFT_USE_OPENEXR)
-endif()
- 
 include_directories(
+    SYSTEM
     src
 )
 
-if (USE_OPENEXR)
+if (USE_PLUGINS)
+    add_definitions(-DRIFT_USE_PLUGINS)
+    add_definitions(-DOIIO_STATIC_BUILD)
+    set (Boost_USE_STATIC_LIBS TRUE)
+    find_package (Boost 1.66 REQUIRED COMPONENTS chrono date_time filesystem regex system thread)
     include_directories(
-        ${DEPENDENCIES_DIR}/openexr-release/include
-        ${DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
+        ${RIFT_DEPENDENCIES_DIR}/oiio-release/include
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/include
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
+        ${RIFT_DEPENDENCIES_DIR}/openexr-release/include/OpenEXR
+        ${RIFT_DEPENDENCIES_DIR}/openexr-release/include
+        ${Boost_INCLUDE_DIRS}
     )
 endif()
 
@@ -76,8 +103,6 @@ set (
     src/core/image_writers/jpeg_writer.cpp
     src/core/image_writers/jpeg_writer.h
     src/core/image_writers/i_out_writer.h
-    src/core/image_writers/oiio_writer.h
-    src/core/image_writers/oiio_writer.cpp
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
 
@@ -100,10 +125,12 @@ set (
     src/core/samplers/samplers/i_sampler.h
 )
 
-if(USE_OPENEXR)
+if(USE_PLUGINS)
     list(APPEND CORE_SOURCES
-         src/core/image_writers/open_exr_writer.h
-         src/core/image_writers/open_exr_writer.cpp
+        src/core/image_writers/open_exr_writer.h
+        src/core/image_writers/open_exr_writer.cpp
+        src/core/image_writers/oiio_writer.h
+        src/core/image_writers/oiio_writer.cpp
     )
 endif()
 
@@ -293,29 +320,53 @@ add_executable(
 
 
 # Optional libraries for OpenEXR
-if(USE_OPENEXR)
-    set(OPEN_EXR_LIBS
-        ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImf-2_2.lib
-        ${DEPENDENCIES_DIR}/openexr-release/lib/IlmImfUtil-2_2.lib
+if(USE_PLUGINS)
+    set(
+        OPEN_EXR_LIBS
+        ${RIFT_DEPENDENCIES_DIR}/openexr-release/lib/IlmImf-2_2.lib
+        ${RIFT_DEPENDENCIES_DIR}/openexr-release/lib/IlmImfUtil-2_2.lib
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/lib/Half.lib
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/lib/IlmThread-2_2.lib
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/lib/Iex-2_2.lib
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/lib/IexMath-2_2.lib
+        ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/lib/Imath-2_2.lib
     )
 
-    set(ILM_BASE_LIBS
-        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Half.lib
-        ${DEPENDENCIES_DIR}/ilmbase-release/lib/IlmThread-2_2.lib
-        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Iex-2_2.lib
-        ${DEPENDENCIES_DIR}/ilmbase-release/lib/IexMath-2_2.lib
-        ${DEPENDENCIES_DIR}/ilmbase-release/lib/Imath-2_2.lib
+    set(
+        ZLIB_LIBS
+        ${RIFT_DEPENDENCIES_DIR}/zlib-release/lib/zlibstatic.lib
     )
 
-    set(ZLIB_LIBS
-        ${DEPENDENCIES_DIR}/zlib-release/lib/zlibstatic.lib
+    set(
+        OIIO_LIBS
+        ${RIFT_DEPENDENCIES_DIR}/oiio-release/lib/OpenImageIO.lib
+        ${RIFT_DEPENDENCIES_DIR}/oiio-release/lib/OpenImageIO_Util.lib
+    )
+
+    set(
+        TIFF_LIB
+        ${RIFT_DEPENDENCIES_DIR}/libtiff-release/lib/libtiff.lib
+        )
+
+    set(
+        PNG_LIB
+        ${RIFT_DEPENDENCIES_DIR}/libpng-release/lib/libpng16_static.lib
+    )
+
+    set(
+        JPEG_LIB
+        ${RIFT_DEPENDENCIES_DIR}/libjpeg-turbo-release/lib/jpeg-static.lib
     )
 
     target_link_libraries(
         RIFT
         ${OPEN_EXR_LIBS}
-        ${ILM_BASE_LIBS}
         ${ZLIB_LIBS}
+        ${TIFF_LIB}
+        ${Boost_LIBRARIES}
+        ${OIIO_LIBS}
+        ${PNG_LIB}
+        ${JPEG_LIB}
     )
 endif()
 

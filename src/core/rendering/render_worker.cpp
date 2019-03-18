@@ -89,7 +89,7 @@ void render_worker::run_thread(
                 col += de_nan(light_integrator->trace(
                     r,
                     render_scene->m_world.get(),
-                    render_scene->m_light_source,
+                    render_scene->m_light_source.get(),
                     0));
             }
 

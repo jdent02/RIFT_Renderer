@@ -20,26 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
 
-#include <string>
+#include "oiio_writer.h"
 
-enum output_writers
+#include "OpenImageIO/imageio.h"
+#include <half.h>
+
+using namespace OpenImageIO_v2_0;
+
+void OIIOWriter::write(
+    const float*       buffer,
+    const std::string& filename,
+    int                size_x,
+    int                size_y) const
 {
-    JPEG,
-    PNG,
-    OPENEXR,
-    OPENIMAGEIO
-};
+    std::string out_filename = filename + ".exr";
+    const int   xres = 480;
+    const int   yres = 480;
 
-class IOutWriter
-{
-  public:
-    virtual ~IOutWriter() = default;
+    half* pixels = new half[xres * yres * 3];
 
-    virtual void write(
-        const float*       buffer,
-        const std::string& filename,
-        int                size_x,
-        int                size_y) const = 0;
-};
+    for (int i = 0; i < xres * yres * 3; i++)
+    {
+        // pixels[i] = static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
+        pixels[i] = static_cast<half>(buffer[i]);
+    }
+
+    std::unique_ptr<ImageOutput> out = ImageOutput::create(out_filename);
+    if (out == nullptr)
+    {
+        return;
+    }
+
+    ImageSpec spec(xres, yres, 3, TypeDesc::HALF);
+    out->open(out_filename, spec);
+    out->write_image(TypeDesc::HALF, pixels);
+
+    out->close();
+}

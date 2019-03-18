@@ -16,7 +16,7 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
     samplers sampler{XORO_128};
     std::string         filepath{"../image_vcpp"};
     std::string         integrator_string{"Importance Sampling Path Tracer"};
-    output_writers      out_writer{PNG};
+    output_writers      out_writer{OPENIMAGEIO};
     lighting_integrator integrator{LIGHT_SAMPLE_PATH_TRACING};
 
     for (int i = 0; i < argc; i++)
@@ -73,7 +73,7 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
             {
                 out_writer = JPEG;
             }
-#ifdef RIFT_USE_OPENEXR
+#ifdef RIFT_USE_PLUGINS
             else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
             {
                 out_writer = OPENEXR;

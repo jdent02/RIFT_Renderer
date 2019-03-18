@@ -25,7 +25,7 @@
 #include "core/image_writers/jpeg_writer.h"
 #include "core/rendering/render_worker.h"
 #include "core/samplers/rng/xoroshiro128.h"
-#ifdef RIFT_USE_OPENEXR
+#ifdef RIFT_USE_PLUGINS
 #include "core/image_writers/open_exr_writer.h"
 #endif
 #include "core/image_writers/i_out_writer.h"
@@ -36,6 +36,7 @@
 #include <cstdio>
 #include <thread>
 #include <vector>
+#include "core/image_writers/oiio_writer.h"
 
 RenderController::RenderController(
     const RenderSettings& settings,
@@ -60,10 +61,14 @@ RenderController::RenderController(
     {
         m_image_writer = std::make_unique<JpegWriter>();
     }
-#ifdef RIFT_USE_OPENEXR
+#ifdef RIFT_USE_PLUGINS
     else if (settings.m_output_writer == OPENEXR)
     {
         m_image_writer = std::make_unique<OpenEXRWriter>();
+    }
+    else if (settings.m_output_writer == OPENIMAGEIO)
+    {
+        m_image_writer = std::make_unique<OIIOWriter>();
     }
 #endif
 }
