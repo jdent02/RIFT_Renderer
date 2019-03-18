@@ -22,27 +22,20 @@
 
 #pragma once
 
-#include "utility/containers/scene.h"
+#include "i_material.h"
+#include "textures/i_texture.h"
 
-struct RenderSettings;
-
-// Utility function to generate a random Scene
-class SceneGenerator
+class Isotropic : public IMaterial
 {
   public:
-    SceneGenerator() = default;
+    Isotropic(ITexture* a)
+      : m_albedo_(a)
+    {}
 
-    ~SceneGenerator() = default;
+    ~Isotropic() override = default;;
+    bool scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
+        const override;
 
-    void make_random_scene(Scene* in_scene, const RenderSettings& settings);
-
-    // IHitable* two_spheres();
-    //
-    // Scene* earth_sphere(int x_dim, int y_dim);
-    //
-    // Scene* rect_light(int m_nx, int m_ny);
-
-    void cornell_box(Scene* in_scene, const RenderSettings& settings);
-
-    void smoky_cornell_box(Scene* in_scene, const RenderSettings& settings);
+  private:
+    ITexture* m_albedo_;
 };

@@ -191,6 +191,8 @@ source_group(
 
 set (
     HITABLES_SOURCES
+    src/hitables/constant_medium.h
+    src/hitables/constant_medium.cpp
     src/hitables/i_hitable.h
     src/hitables/hitable_list.h
     src/hitables/sphere.h
@@ -221,6 +223,8 @@ set (
     src/materials/lambertian.cpp
     src/materials/metal.h
     src/materials/metal.cpp
+    src/materials/isotropic.h
+    src/materials/isotropic.cpp
 )
 
 source_group(

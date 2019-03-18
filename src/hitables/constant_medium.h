@@ -22,27 +22,19 @@
 
 #pragma once
 
-#include "utility/containers/scene.h"
+#include "i_hitable.h"
+#include "textures/i_texture.h"
 
-struct RenderSettings;
-
-// Utility function to generate a random Scene
-class SceneGenerator
+class ConstantMedium : public IHitable
 {
   public:
-    SceneGenerator() = default;
+    ConstantMedium(IHitable* b, float d, ITexture* a);
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    ~SceneGenerator() = default;
-
-    void make_random_scene(Scene* in_scene, const RenderSettings& settings);
-
-    // IHitable* two_spheres();
-    //
-    // Scene* earth_sphere(int x_dim, int y_dim);
-    //
-    // Scene* rect_light(int m_nx, int m_ny);
-
-    void cornell_box(Scene* in_scene, const RenderSettings& settings);
-
-    void smoky_cornell_box(Scene* in_scene, const RenderSettings& settings);
+  private:
+    std::unique_ptr<IMaterial> m_phase_function_;
+    IHitable*                  m_boundary_;
+    float                      m_density_;
 };

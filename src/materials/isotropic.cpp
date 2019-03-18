@@ -20,29 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "isotropic.h"
 
-#include "utility/containers/scene.h"
+#include "hitables/sphere.h"
 
-struct RenderSettings;
-
-// Utility function to generate a random Scene
-class SceneGenerator
+bool Isotropic::scatter(
+    const Ray&       r_in,
+    const HitRecord& hrec,
+    ScatterRecord&   srec) const
 {
-  public:
-    SceneGenerator() = default;
-
-    ~SceneGenerator() = default;
-
-    void make_random_scene(Scene* in_scene, const RenderSettings& settings);
-
-    // IHitable* two_spheres();
-    //
-    // Scene* earth_sphere(int x_dim, int y_dim);
-    //
-    // Scene* rect_light(int m_nx, int m_ny);
-
-    void cornell_box(Scene* in_scene, const RenderSettings& settings);
-
-    void smoky_cornell_box(Scene* in_scene, const RenderSettings& settings);
-};
+    srec.m_is_specular = true;
+    srec.m_specular_ray = Ray(hrec.m_p, random_in_unit_sphere());
+    srec.m_attenuation = m_albedo_->value(hrec.m_u, hrec.m_v, hrec.m_p);
+    return true;
+}
