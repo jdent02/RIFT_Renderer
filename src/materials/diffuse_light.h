@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
 #include "core/data_types/hit_record.h"
+#include "core/data_types/vec3.h"
 #include "materials/i_material.h"
 #include "textures/i_texture.h"
 
@@ -31,17 +31,19 @@ class DiffuseLight : public IMaterial
 {
   public:
     explicit DiffuseLight(ITexture* a)
-      : emit(a){};
+      : m_emit_(a){};
 
     ~DiffuseLight() override = default;
 
-    bool scatter(const Ray& r_in, const HitRecord& rec, ScatterRecord& srec)
-        const override
+    bool pdf_based_scatter(
+        const Ray&       r_in,
+        const HitRecord& rec,
+        ScatterRecord&   srec) const override
     {
         return false;
     }
 
-    virtual Vec3 emitted(
+    Vec3 emitted(
         const Ray&       r_in,
         const HitRecord& rec,
         float            u,
@@ -50,10 +52,25 @@ class DiffuseLight : public IMaterial
     {
         if (dot(rec.m_normal, r_in.direction()) < 0.0)
         {
-            return emit->value(u, v, p);
+            return m_emit_->value(u, v, p);
         }
         return Vec3(0.f, 0.f, 0.f);
     }
 
-    ITexture* emit;
+    Vec3 path_emitted(float u, float v, const Vec3& p) const override
+    {
+        return m_emit_->value(u, v, p);
+    }
+
+    bool path_scatter(
+        const Ray&       r_in,
+        const HitRecord& rec,
+        Vec3&            attenuation,
+        Ray&             scattered) const override
+    {
+        return false;
+    }
+
+  private:
+    ITexture* m_emit_;
 };

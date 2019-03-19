@@ -25,7 +25,7 @@
 #include "camera/i_camera.h"
 #include "color_functions.h"
 #include "core/data_types/Ray.h"
-#include "core/lighting_integrators/direct_lighting.h"
+// #include "core/lighting_integrators/direct_lighting.h"
 #include "core/lighting_integrators/i_light_integrator.h"
 #include "core/lighting_integrators/light_sample_path.h"
 #include "core/lighting_integrators/path_tracer.h"
@@ -53,10 +53,6 @@ void render_worker::run_thread(
     else if (settings.m_light_integrator == LIGHT_SAMPLE_PATH_TRACING)
     {
         light_integrator = std::make_unique<LightSamplePath>();
-    }
-    else if (settings.m_light_integrator == DIRECT_LIGHTING)
-    {
-        light_integrator = std::make_unique<DirectLighting>();
     }
 
     const int buffer_size = settings.m_resolution_x * settings.m_resolution_y * 3;

@@ -30,12 +30,12 @@
 
 struct RenderSettings
 {
-    const int                   m_resolution_x;
-    const int                   m_resolution_y;
-    const int                   m_samples;
-    mutable lighting_integrator m_light_integrator;
-    const int                   m_threads;
-    const samplers              m_sampler;
-    const output_writers        m_output_writer;
-    const std::string           m_filepath;
+    const int              m_resolution_x;
+    const int              m_resolution_y;
+    const int              m_samples;
+    mutable IntegratorEnum m_light_integrator;
+    const int              m_threads;
+    const samplers         m_sampler;
+    const output_writers   m_output_writer;
+    const std::string      m_filepath;
 };

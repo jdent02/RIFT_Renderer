@@ -23,10 +23,10 @@
 #pragma once
 
 #include "core/data_types/hit_record.h"
+#include "materials/i_material.h"
 
 class Ray;
 class AABB;
-class IMaterial;
 
 class IHitable
 {

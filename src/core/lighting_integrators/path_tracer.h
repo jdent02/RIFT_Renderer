@@ -22,15 +22,12 @@
 
 #pragma once
 
-#include "core/lighting_integrators/i_light_integrator.h"
+#include "i_light_integrator.h"
 
 class PathTracer : public ILightIntegrator
 {
   public:
     PathTracer() = default;
-    Vec3 trace(
-        const Ray& r,
-        IHitable*  world,
-        IHitable*  light_shape,
-        const int  depth) const override;
+    Vec3 trace(const Ray& r, IHitable* world, IHitable* light_shape, int depth)
+        const override;
 };

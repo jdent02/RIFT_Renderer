@@ -45,14 +45,6 @@ RenderController::RenderController(
   , m_render_scene(render_scene)
   , m_settings(settings)
 {
-    if (m_settings.m_light_integrator != PATH_TRACING &&
-        m_render_scene->m_light_source == nullptr)
-    {
-        printf("Scene has no discreet light sources, switching integrator to "
-               "path tracer\n");
-        m_settings.m_light_integrator = PATH_TRACING;
-    }
-
     if (settings.m_output_writer == PNG)
     {
         m_image_writer = std::make_unique<PngWriter>();

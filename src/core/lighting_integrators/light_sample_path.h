@@ -28,9 +28,6 @@ class LightSamplePath : public ILightIntegrator
 {
   public:
     LightSamplePath() = default;
-    Vec3 trace(
-        const Ray& r,
-        IHitable*  world,
-        IHitable*  light_shape,
-        const int  depth) const override;
+    Vec3 trace(const Ray& r, IHitable* world, IHitable* light_shape, int depth)
+        const override;
 };

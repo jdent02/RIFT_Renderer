@@ -40,7 +40,7 @@ int main(const int argc, char* argv[])
 
     std::unique_ptr<Scene> master_scene = std::make_unique<Scene>();
 
-    generator->smoky_cornell_box(master_scene.get(), settings);
+    generator->cornell_box(master_scene.get(), settings);
 
     const time_t start_time = time(nullptr);
 

@@ -26,9 +26,8 @@ class IHitable;
 class Ray;
 class Vec3;
 
-enum lighting_integrator
+enum IntegratorEnum
 {
-    DIRECT_LIGHTING,
     PATH_TRACING,
     LIGHT_SAMPLE_PATH_TRACING
 };
@@ -41,5 +40,5 @@ class ILightIntegrator
         const Ray& r,
         IHitable*  world,
         IHitable*  light_shape,
-        const int  depth) const = 0;
+        int        depth) const = 0;
 };

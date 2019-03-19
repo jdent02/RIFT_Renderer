@@ -45,7 +45,7 @@ Vec3 LightSamplePath::trace(
         const Vec3    emitted =
             hrec.m_mat_ptr->emitted(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
 
-        if (depth < 10 && hrec.m_mat_ptr->scatter(r, hrec, srec))
+        if (depth < 10 && hrec.m_mat_ptr->pdf_based_scatter(r, hrec, srec))
         {
             if (srec.m_is_specular)
             {

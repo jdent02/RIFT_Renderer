@@ -22,42 +22,29 @@
 
 #include "path_tracer.h"
 
+#include "core/data_types/Ray.h"
 #include "core/data_types/hit_record.h"
-#include "core/data_types/scatter_record.h"
-#include "core/pdfs/hitable_pdf.h"
+#include "core/data_types/vec3.h"
+#include "hitables/i_hitable.h"
 #include "materials/i_material.h"
-
-#include <cfloat>
 
 Vec3 PathTracer::trace(
     const Ray& r,
     IHitable*  world,
     IHitable*  light_shape,
-    const int  depth) const
+    int        depth) const
 {
-    HitRecord hrec;
-    if (world->hit(r, 0.001f, FLT_MAX, hrec))
+    HitRecord rec;
+    if (world->hit(r, 0.001, FLT_MAX, rec))
     {
-        ScatterRecord srec;
-        const Vec3    emitted =
-            hrec.m_mat_ptr->emitted(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
-
-        if (depth < 10 && hrec.m_mat_ptr->scatter(r, hrec, srec))
+        Ray  scattered;
+        Vec3 attenuation;
+        Vec3 emitted = rec.m_mat_ptr->path_emitted(rec.m_u, rec.m_v, rec.m_p);
+        if (depth < 10 &&
+            rec.m_mat_ptr->path_scatter(r, rec, attenuation, scattered))
         {
-            if (srec.m_is_specular)
-            {
-                return srec.m_attenuation *
-                       trace(srec.m_specular_ray, world, light_shape, depth + 1);
-            }
-            Vec3  direction = srec.m_pdf_ptr.get()->generate();
-            Ray   scattered(hrec.m_p, direction, r.time());
-            float pdf_val = srec.m_pdf_ptr.get()->value(scattered.direction());
-
             return emitted +
-                   srec.m_attenuation *
-                       hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
-                       trace(scattered, world, light_shape, depth + 1) /
-                       pdf_val;
+                   attenuation * trace(scattered, world, nullptr, depth + 1);
         }
         return emitted;
     }

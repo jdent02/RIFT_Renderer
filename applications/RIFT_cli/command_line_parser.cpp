@@ -9,15 +9,15 @@
 
 RenderSettings command_line_parser::parse(const int argc, char* argv[])
 {
-    int      threads{static_cast<int>(std::thread::hardware_concurrency())};
-    int      xres{1920};
-    int      yres{1080};
-    int      samples{100};
-    samplers sampler{XORO_128};
-    std::string         filepath{"../image_vcpp"};
-    std::string         integrator_string{"Importance Sampling Path Tracer"};
-    output_writers      out_writer{OPENIMAGEIO};
-    lighting_integrator integrator{LIGHT_SAMPLE_PATH_TRACING};
+    int         threads{static_cast<int>(std::thread::hardware_concurrency())};
+    int         xres{1920};
+    int         yres{1080};
+    int         samples{100};
+    samplers    sampler{XORO_128};
+    std::string filepath{"../image_vcpp"};
+    std::string integrator_string{"Path Tracer"};
+    output_writers out_writer{OPENIMAGEIO};
+    IntegratorEnum integrator{PATH_TRACING};
 
     for (int i = 0; i < argc; i++)
     {
@@ -45,23 +45,6 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
             char*  sample_num = argv[i + 1];
             size_t str_len = strlen(sample_num);
             samples = convert_number(str_len, sample_num);
-        }
-        else if (!static_cast<bool>(strcmp(argv[i], "--integrator")))
-        {
-            if (!static_cast<bool>(strcmp(argv[i + 1], "path")))
-            {
-                integrator = PATH_TRACING;
-                integrator_string = "Path Tracer";
-            }
-            else if (!static_cast<bool>(strcmp(argv[i + 1], "light_sample")))
-            {
-                integrator = LIGHT_SAMPLE_PATH_TRACING;
-            }
-            else if (!static_cast<bool>(strcmp(argv[i + 1], "direct")))
-            {
-                integrator = DIRECT_LIGHTING;
-                integrator_string = "Direct Lighting";
-            }
         }
         else if (!static_cast<bool>(strcmp(argv[i], "--help")))
         {

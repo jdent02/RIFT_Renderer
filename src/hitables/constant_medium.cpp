@@ -23,7 +23,7 @@
 #include "constant_medium.h"
 
 #include "core/rendering/utility_functions.h"
-#include "materials/isotropic.h"
+// #include "materials/isotropic.h"
 
 #include <cfloat>
 
@@ -31,7 +31,7 @@ ConstantMedium::ConstantMedium(IHitable* b, float d, ITexture* a)
   : m_boundary_(b)
   , m_density_(d)
 {
-    m_phase_function_ = std::make_unique<Isotropic>(a);
+    // m_phase_function_ = std::make_unique<Isotropic>(a);
 }
 
 bool ConstantMedium::hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
