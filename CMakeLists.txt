@@ -258,7 +258,6 @@ set (
     src/utility/noises/perlin.h
     src/utility/containers/scene.h
     src/utility/containers/render_settings.h
-    src/utility/containers/pixel_buffer.h
     src/utility/version/version.h
 )
 

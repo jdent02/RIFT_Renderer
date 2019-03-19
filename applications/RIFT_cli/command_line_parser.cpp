@@ -17,7 +17,7 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
     std::string filepath{"../image_vcpp"};
     std::string integrator_string{"Path Tracer"};
     output_writers out_writer{OPENIMAGEIO};
-    IntegratorEnum integrator{PATH_TRACING};
+    IntegratorEnum integrator{LIGHT_SAMPLE_PATH_TRACING};
 
     for (int i = 0; i < argc; i++)
     {

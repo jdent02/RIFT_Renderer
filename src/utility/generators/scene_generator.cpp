@@ -243,34 +243,89 @@ void SceneGenerator::cornell_box(
     auto** list = new IHitable*[8];
     int    i = 0;
 
-    IMaterial* red =
-        new Lambertian(new ConstantTexture(Vec3(0.65f, 0.05f, 0.05f)));
-    IMaterial* white =
-        new Lambertian(new ConstantTexture(Vec3(0.73f, 0.73f, 0.73f)));
-    IMaterial* green =
-        new Lambertian(new ConstantTexture(Vec3(0.12f, 0.45f, 0.15f)));
-    IMaterial* light =
-        new DiffuseLight(new ConstantTexture(Vec3(15.f, 15.f, 15.f)));
-    IMaterial* aluminum = new Metal(Vec3(0.8f, 0.85f, 0.88f), 0.f);
+    in_scene->m_textures.emplace(
+        "red_rgb",
+        std::make_unique<ConstantTexture>(Vec3(0.65f, 0.05f, 0.05f)));
+    in_scene->m_textures.emplace(
+        "white_rgb",
+        std::make_unique<ConstantTexture>(Vec3(0.73f, 0.73f, 0.73f)));
+    in_scene->m_textures.emplace(
+        "green_rgb",
+        std::make_unique<ConstantTexture>(Vec3(0.12f, 0.45f, 0.15f)));
+    in_scene->m_textures.emplace(
+        "light_rgb", std::make_unique<ConstantTexture>(Vec3(15.f, 15.f, 15.f)));
 
-    list[i++] = new FlipNormals(new YZRect(0, 555, 0, 555, 555, green));
+    in_scene->m_materials.emplace(
+        "red",
+        std::make_unique<Lambertian>(
+            in_scene->m_textures.find("red_rgb")->second.get()));
+    in_scene->m_materials.emplace(
+        "white",
+        std::make_unique<Lambertian>(
+            in_scene->m_textures.find("white_rgb")->second.get()));
+    in_scene->m_materials.emplace(
+        "green",
+        std::make_unique<Lambertian>(
+            in_scene->m_textures.find("green_rgb")->second.get()));
+    in_scene->m_materials.emplace(
+        "light",
+        std::make_unique<DiffuseLight>(
+            in_scene->m_textures.find("light_rgb")->second.get()));
 
-    list[i++] = new YZRect(0, 555, 0, 555, 0, red);
+    list[i++] = new FlipNormals(new YZRect(
+        0,
+        555,
+        0,
+        555,
+        555,
+        in_scene->m_materials.find("green")->second.get()));
 
-    list[i++] = new FlipNormals(new XZRect(213, 343, 227, 332, 554, light));
+    list[i++] = new YZRect(
+        0, 555, 0, 555, 0, in_scene->m_materials.find("red")->second.get());
 
-    list[i++] = new FlipNormals(new XZRect(0, 555, 0, 555, 555, white));
+    list[i++] = new FlipNormals(new XZRect(
+        213,
+        343,
+        227,
+        332,
+        554,
+        in_scene->m_materials.find("light")->second.get()));
 
-    list[i++] = new XZRect(0, 555, 0, 555, 0, white);
+    list[i++] = new FlipNormals(new XZRect(
+        0,
+        555,
+        0,
+        555,
+        555,
+        in_scene->m_materials.find("white")->second.get()));
 
-    list[i++] = new FlipNormals(new XYRect(0, 555, 0, 555, 555, white));
+    list[i++] = new XZRect(
+        0, 555, 0, 555, 0, in_scene->m_materials.find("white")->second.get());
+
+    list[i++] = new FlipNormals(new XYRect(
+        0,
+        555,
+        0,
+        555,
+        555,
+        in_scene->m_materials.find("white")->second.get()));
 
     list[i++] = new Translate(
-        new RotateY(new Box(Vec3(0, 0, 0), Vec3(165, 165, 165), white), -18),
+        new RotateY(
+            new Box(
+                Vec3(0, 0, 0),
+                Vec3(165, 165, 165),
+                in_scene->m_materials.find("white")->second.get()),
+            -18),
         Vec3(130, 0, 65));
 
     list[i++] = new Translate(
-        new RotateY(new Box(Vec3(0, 0, 0), Vec3(165, 330, 165), white), 15),
+        new RotateY(
+            new Box(
+                Vec3(0, 0, 0),
+                Vec3(165, 330, 165),
+                in_scene->m_materials.find("white")->second.get()),
+            15),
         Vec3(265, 0, 295));
 
     const Vec3  lookfrom(278.f, 278.f, -800.f);
@@ -333,8 +388,8 @@ void SceneGenerator::smoky_cornell_box(
     list[i++] =
         new ConstantMedium(b1, 0.01f, new ConstantTexture(Vec3(1.f, 1.f, 1.f)));
 
-    list[i++] =
-        new ConstantMedium(b2, 0.01f, new ConstantTexture(Vec3(0.3f, 0.3f, 0.3f)));
+    list[i++] = new ConstantMedium(
+        b2, 0.01f, new ConstantTexture(Vec3(0.3f, 0.3f, 0.3f)));
 
     const Vec3  lookfrom(278.f, 278.f, -800.f);
     const Vec3  lookat(278.f, 278.f, 0.f);
