@@ -290,7 +290,7 @@ void SceneGenerator::cornell_box(
         0.5f);
     in_scene->m_world = std::make_unique<HitableList>(list, i);
     in_scene->m_light_source =
-        std::make_unique<XZRect>(213, 343, 227, 332, 554, nullptr);
+        std::make_unique<XZRect>(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
 }
 
 void SceneGenerator::smoky_cornell_box(
@@ -353,5 +353,5 @@ void SceneGenerator::smoky_cornell_box(
         0.5f);
     in_scene->m_world = std::make_unique<HitableList>(list, i);
     in_scene->m_light_source =
-        std::make_unique<XZRect>(213, 343, 227, 332, 554, nullptr);
+        std::make_unique<XZRect>(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
 }

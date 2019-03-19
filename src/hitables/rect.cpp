@@ -125,9 +125,9 @@ float XZRect::pdf_value(const Vec3& o, const Vec3& v) const
 Vec3 XZRect::random(const Vec3& o) const
 {
     Vec3 random_point = Vec3(
-        m_x0_ + (rand() * inv_rand_max) * (m_x1_ - m_x0_),
+        m_x0_ + (rand() * INV_RAND_MAX) * (m_x1_ - m_x0_),
         m_k_,
-        m_z0_ + (rand() * inv_rand_max) * (m_z1_ - m_z0_));
+        m_z0_ + (rand() * INV_RAND_MAX) * (m_z1_ - m_z0_));
     return random_point - o;
 }
 

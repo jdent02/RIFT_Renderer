@@ -35,8 +35,8 @@ inline void get_sphere_uv(const Vec3& p, float& u, float& v)
 {
     float phi = std::atan2(p.z(), p.x());
     float theta = std::asin(p.y());
-    u = 1.f - (phi + pi) / (2 * pi);
-    v = (theta + pi / 2) / pi;
+    u = 1.f - (phi + FLOAT_M_PI) / (2 * FLOAT_M_PI);
+    v = (theta + FLOAT_M_PI / 2) / FLOAT_M_PI;
 }
 
 class Sphere : public IHitable

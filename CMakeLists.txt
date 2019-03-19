@@ -47,6 +47,10 @@ include_directories(
     src
 )
 
+if (WIN32)
+    add_definitions(-D_USE_MATH_DEFINES)
+endif()
+
 if (USE_PLUGINS)
     add_definitions(-DRIFT_USE_PLUGINS)
     add_definitions(-DOIIO_STATIC_BUILD)
@@ -56,7 +60,7 @@ if (USE_PLUGINS)
         ${RIFT_DEPENDENCIES_DIR}/oiio-release/include
         ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/include
         ${RIFT_DEPENDENCIES_DIR}/ilmbase-release/include/OpenEXR
-        ${RIFT_DEPENDENCIES_DIR}/openexr-release/include/OpenEXR
+        ${RIFT_DEPENDENCIES_DIR}/openexr-release/include
         ${RIFT_DEPENDENCIES_DIR}/openexr-release/include
         ${Boost_INCLUDE_DIRS}
     )
@@ -254,6 +258,7 @@ set (
     src/utility/noises/perlin.h
     src/utility/containers/scene.h
     src/utility/containers/render_settings.h
+    src/utility/containers/pixel_buffer.h
     src/utility/version/version.h
 )
 

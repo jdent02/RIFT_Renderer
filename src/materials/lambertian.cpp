@@ -48,7 +48,7 @@ float Lambertian::scattering_pdf(
         cosine = 0;
     }
 
-    return cosine * inv_pi;
+    return cosine * INV_PI;
 }
 
 bool Lambertian::path_scatter(

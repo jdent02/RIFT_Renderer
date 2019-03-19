@@ -78,7 +78,7 @@ BVHNode::BVHNode(
     const float time0,
     const float time1)
 {
-    const int axis = int(3 * (rand() * inv_rand_max));
+    const int axis = int(3 * (rand() * INV_RAND_MAX));
     if (axis == 0)
     {
         qsort(l, n, sizeof(IHitable*), box_x_compare);

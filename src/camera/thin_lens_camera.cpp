@@ -39,7 +39,7 @@ ThinLensCamera::ThinLensCamera(
   , m_time0_(t0)
   , m_time1_(t1)
 {
-    const float theta = vfov * pi / 180.f;
+    const float theta = vfov * FLOAT_M_PI / 180.f;
     const float half_height = std::tan(theta / 2.f);
     const float half_width = aspect * half_height;
 
@@ -56,7 +56,7 @@ Ray ThinLensCamera::get_ray(float s, float t) const
 {
     Vec3        rd = m_lens_radius_ * random_in_unit_disk();
     const Vec3  offset = m_u_ * rd.x() + m_v_ * rd.y();
-    const float time = m_time0_ + rand() * inv_rand_max * (m_time1_ - m_time0_);
+    const float time = m_time0_ + rand() * INV_RAND_MAX * (m_time1_ - m_time0_);
     return {m_origin_ + offset,
             m_lower_left_corner_ + s * m_horizontal_ + t * m_vertical_ -
                 m_origin_ - offset,

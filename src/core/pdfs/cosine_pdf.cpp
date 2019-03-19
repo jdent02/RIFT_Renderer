@@ -29,7 +29,7 @@ float CosinePDF::value(const Vec3& direction) const
     float cosine = dot(unit_vector(direction), m_uvw_.w());
     if (cosine > 0)
     {
-        return cosine * inv_pi;
+        return cosine * INV_PI;
     }
     return 0;
 }

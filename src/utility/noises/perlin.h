@@ -55,9 +55,9 @@ static Vec3* perlin_generate()
     for (int i = 0; i < 256; ++i)
     {
         p[i] = unit_vector(Vec3(
-            -1 + 2 * (rand() * inv_rand_max),
-            -1 + 2 * (rand() * inv_rand_max),
-            -1 + 2 * (rand() * inv_rand_max)));
+            -1 + 2 * (rand() * INV_RAND_MAX),
+            -1 + 2 * (rand() * INV_RAND_MAX),
+            -1 + 2 * (rand() * INV_RAND_MAX)));
     }
     return p;
 }
@@ -66,7 +66,7 @@ inline void permute(int* p, int n)
 {
     for (int i = n - 1; i > 0; i--)
     {
-        int target = int(rand() * inv_rand_max * (i + 1));
+        int target = int(rand() * INV_RAND_MAX * (i + 1));
         int tmp = p[i];
         p[i] = p[target];
         p[target] = tmp;

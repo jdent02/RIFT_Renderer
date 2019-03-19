@@ -67,7 +67,7 @@ bool Dielectric::pdf_based_scatter(
         reflect_prob = 1.f;
     }
 
-    if (rand() * inv_rand_max < reflect_prob)
+    if (rand() * INV_RAND_MAX < reflect_prob)
     {
         srec.m_specular_ray = Ray(rec.m_p, reflected, r_in.time());
         srec.m_is_specular = true;

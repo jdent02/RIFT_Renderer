@@ -58,7 +58,7 @@ bool ConstantMedium::hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
 
             float distance_inside_boundary =
                 (rec2.m_t = rec1.m_t) * r.direction().length();
-            float hit_distance = -(1 / m_density_) * std::log(rand() * inv_rand_max);
+            float hit_distance = -(1 / m_density_) * std::log(rand() * INV_RAND_MAX);
             if (hit_distance < distance_inside_boundary)
             {
                 if (db)

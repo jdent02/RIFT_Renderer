@@ -82,7 +82,7 @@ float Sphere::pdf_value(const Vec3& o, const Vec3& v) const
     {
         float cos_theta_max =
             std::sqrt(1 - m_radius_ * m_radius_ / (m_center_ - o).squared_length());
-        float solid_angle = 2 * pi * (1 - cos_theta_max);
+        float solid_angle = 2 * FLOAT_M_PI * (1 - cos_theta_max);
         return 1 / solid_angle;
     }
     return 0;

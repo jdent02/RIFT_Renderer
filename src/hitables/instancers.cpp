@@ -60,7 +60,7 @@ bool Translate::bounding_box(const float t0, const float t1, AABB& box) const
 RotateY::RotateY(IHitable* p, const float angle)
   : m_ptr_(p)
 {
-    const float radians = pi / 180 * angle;
+    const float radians = FLOAT_M_PI / 180 * angle;
     m_sin_theta_ = std::sin(radians);
     m_cos_theta_ = std::cos(radians);
     m_hasbox_ = m_ptr_->bounding_box(0, 1, m_bbox_);
