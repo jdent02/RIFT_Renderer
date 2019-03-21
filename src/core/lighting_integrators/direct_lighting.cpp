@@ -39,7 +39,7 @@ Vec3 DirectLighting::trace(
     {
         ScatterRecord srec;
         const Vec3    emission =
-            hrec.m_mat_ptr->emitted(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
+            hrec.m_mat_ptr->emission(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
 
         if (depth < 10 && hrec.m_mat_ptr->scatter(r, hrec, srec))
         {
@@ -55,7 +55,7 @@ Vec3 DirectLighting::trace(
 
             return emission +
                    srec.m_attenuation *
-                       hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
+                       hrec.m_mat_ptr->scatter_weight(r, hrec, scattered) *
                        trace(scattered, world, light_shape, depth + 1) /
                        pdf_weight;
         }

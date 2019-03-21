@@ -22,7 +22,7 @@
 
 #include "thin_lens_camera.h"
 
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 
 ThinLensCamera::ThinLensCamera(
     const Vec3  lookfrom,

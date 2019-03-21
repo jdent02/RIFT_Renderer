@@ -47,10 +47,6 @@ include_directories(
     src
 )
 
-if (WIN32)
-    add_definitions(-D_USE_MATH_DEFINES)
-endif()
-
 if (USE_PLUGINS)
     add_definitions(-DRIFT_USE_PLUGINS)
     add_definitions(-DOIIO_STATIC_BUILD)
@@ -73,71 +69,6 @@ set (
     src/objects/camera/thin_lens_camera.cpp
 )
 
-source_group(
-    "src\\object\\camera" REGULAR_EXPRESSION
-    src/objects/camera/.*
-)
-
-set (
-    CORE_SOURCES
-    src/core/acceleration_structures/bvh_node.h
-    src/core/acceleration_structures/bvh_node.cpp
-    src/core/acceleration_structures/aabb.h
-    src/core/acceleration_structures/aabb.cpp
-    src/core/acceleration_structures/bvh_utils.h
-
-    src/core/lighting_integrators/i_light_integrator.h
-    src/core/lighting_integrators/direct_lighting.h
-    src/core/lighting_integrators/direct_lighting.cpp
-    src/core/lighting_integrators/light_sample_path.cpp
-    src/core/lighting_integrators/light_sample_path.h
-    src/core/lighting_integrators/path_tracer.h
-    src/core/lighting_integrators/path_tracer.cpp
-
-    src/utility/math_functions/onb.h
-
-    src/core/rendering/utility_functions.h
-    src/core/rendering/render_controller.h
-    src/core/rendering/render_controller.cpp
-    src/core/rendering/render_worker.h
-    src/core/rendering/render_worker.cpp
-    src/core/rendering/scatter_functions.h
-    src/core/rendering/color_functions.h
-
-    src/core/image_writers/jpeg_writer.cpp
-    src/core/image_writers/jpeg_writer.h
-    src/core/image_writers/i_out_writer.h
-    src/core/image_writers/png_writer.cpp
-    src/core/image_writers/png_writer.h
-
-    src/utility/data_types/ray.h
-    src/utility/data_types/vec3.h
-    src/utility/data_types/hit_record.h
-    src/utility/data_types/scatter_record.h
-
-    src/utility/math_functions/pdfs/pdf.h
-    src/utility/math_functions/pdfs/cosine_pdf.cpp
-    src/utility/math_functions/pdfs/cosine_pdf.h
-    src/utility/math_functions/pdfs/hitable_pdf.h
-    src/utility/math_functions/pdfs/mixture_pdf.h
-    
-    src/core/samplers/rng/xoroshiro128.h
-    src/core/samplers/rng/xoroshiro128.cpp
-    src/core/samplers/rng/i_rand_generator.h
-    src/core/samplers/rng/drand48.cpp
-    src/core/samplers/rng/drand48.h
-    src/core/samplers/samplers/i_sampler.h
-)
-
-if(USE_PLUGINS)
-    list(APPEND CORE_SOURCES
-        src/core/image_writers/open_exr_writer.h
-        src/core/image_writers/open_exr_writer.cpp
-        src/core/image_writers/oiio_writer.h
-        src/core/image_writers/oiio_writer.cpp
-    )
-endif()
-
 set (
     HITABLES_SOURCES
     src/objects/hitables/constant_medium.h
@@ -157,10 +88,50 @@ set (
     src/objects/hitables/sky_sphere.h
 )
 
-source_group(
-    "src\\object\\hitables" REGULAR_EXPRESSION
-    src/objects/hitables/.*
+set (
+    CORE_SOURCES
+    src/core/acceleration_structures/bvh_node.h
+    src/core/acceleration_structures/bvh_node.cpp
+    src/core/acceleration_structures/aabb.h
+    src/core/acceleration_structures/aabb.cpp
+    src/core/acceleration_structures/bvh_utils.h
+
+    src/core/lighting_integrators/i_light_integrator.h
+    src/core/lighting_integrators/direct_lighting.h
+    src/core/lighting_integrators/direct_lighting.cpp
+    src/core/lighting_integrators/light_sample_path.cpp
+    src/core/lighting_integrators/light_sample_path.h
+    src/core/lighting_integrators/path_tracer.h
+    src/core/lighting_integrators/path_tracer.cpp
+    src/core/rendering/render_controller.h
+    src/core/rendering/render_controller.cpp
+    src/core/rendering/render_worker.h
+    src/core/rendering/render_worker.cpp
+    src/core/rendering/scatter_functions.h
+    src/core/rendering/color_functions.h
+
+    src/core/image_writers/jpeg_writer.cpp
+    src/core/image_writers/jpeg_writer.h
+    src/core/image_writers/i_out_writer.h
+    src/core/image_writers/png_writer.cpp
+    src/core/image_writers/png_writer.h
+
+    src/core/samplers/rng/xoroshiro128.h
+    src/core/samplers/rng/xoroshiro128.cpp
+    src/core/samplers/rng/i_rand_generator.h
+    src/core/samplers/rng/drand48.cpp
+    src/core/samplers/rng/drand48.h
+    src/core/samplers/samplers/i_sampler.h
 )
+
+if(USE_PLUGINS)
+    list(APPEND CORE_SOURCES
+        src/core/image_writers/open_exr_writer.h
+        src/core/image_writers/open_exr_writer.cpp
+        src/core/image_writers/oiio_writer.h
+        src/core/image_writers/oiio_writer.cpp
+    )
+endif()
 
 set (
     MATERIAL_SOURCES
@@ -172,11 +143,6 @@ set (
     src/materials/lambertian.cpp
     src/materials/metal.h
     src/materials/metal.cpp
-)
-
-source_group(
-    "src\\materials" REGULAR_EXPRESSION
-    src/materials/.*
 )
 
 set (
@@ -191,11 +157,6 @@ set (
     src/textures/sky_gradient.cpp
     src/textures/sky_gradient.h)
 
-source_group(
-    "src\\textures" REGULAR_EXPRESSION
-    src/textures/.*
-)
-
 set (
     UTILITY_SOURCES
     src/utility/generators/scene_generator.h
@@ -206,6 +167,16 @@ set (
     src/utility/containers/scene.h
     src/utility/containers/render_settings.h
     src/utility/version/version.h
+    src/utility/data_types/ray.h
+    src/utility/data_types/vec3.h
+    src/utility/data_types/hit_record.h
+    src/utility/data_types/scatter_record.h
+    src/utility/math_functions/pdfs/pdf.h
+    src/utility/math_functions/utility_functions.h
+    src/utility/math_functions/pdfs/cosine_pdf.h
+    src/utility/math_functions/pdfs/hitable_pdf.h
+    src/utility/math_functions/pdfs/mixture_pdf.h
+    src/utility/math_functions/onb.h
 )
 
 set (
@@ -228,6 +199,10 @@ set (
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    add_definitions(
+        -D_USE_MATH_DEFINES
+    )
+
     set(
         CMAKE_C_FLAGS_RELEASE
         "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
@@ -300,8 +275,88 @@ if(USE_PLUGINS)
     )
 endif()
 
-add_executable(
-    number_generator_test
-    utility_apps/number_generator/main.cpp
-    src/core/samplers/rng/xoroshiro128.cpp
+# Visual Studio folder layout
+source_group(
+    "src\\core\\acceleration_structures" REGULAR_EXPRESSION
+    src/core/acceleration_structures/.*
+)
+
+source_group(
+    "src\\core\\image_writers" REGULAR_EXPRESSION
+    src/core/image_writers/.*
+)
+
+source_group(
+    "src\\core\\lighting_integrators" REGULAR_EXPRESSION
+    src/core/lighting_integrators/.*
+)
+
+source_group(
+    "src\\core\\rendering" REGULAR_EXPRESSION
+    src/core/rendering/.*
+)
+
+source_group(
+    "src\\core\\samplers" REGULAR_EXPRESSION
+    src/core/samplers/.*
+)
+
+source_group(
+    "src\\materials" REGULAR_EXPRESSION
+    src/materials/.*
+)
+
+source_group(
+    "src\\object\\cameras" REGULAR_EXPRESSION
+    src/objects/camera/.*
+)
+
+source_group(
+    "src\\object\\hitables" REGULAR_EXPRESSION
+    src/objects/hitables/.*
+)
+
+source_group(
+    "src\\textures" REGULAR_EXPRESSION
+    src/textures/.*
+)
+
+source_group(
+    "src\\third_party" REGULAR_EXPRESSION
+    src/third_party/.*
+)
+
+source_group(
+    "src\\utility\\containers" REGULAR_EXPRESSION
+    src/utility/containers/.*
+)
+
+source_group(
+    "src\\utility\\data_types" REGULAR_EXPRESSION
+    src/utility/data_types/.*
+)
+
+source_group(
+    "src\\utility\\generators" REGULAR_EXPRESSION
+    src/utility/generators/.*
+)
+
+source_group(
+    "src\\utility\\math_functions" REGULAR_EXPRESSION
+    src/utility/math_functions/.*
+)
+
+source_group(
+    "src\\utility\\math_functions\\pdf" REGULAR_EXPRESSION
+    src/utility/math_functions/pdfs.*
+)
+
+source_group(
+    "src\\utility\\noises" REGULAR_EXPRESSION
+    src/utility/noises/.*
+)
+
+source_group(
+    "src\\utility\\version" REGULAR_EXPRESSION
+    src/utility/version/.*
 )

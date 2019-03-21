@@ -23,7 +23,7 @@
 #include "bvh_node.h"
 
 #include "core/acceleration_structures/bvh_utils.h"
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 #include "utility/data_types/hit_record.h"
 
 bool BVHNode::bounding_box(float t0, float t1, AABB& b) const

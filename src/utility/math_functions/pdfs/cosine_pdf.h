@@ -22,8 +22,9 @@
 
 #pragma once
 
+#include "utility/math_functions/utility_functions.h"
 #include "utility/math_functions/onb.h"
-#include "pdf.h"
+#include "utility/math_functions/pdfs/pdf.h"
 
 class CosinePDF final : public PDF
 {
@@ -35,3 +36,18 @@ class CosinePDF final : public PDF
   private:
     ONB m_uvw_;
 };
+
+inline float CosinePDF::value(const Vec3& direction) const
+{
+    float cosine = dot(unit_vector(direction), m_uvw_.w());
+    if (cosine > 0)
+    {
+        return cosine * INV_PI;
+    }
+    return 0;
+}
+
+inline Vec3 CosinePDF::generate() const
+{
+    return m_uvw_.local(random_cosine_direction());
+}

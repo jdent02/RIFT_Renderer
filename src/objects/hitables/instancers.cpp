@@ -22,7 +22,7 @@
 
 #include "instancers.h"
 
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 #include "utility/data_types/hit_record.h"
 #include "utility/data_types/ray.h"
 

@@ -39,7 +39,7 @@ class IMaterial
         return false;
     }
 
-    virtual float scattering_pdf(
+    virtual float scatter_weight(
         const Ray&       r_in,
         const HitRecord& hrec,
         const Ray&       scattered) const
@@ -47,7 +47,7 @@ class IMaterial
         return false;
     }
 
-    virtual Vec3 emitted(
+    virtual Vec3 emission(
         const Ray&       r_in,
         const HitRecord& rec,
         float            u,
@@ -56,18 +56,4 @@ class IMaterial
     {
         return Vec3(0.f, 0.f, 0.f);
     }
-
-    virtual Vec3 path_emitted(float u, float v, const Vec3& p) const
-    {
-        return Vec3(0.f, 0.f, 0.f);
-    }
-
-    virtual bool path_scatter(
-        const Ray&       r_in,
-        const HitRecord& rec,
-        Vec3&            attenuation,
-        Ray&             scattered) const
-    {
-        return false;
-    };
 };

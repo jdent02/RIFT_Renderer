@@ -35,8 +35,8 @@ void OIIOWriter::write(
     int                size_y) const
 {
     std::string out_filename = filename + ".png";
-    const int   xres = 640;
-    const int   yres = 640;
+    const int   xres = 480;
+    const int   yres = 480;
 
     // half* pixels = new half[xres * yres * 3];
 
@@ -53,6 +53,7 @@ void OIIOWriter::write(
         pixels[i] =
             static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
     }
+
 
     std::unique_ptr<ImageOutput> out = ImageOutput::create(out_filename);
     if (out == nullptr)

@@ -23,7 +23,7 @@
 #include "rect.h"
 
 #include "core/acceleration_structures/aabb.h"
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 #include "utility/data_types/hit_record.h"
 #include "utility/data_types/ray.h"
 

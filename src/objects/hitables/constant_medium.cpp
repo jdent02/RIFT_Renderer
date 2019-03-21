@@ -22,7 +22,7 @@
 
 #include "constant_medium.h"
 
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 // #include "materials/isotropic.h"
 
 #include <cfloat>

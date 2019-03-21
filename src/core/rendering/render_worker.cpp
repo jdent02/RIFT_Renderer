@@ -22,9 +22,9 @@
 
 #include "core/rendering/render_worker.h"
 
-#include "camera/i_camera.h"
+#include "objects/camera/i_camera.h"
 #include "color_functions.h"
-#include "core/data_types/Ray.h"
+#include "utility/data_types/ray.h"
 // #include "core/lighting_integrators/direct_lighting.h"
 #include "core/lighting_integrators/i_light_integrator.h"
 #include "core/lighting_integrators/light_sample_path.h"

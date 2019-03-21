@@ -92,7 +92,7 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
             else if (!static_cast<bool>(strcmp(argv[i + 1], "oiio")))
             {
                 printf("ERROR: OpenImageIO writer is not available.  Please "
-                    "compile RIFT with plugin support\n");
+                       "compile RIFT with plugin support\n");
                 exit(EXIT_FAILURE);
             }
 #endif

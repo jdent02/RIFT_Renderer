@@ -30,7 +30,6 @@
 #endif
 #include "core/image_writers/i_out_writer.h"
 #include "core/image_writers/png_writer.h"
-#include "core/lighting_integrators/i_light_integrator.h"
 #include "utility/containers/render_settings.h"
 
 #include <cstdio>

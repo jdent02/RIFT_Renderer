@@ -38,7 +38,7 @@ class SceneGenerator
 
     // IHitable* two_spheres();
     //
-    // Scene* earth_sphere(int x_dim, int y_dim);
+    void* earth_sphere(Scene* in_scene, const RenderSettings& settings);
     //
     // Scene* rect_light(int m_nx, int m_ny);
 

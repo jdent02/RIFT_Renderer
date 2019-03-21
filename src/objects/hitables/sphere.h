@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 #include "i_hitable.h"
 
 // Forward declarations

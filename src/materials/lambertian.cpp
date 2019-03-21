@@ -22,7 +22,7 @@
 
 #include "lambertian.h"
 
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 #include "utility/math_functions/pdfs/cosine_pdf.h"
 
 bool Lambertian::scatter(
@@ -36,7 +36,7 @@ bool Lambertian::scatter(
     return true;
 }
 
-float Lambertian::scattering_pdf(
+float Lambertian::scatter_weight(
     const Ray&       r_in,
     const HitRecord& rec,
     const Ray&       scattered) const

@@ -41,7 +41,7 @@ class Lambertian : public IMaterial
         const HitRecord& hrec,
         ScatterRecord&   srec) const override;
 
-    float scattering_pdf(
+    float scatter_weight(
         const Ray&       r_in,
         const HitRecord& rec,
         const Ray&       scattered) const override;

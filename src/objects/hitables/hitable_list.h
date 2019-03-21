@@ -23,15 +23,17 @@
 #pragma once
 
 #include "core/acceleration_structures/aabb.h"
+#include "objects/hitables/i_hitable.h"
 #include "utility/data_types/hit_record.h"
-#include "i_hitable.h"
+
+#include <vector>
 
 class HitableList : public IHitable
 {
   public:
     HitableList() = default;
 
-    HitableList(IHitable** l, int n);
+    explicit HitableList(std::vector<IHitable*>* l);
 
     bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
         const override;
@@ -39,13 +41,11 @@ class HitableList : public IHitable
     bool bounding_box(float t0, float t1, AABB& box) const override;
 
   private:
-    IHitable** m_list_;
-    int        m_list_size_;
+    std::vector<IHitable*>* m_list_;
 };
 
-inline HitableList::HitableList(IHitable** l, int n)
+inline HitableList::HitableList(std::vector<IHitable*>* l)
   : m_list_(l)
-  , m_list_size_(n)
 {}
 
 inline bool HitableList::hit(
@@ -57,9 +57,9 @@ inline bool HitableList::hit(
     HitRecord temp_rec;
     bool      hit_anything = false;
     float     closest_so_far = t_max;
-    for (auto i = 0; i < m_list_size_; i++)
+    for (auto hitable : *m_list_)
     {
-        if (m_list_[i]->hit(r, t_min, closest_so_far, temp_rec))
+        if (hitable->hit(r, t_min, closest_so_far, temp_rec))
         {
             hit_anything = true;
             closest_so_far = temp_rec.m_t;
@@ -72,23 +72,22 @@ inline bool HitableList::hit(
 
 inline bool HitableList::bounding_box(float t0, float t1, AABB& box) const
 {
-    if (m_list_size_ < 1)
+    if (m_list_->empty())
     {
         return false;
     }
     AABB       temp_box;
-    const bool first_true = m_list_[0]->bounding_box(t0, t1, temp_box);
+    const bool first_true = m_list_->at(0)->bounding_box(t0, t1, temp_box);
     if (!first_true)
     {
         return false;
     }
-    else
+
+    box = temp_box;
+
+    for (auto& item : *m_list_)
     {
-        box = temp_box;
-    }
-    for (int i = 0; i < m_list_size_; i++)
-    {
-        if (m_list_[0]->bounding_box(t0, t1, temp_box))
+        if (item->bounding_box(t0, t1, temp_box))
         {
             box = surrounding_box(box, temp_box);
         }

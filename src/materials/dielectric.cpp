@@ -24,7 +24,7 @@
 
 #include "utility/data_types/ray.h"
 #include "core/rendering/scatter_functions.h"
-#include "core/rendering/utility_functions.h"
+#include "utility/math_functions/utility_functions.h"
 
 bool Dielectric::scatter(
     const Ray&       r_in,

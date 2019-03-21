@@ -41,7 +41,7 @@ class DiffuseLight : public IMaterial
         return false;
     }
 
-    Vec3 emitted(
+    Vec3 emission(
         const Ray&       r_in,
         const HitRecord& rec,
         float            u,
