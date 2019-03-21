@@ -20,18 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "light_sample_path.h"
+#include "direct_lighting.h"
 
-#include "core/data_types/vec3.h"
 #include "core/data_types/hit_record.h"
 #include "core/data_types/scatter_record.h"
+#include "core/data_types/vec3.h"
 #include "core/pdfs/hitable_pdf.h"
-#include "core/pdfs/mixture_pdf.h"
 #include "materials/i_material.h"
 
 #include <cfloat>
 
-Vec3 LightSamplePath::trace(
+Vec3 DirectLighting::trace(
     const Ray& r,
     IHitable*  world,
     IHitable*  light_shape,
@@ -41,7 +40,7 @@ Vec3 LightSamplePath::trace(
     if (world->hit(r, 0.001f, FLT_MAX, hrec))
     {
         ScatterRecord srec;
-        const Vec3    emitted =
+        const Vec3    emission =
             hrec.m_mat_ptr->emitted(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
 
         if (depth < 10 && hrec.m_mat_ptr->scatter(r, hrec, srec))
@@ -49,20 +48,20 @@ Vec3 LightSamplePath::trace(
             if (srec.m_is_specular)
             {
                 return srec.m_attenuation *
-                       trace(srec.m_specular_ray, world, light_shape, depth + 1);
+                       trace(
+                           srec.m_specular_ray, world, light_shape, depth + 1);
             }
-            HitablePDF plight(light_shape, hrec.m_p);
-            MixturePDF p(&plight, srec.m_pdf_ptr.get());
-            Ray        scattered(hrec.m_p, p.generate(), r.time());
-            float      pdf_val = p.value(scattered.direction());
+            HitablePDF light(light_shape, hrec.m_p);
+            Ray        scattered(hrec.m_p, light.generate(), r.time());
+            float      pdf_weight = light.value(scattered.direction());
 
-            return emitted +
+            return emission +
                    srec.m_attenuation *
                        hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
                        trace(scattered, world, light_shape, depth + 1) /
-                       pdf_val;
+                       pdf_weight;
         }
-        return emitted;
+        return emission;
     }
     return Vec3(0.f, 0.f, 0.f);
 }

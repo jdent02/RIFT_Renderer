@@ -30,9 +30,9 @@
 
 struct Scene
 {
-    std::unique_ptr<ICamera>                                    m_cam;
-    std::unique_ptr<IHitable>                                   m_world;
-    std::unique_ptr<IHitable>                                   m_light_source;
-    std::unordered_map<std::string, std::unique_ptr<IMaterial>> m_materials;
-    std::unordered_map<std::string, std::unique_ptr<ITexture>>  m_textures;
+    ICamera*                                    m_cam;
+    IHitable*                                   m_world;
+    IHitable*                                   m_light_source;
+    std::unordered_map<std::string, IMaterial*> m_materials;
+    std::unordered_map<std::string, ITexture*>  m_textures;
 };

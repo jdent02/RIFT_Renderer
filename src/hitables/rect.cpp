@@ -112,7 +112,7 @@ bool XZRect::bounding_box(float t0, float t1, AABB& box) const
 float XZRect::pdf_value(const Vec3& o, const Vec3& v) const
 {
     HitRecord rec;
-    if (this->hit(Ray(o, v), 0.001, FLT_MAX, rec))
+    if (this->hit(Ray(o, v), 0.001f, FLT_MAX, rec))
     {
         float area = (m_x1_ - m_x0_) * (m_z1_ - m_z0_);
         float distance_squared = rec.m_t * rec.m_t * v.squared_length();

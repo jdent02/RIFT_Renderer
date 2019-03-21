@@ -26,7 +26,7 @@
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 
-bool Metal::pdf_based_scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
+bool Metal::scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
     const
 {
     const Vec3 reflected =

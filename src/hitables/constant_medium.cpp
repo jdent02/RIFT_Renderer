@@ -43,7 +43,7 @@ bool ConstantMedium::hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
     HitRecord rec1, rec2;
     if (m_boundary_->hit(r, -FLT_MAX, FLT_MAX, rec1))
     {
-        if (m_boundary_->hit(r, rec1.m_t + 0.0001, FLT_MAX, rec2))
+        if (m_boundary_->hit(r, rec1.m_t + 0.0001f, FLT_MAX, rec2))
         {
             if (db)
                 std::cerr << "Whoopsie\n";

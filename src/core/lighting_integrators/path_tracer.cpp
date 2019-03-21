@@ -34,17 +34,28 @@ Vec3 PathTracer::trace(
     IHitable*  light_shape,
     int        depth) const
 {
-    HitRecord rec;
-    if (world->hit(r, 0.001, FLT_MAX, rec))
+    HitRecord hrec;
+    if (world->hit(r, 0.001f, FLT_MAX, hrec))
     {
-        Ray  scattered;
-        Vec3 attenuation;
-        Vec3 emitted = rec.m_mat_ptr->path_emitted(rec.m_u, rec.m_v, rec.m_p);
-        if (depth < 10 &&
-            rec.m_mat_ptr->path_scatter(r, rec, attenuation, scattered))
+        ScatterRecord srec;
+        const Vec3    emitted =
+            hrec.m_mat_ptr->emitted(r, hrec, hrec.m_u, hrec.m_v, hrec.m_p);
+
+        if (depth < 10 && hrec.m_mat_ptr->scatter(r, hrec, srec))
         {
+            if (srec.m_is_specular)
+            {
+                return srec.m_attenuation *
+                    trace(srec.m_specular_ray, world, light_shape, depth + 1);
+            }
+            Ray        scattered(hrec.m_p, srec.m_pdf_ptr->generate(), r.time());
+            float      pdf_val = srec.m_pdf_ptr->value(scattered.direction());
+
             return emitted +
-                   attenuation * trace(scattered, world, nullptr, depth + 1);
+                srec.m_attenuation *
+                hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
+                trace(scattered, world, light_shape, depth + 1) /
+                pdf_val;
         }
         return emitted;
     }

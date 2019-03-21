@@ -35,7 +35,7 @@ class DiffuseLight : public IMaterial
 
     ~DiffuseLight() override = default;
 
-    bool pdf_based_scatter(
+    bool scatter(
         const Ray&       r_in,
         const HitRecord& rec,
         ScatterRecord&   srec) const override
@@ -55,20 +55,6 @@ class DiffuseLight : public IMaterial
             return m_emit_->value(u, v, p);
         }
         return Vec3(0.f, 0.f, 0.f);
-    }
-
-    Vec3 path_emitted(float u, float v, const Vec3& p) const override
-    {
-        return m_emit_->value(u, v, p);
-    }
-
-    bool path_scatter(
-        const Ray&       r_in,
-        const HitRecord& rec,
-        Vec3&            attenuation,
-        Ray&             scattered) const override
-    {
-        return false;
     }
 
   private:

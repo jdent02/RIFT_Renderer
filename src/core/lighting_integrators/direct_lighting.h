@@ -22,53 +22,12 @@
 
 #pragma once
 
-#include "core/data_types/ray.h"
-#include "core/data_types/vec3.h"
-#include "core/data_types/hit_record.h"
-#include "core/data_types/scatter_record.h"
+#include "core/lighting_integrators/i_light_integrator.h"
 
-class IMaterial
+class DirectLighting : public ILightIntegrator
 {
   public:
-    virtual ~IMaterial() = default;
-
-    virtual bool scatter(
-        const Ray&       r_in,
-        const HitRecord& hrec,
-        ScatterRecord&   srec) const
-    {
-        return false;
-    }
-
-    virtual float scattering_pdf(
-        const Ray&       r_in,
-        const HitRecord& hrec,
-        const Ray&       scattered) const
-    {
-        return false;
-    }
-
-    virtual Vec3 emitted(
-        const Ray&       r_in,
-        const HitRecord& rec,
-        float            u,
-        float            v,
-        const Vec3&      p) const
-    {
-        return Vec3(0.f, 0.f, 0.f);
-    }
-
-    virtual Vec3 path_emitted(float u, float v, const Vec3& p) const
-    {
-        return Vec3(0.f, 0.f, 0.f);
-    }
-
-    virtual bool path_scatter(
-        const Ray&       r_in,
-        const HitRecord& rec,
-        Vec3&            attenuation,
-        Ray&             scattered) const
-    {
-        return false;
-    };
+    DirectLighting() = default;
+    Vec3 trace(const Ray& r, IHitable* world, IHitable* light_shape, int depth)
+        const override;
 };

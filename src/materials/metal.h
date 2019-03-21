@@ -37,7 +37,7 @@ class Metal : public IMaterial
 
     ~Metal() override = default;
 
-    bool pdf_based_scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
+    bool scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
         const override;
 
   private:

@@ -34,15 +34,24 @@ void OIIOWriter::write(
     int                size_x,
     int                size_y) const
 {
-    std::string out_filename = filename + ".exr";
-    const int   xres = 480;
-    const int   yres = 480;
+    std::string out_filename = filename + ".png";
+    const int   xres = 640;
+    const int   yres = 640;
 
-    half* pixels = new half[xres * yres * 3];
+    // half* pixels = new half[xres * yres * 3];
 
-    for (int i = 0; i < xres * yres * 3; i++)
+    // for (int i = 0; i < xres * yres * 3; i++)
+    // {
+    //     pixels[i] = static_cast<half>(buffer[i]);
+    // }
+    int buffer_size = xres * yres * 3;
+
+    auto* pixels = new unsigned char[buffer_size];
+
+    for (int i = 0; i < buffer_size; i++)
     {
-        pixels[i] = static_cast<half>(buffer[i]);
+        pixels[i] =
+            static_cast<unsigned char>(int(255 * std::sqrt(buffer[i])));
     }
 
     std::unique_ptr<ImageOutput> out = ImageOutput::create(out_filename);
@@ -51,9 +60,9 @@ void OIIOWriter::write(
         return;
     }
 
-    ImageSpec spec(xres, yres, 3, TypeDesc::HALF);
+    ImageSpec spec(xres, yres, 3, TypeDesc::UINT8);
     out->open(out_filename, spec);
-    out->write_image(TypeDesc::HALF, pixels);
+    out->write_image(TypeDesc::UINT8, pixels);
 
     out->close();
 }

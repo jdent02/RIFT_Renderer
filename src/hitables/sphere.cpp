@@ -78,7 +78,7 @@ bool Sphere::bounding_box(float t0, float t1, AABB& box) const
 float Sphere::pdf_value(const Vec3& o, const Vec3& v) const
 {
     HitRecord rec;
-    if (this->hit(Ray(o, v), 0.001, FLT_MAX, rec))
+    if (this->hit(Ray(o, v), 0.001f, FLT_MAX, rec))
     {
         float cos_theta_max =
             std::sqrt(1 - m_radius_ * m_radius_ / (m_center_ - o).squared_length());

@@ -29,7 +29,8 @@ class Vec3;
 enum IntegratorEnum
 {
     PATH_TRACING,
-    LIGHT_SAMPLE_PATH_TRACING
+    LIGHT_SAMPLE_PATH_TRACING,
+    DIRECT_LIGHTING
 };
 
 class ILightIntegrator

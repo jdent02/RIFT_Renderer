@@ -36,7 +36,7 @@ class Dielectric : public IMaterial
 
     ~Dielectric() override = default;
 
-    bool pdf_based_scatter(const Ray& r_in, const HitRecord& rec, ScatterRecord& srec)
+    bool scatter(const Ray& r_in, const HitRecord& rec, ScatterRecord& srec)
         const override;
 
   private:

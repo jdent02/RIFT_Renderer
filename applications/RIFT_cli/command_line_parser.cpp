@@ -17,7 +17,7 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
     std::string filepath{"../image_vcpp"};
     std::string integrator_string{"Path Tracer"};
     output_writers out_writer{OPENIMAGEIO};
-    IntegratorEnum integrator{LIGHT_SAMPLE_PATH_TRACING};
+    IntegratorEnum integrator{PATH_TRACING};
 
     for (int i = 0; i < argc; i++)
     {
@@ -40,6 +40,23 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
         {
             filepath = argv[i + 1];
         }
+        else if (!static_cast<bool>(strcmp(argv[i], "--integrator")))
+        {
+            if (!static_cast<bool>(strcmp(argv[i + 1], "path")))
+            {
+                integrator = PATH_TRACING;
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "direct")))
+            {
+                integrator = DIRECT_LIGHTING;
+                integrator_string = "Direct Lighting";
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "importance")))
+            {
+                integrator = LIGHT_SAMPLE_PATH_TRACING;
+                integrator_string = "Material Importance Sampling";
+            }
+        }
         else if (!static_cast<bool>(strcmp(argv[i], "--samples")))
         {
             char*  sample_num = argv[i + 1];
@@ -61,11 +78,21 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
             {
                 out_writer = OPENEXR;
             }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "oiio")))
+            {
+                out_writer = OPENIMAGEIO;
+            }
 #else
             else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
             {
                 printf("ERROR: OpenEXR writer is not available.  Please "
-                       "compile RIFT with OpenEXR support\n");
+                       "compile RIFT with plugin support\n");
+                exit(EXIT_FAILURE);
+            }
+            else if (!static_cast<bool>(strcmp(argv[i + 1], "oiio")))
+            {
+                printf("ERROR: OpenImageIO writer is not available.  Please "
+                    "compile RIFT with plugin support\n");
                 exit(EXIT_FAILURE);
             }
 #endif

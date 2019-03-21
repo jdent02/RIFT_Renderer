@@ -87,6 +87,8 @@ set (
     src/core/acceleration_structures/bvh_utils.h
 
     src/core/lighting_integrators/i_light_integrator.h
+    src/core/lighting_integrators/direct_lighting.h
+    src/core/lighting_integrators/direct_lighting.cpp
     src/core/lighting_integrators/light_sample_path.cpp
     src/core/lighting_integrators/light_sample_path.h
     src/core/lighting_integrators/path_tracer.h

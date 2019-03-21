@@ -20,28 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "scene_generator.h"
+
+#include "camera/thin_lens_camera.h"
+#include "core/acceleration_structures/bvh_node.h"
 #include "core/samplers/rng/xoroshiro128.h"
 #include "hitables/box.h"
+#include "hitables/constant_medium.h"
+#include "hitables/hitable_list.h"
 #include "hitables/instancers.h"
+#include "hitables/moving_sphere.h"
 #include "hitables/rect.h"
+#include "hitables/sky_sphere.h"
+#include "hitables/sphere.h"
 #include "materials/dielectric.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "textures/checker_tex.h"
 #include "textures/constant_tex.h"
+#include "utility/containers/render_settings.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-
-#include "camera/thin_lens_camera.h"
-#include "core/acceleration_structures/bvh_node.h"
-#include "hitables/constant_medium.h"
-#include "hitables/hitable_list.h"
-#include "hitables/moving_sphere.h"
-#include "hitables/sky_sphere.h"
-#include "hitables/sphere.h"
-#include "scene_generator.h"
 #include "third_party/stb_image.h"
-#include "utility/containers/render_settings.h"
 
 #include <memory>
 
@@ -133,7 +133,7 @@ void SceneGenerator::make_random_scene(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    in_scene->m_cam = std::make_unique<ThinLensCamera>(
+    in_scene->m_cam = new ThinLensCamera(
         lookfrom,
         lookat,
         Vec3(0.f, 1.f, 0.f),
@@ -143,7 +143,7 @@ void SceneGenerator::make_random_scene(
         dist_to_focus,
         0.f,
         0.5f);
-    in_scene->m_world = std::make_unique<BVHNode>(list, i, 0.f, 0.5f);
+    in_scene->m_world = new BVHNode(list, i, 0.f, 0.5f);
     in_scene->m_light_source = nullptr;
 }
 /*
@@ -241,81 +241,62 @@ void SceneGenerator::cornell_box(
     const RenderSettings& settings)
 {
     auto** list = new IHitable*[8];
-    int    i = 0;
+
+    int i = 0;
 
     in_scene->m_textures.emplace(
         "red_rgb",
-        std::make_unique<ConstantTexture>(Vec3(0.65f, 0.05f, 0.05f)));
+        new ConstantTexture(Vec3(0.65f, 0.05f, 0.05f)));
     in_scene->m_textures.emplace(
         "white_rgb",
-        std::make_unique<ConstantTexture>(Vec3(0.73f, 0.73f, 0.73f)));
+        new ConstantTexture(Vec3(0.73f, 0.73f, 0.73f)));
     in_scene->m_textures.emplace(
         "green_rgb",
-        std::make_unique<ConstantTexture>(Vec3(0.12f, 0.45f, 0.15f)));
+        new ConstantTexture(Vec3(0.12f, 0.45f, 0.15f)));
     in_scene->m_textures.emplace(
-        "light_rgb", std::make_unique<ConstantTexture>(Vec3(15.f, 15.f, 15.f)));
+        "light_rgb", new ConstantTexture(Vec3(15.f, 15.f, 15.f)));
 
     in_scene->m_materials.emplace(
         "red",
-        std::make_unique<Lambertian>(
-            in_scene->m_textures.find("red_rgb")->second.get()));
+        new Lambertian(
+            in_scene->m_textures.find("red_rgb")->second));
     in_scene->m_materials.emplace(
         "white",
-        std::make_unique<Lambertian>(
-            in_scene->m_textures.find("white_rgb")->second.get()));
+        new Lambertian(
+            in_scene->m_textures.find("white_rgb")->second));
     in_scene->m_materials.emplace(
         "green",
-        std::make_unique<Lambertian>(
-            in_scene->m_textures.find("green_rgb")->second.get()));
+        new Lambertian(
+            in_scene->m_textures.find("green_rgb")->second));
     in_scene->m_materials.emplace(
         "light",
-        std::make_unique<DiffuseLight>(
-            in_scene->m_textures.find("light_rgb")->second.get()));
+        new DiffuseLight(
+            in_scene->m_textures.find("light_rgb")->second));
 
     list[i++] = new FlipNormals(new YZRect(
-        0,
-        555,
-        0,
-        555,
-        555,
-        in_scene->m_materials.find("green")->second.get()));
+        0, 555, 0, 555, 555, in_scene->m_materials.find("green")->second));
 
     list[i++] = new YZRect(
-        0, 555, 0, 555, 0, in_scene->m_materials.find("red")->second.get());
+        0, 555, 0, 555, 0, in_scene->m_materials.find("red")->second);
 
     list[i++] = new FlipNormals(new XZRect(
-        213,
-        343,
-        227,
-        332,
-        554,
-        in_scene->m_materials.find("light")->second.get()));
+        213, 343, 227, 332, 554, in_scene->m_materials.find("light")->second));
 
     list[i++] = new FlipNormals(new XZRect(
-        0,
-        555,
-        0,
-        555,
-        555,
-        in_scene->m_materials.find("white")->second.get()));
+        0, 555, 0, 555, 555, in_scene->m_materials.find("white")->second));
 
     list[i++] = new XZRect(
-        0, 555, 0, 555, 0, in_scene->m_materials.find("white")->second.get());
+        0, 555, 0, 555, 0, in_scene->m_materials.find("white")->second);
 
     list[i++] = new FlipNormals(new XYRect(
-        0,
-        555,
-        0,
-        555,
-        555,
-        in_scene->m_materials.find("white")->second.get()));
+        0, 555, 0, 555, 555, in_scene->m_materials.find("white")->second));
 
     list[i++] = new Translate(
         new RotateY(
             new Box(
                 Vec3(0, 0, 0),
                 Vec3(165, 165, 165),
-                in_scene->m_materials.find("white")->second.get()),
+                in_scene->m_materials.find("white")->second),
             -18),
         Vec3(130, 0, 65));
 
@@ -324,7 +305,7 @@ void SceneGenerator::cornell_box(
             new Box(
                 Vec3(0, 0, 0),
                 Vec3(165, 330, 165),
-                in_scene->m_materials.find("white")->second.get()),
+                in_scene->m_materials.find("white")->second),
             15),
         Vec3(265, 0, 295));
 
@@ -333,7 +314,7 @@ void SceneGenerator::cornell_box(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    in_scene->m_cam = std::make_unique<ThinLensCamera>(
+    in_scene->m_cam = new ThinLensCamera(
         lookfrom,
         lookat,
         Vec3(0.f, 1.f, 0.f),
@@ -343,9 +324,10 @@ void SceneGenerator::cornell_box(
         dist_to_focus,
         0.f,
         0.5f);
-    in_scene->m_world = std::make_unique<HitableList>(list, i);
+
+    in_scene->m_world = new HitableList(list, i);
     in_scene->m_light_source =
-        std::make_unique<XZRect>(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
+        new XZRect(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
 }
 
 void SceneGenerator::smoky_cornell_box(
@@ -396,7 +378,7 @@ void SceneGenerator::smoky_cornell_box(
     const float dist_to_focus = (lookfrom - lookat).length();
     const float aperture = 0.05f;
 
-    in_scene->m_cam = std::make_unique<ThinLensCamera>(
+    in_scene->m_cam = new ThinLensCamera(
         lookfrom,
         lookat,
         Vec3(0.f, 1.f, 0.f),
@@ -406,7 +388,7 @@ void SceneGenerator::smoky_cornell_box(
         dist_to_focus,
         0.f,
         0.5f);
-    in_scene->m_world = std::make_unique<HitableList>(list, i);
+    in_scene->m_world = new HitableList(list, i);
     in_scene->m_light_source =
-        std::make_unique<XZRect>(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
+        new XZRect(213.f, 343.f, 227.f, 332.f, 554.f, nullptr);
 }

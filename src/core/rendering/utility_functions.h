@@ -27,7 +27,7 @@
 #include <cmath>
 
 // global const variables
-#define INV_RAND_MAX float(1.f / RAND_MAX)
+#define INV_RAND_MAX (1.f / RAND_MAX)
 #define FLOAT_M_PI float(M_PI)
 #define INV_PI (1.f / FLOAT_M_PI)
 

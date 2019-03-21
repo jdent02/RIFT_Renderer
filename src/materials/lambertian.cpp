@@ -26,7 +26,7 @@
 #include "core/pdfs/cosine_pdf.h"
 #include "core/rendering/utility_functions.h"
 
-bool Lambertian::pdf_based_scatter(
+bool Lambertian::scatter(
     const Ray&       r_in,
     const HitRecord& hrec,
     ScatterRecord&   srec) const
@@ -49,16 +49,4 @@ float Lambertian::scattering_pdf(
     }
 
     return cosine * INV_PI;
-}
-
-bool Lambertian::path_scatter(
-    const Ray&       r_in,
-    const HitRecord& rec,
-    Vec3&            attenuation,
-    Ray&             scattered) const
-{
-    Vec3 target = rec.m_p + rec.m_normal + random_in_unit_sphere();
-    scattered = Ray(rec.m_p, target - rec.m_p);
-    attenuation = m_albedo_->value(rec.m_u, rec.m_v, rec.m_p);
-    return true;
 }

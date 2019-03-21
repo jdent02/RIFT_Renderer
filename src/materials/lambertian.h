@@ -36,7 +36,7 @@ class Lambertian : public IMaterial
 
     ~Lambertian() = default;
 
-    bool pdf_based_scatter(
+    bool scatter(
         const Ray&       r_in,
         const HitRecord& hrec,
         ScatterRecord&   srec) const override;
@@ -45,12 +45,6 @@ class Lambertian : public IMaterial
         const Ray&       r_in,
         const HitRecord& rec,
         const Ray&       scattered) const override;
-
-    bool path_scatter(
-        const Ray&       r_in,
-        const HitRecord& rec,
-        Vec3&            attenuation,
-        Ray&             scattered) const override;
 
   private:
     ITexture* m_albedo_;

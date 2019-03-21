@@ -26,7 +26,7 @@
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 
-bool Dielectric::pdf_based_scatter(
+bool Dielectric::scatter(
     const Ray&       r_in,
     const HitRecord& rec,
     ScatterRecord&   srec) const

@@ -34,6 +34,7 @@
 #include "utility/containers/render_settings.h"
 
 #include <mutex>
+#include "core/lighting_integrators/direct_lighting.h"
 
 void render_worker::run_thread(
     const float           seed,
@@ -54,6 +55,11 @@ void render_worker::run_thread(
     {
         light_integrator = std::make_unique<LightSamplePath>();
     }
+    else if (settings.m_light_integrator == DIRECT_LIGHTING)
+    {
+        light_integrator = std::make_unique<DirectLighting>();
+    }
+
 
     const int buffer_size = settings.m_resolution_x * settings.m_resolution_y * 3;
 
@@ -84,8 +90,8 @@ void render_worker::run_thread(
                 Ray r = render_scene->m_cam->get_ray(u, v);
                 col += de_nan(light_integrator->trace(
                     r,
-                    render_scene->m_world.get(),
-                    render_scene->m_light_source.get(),
+                    render_scene->m_world,
+                    render_scene->m_light_source,
                     0));
             }
 
