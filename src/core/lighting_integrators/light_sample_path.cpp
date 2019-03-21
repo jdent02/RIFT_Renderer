@@ -22,12 +22,10 @@
 
 #include "light_sample_path.h"
 
-#include "core/data_types/vec3.h"
-#include "core/data_types/hit_record.h"
-#include "core/data_types/scatter_record.h"
-#include "core/pdfs/hitable_pdf.h"
-#include "core/pdfs/mixture_pdf.h"
 #include "materials/i_material.h"
+#include "objects/hitables/i_hitable.h"
+#include "utility/math_functions/pdfs/hitable_pdf.h"
+#include "utility/math_functions/pdfs/mixture_pdf.h"
 
 #include <cfloat>
 
@@ -49,7 +47,8 @@ Vec3 LightSamplePath::trace(
             if (srec.m_is_specular)
             {
                 return srec.m_attenuation *
-                       trace(srec.m_specular_ray, world, light_shape, depth + 1);
+                       trace(
+                           srec.m_specular_ray, world, light_shape, depth + 1);
             }
             HitablePDF plight(light_shape, hrec.m_p);
             MixturePDF p(&plight, srec.m_pdf_ptr.get());

@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "core/data_types/Vec3.h"
-#include "core/data_types/hit_record.h"
 #include "materials/i_material.h"
 
 struct ScatterRecord;

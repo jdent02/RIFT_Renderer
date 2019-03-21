@@ -22,25 +22,32 @@
 
 #pragma once
 
-#include "core/pdfs/pdf.h"
-#include "hitables/i_hitable.h"
+#include "i_hitable.h"
 
-class HitablePDF : public PDF
+class IMaterial;
+
+class MovingSphere : public IHitable
 {
   public:
-    HitablePDF(IHitable* p, const Vec3& origin)
-      : m_o_(origin)
-      , m_ptr_(p)
-    {}
+    MovingSphere() = default;
 
-    float value(const Vec3& direction) const override
-    {
-        return m_ptr_->pdf_value(m_o_, direction);
-    }
+    MovingSphere(
+        Vec3       cen0,
+        Vec3       cen1,
+        float      t0,
+        float      t1,
+        float      r,
+        IMaterial* m);
 
-    Vec3 generate() const override { return m_ptr_->random(m_o_); };
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
 
-  private:
-    Vec3      m_o_;
-    IHitable* m_ptr_;
+    bool bounding_box(float t0, float t1, AABB& box) const override;
+
+    Vec3 center(float time) const;
+
+    Vec3       m_center0, m_center1;
+    float      m_time0{}, m_time1{};
+    float      m_radius{};
+    IMaterial* m_mat_ptr{};
 };

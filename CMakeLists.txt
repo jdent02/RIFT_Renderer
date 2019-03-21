@@ -68,14 +68,14 @@ endif()
 
 set (
     CAMERA_SOURCES
-    src/camera/i_camera.h
-    src/camera/thin_lens_camera.h
-    src/camera/thin_lens_camera.cpp
+    src/objects/camera/i_camera.h
+    src/objects/camera/thin_lens_camera.h
+    src/objects/camera/thin_lens_camera.cpp
 )
 
 source_group(
-    "src\\camera" REGULAR_EXPRESSION
-    src/camera/.*
+    "src\\object\\camera" REGULAR_EXPRESSION
+    src/objects/camera/.*
 )
 
 set (
@@ -94,7 +94,7 @@ set (
     src/core/lighting_integrators/path_tracer.h
     src/core/lighting_integrators/path_tracer.cpp
 
-    src/core/onb/onb.h
+    src/utility/math_functions/onb.h
 
     src/core/rendering/utility_functions.h
     src/core/rendering/render_controller.h
@@ -110,16 +110,16 @@ set (
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
 
-    src/core/data_types/ray.h
-    src/core/data_types/vec3.h
-    src/core/data_types/hit_record.h
-    src/core/data_types/scatter_record.h
+    src/utility/data_types/ray.h
+    src/utility/data_types/vec3.h
+    src/utility/data_types/hit_record.h
+    src/utility/data_types/scatter_record.h
 
-    src/core/pdfs/pdf.h
-    src/core/pdfs/cosine_pdf.cpp
-    src/core/pdfs/cosine_pdf.h
-    src/core/pdfs/hitable_pdf.h
-    src/core/pdfs/mixture_pdf.h
+    src/utility/math_functions/pdfs/pdf.h
+    src/utility/math_functions/pdfs/cosine_pdf.cpp
+    src/utility/math_functions/pdfs/cosine_pdf.h
+    src/utility/math_functions/pdfs/hitable_pdf.h
+    src/utility/math_functions/pdfs/mixture_pdf.h
     
     src/core/samplers/rng/xoroshiro128.h
     src/core/samplers/rng/xoroshiro128.cpp
@@ -138,83 +138,28 @@ if(USE_PLUGINS)
     )
 endif()
 
-source_group(
-    "src\\core\\pdfs" REGULAR_EXPRESSION
-    src/core/pdfs/.*
-)
-
-source_group(
-    "src\\core\\lighting_integrators"
-    src/core/lighting_integrators/.*
-)
-
-source_group(
-    "src\\core\\samplers\\QMC" REGULAR_EXPRESSION
-    src/core/samplers/monte_carlo_sequences/.*
-)
-
-source_group(
-    "src\\core\\samplers\\rng" REGULAR_EXPRESSION
-    src/core/samplers/rng/.*
-)
-
-source_group(
-    "src\\core\\samplers" REGULAR_EXPRESSION
-    src/core/samplers/.*
-)
-
-source_group(
-    "src\\core\\onb" REGULAR_EXPRESSION
-    src/core/onb/.*
-)
-
-source_group(
-    "src\\core\\acceleration_structures" REGULAR_EXPRESSION
-    src/core/acceleration_structures/.*
-)
-
-source_group(
-    "src\\core\\bases" REGULAR_EXPRESSION
-    src/core/bases/.*
-)
-
-source_group(
-    "src\\core\\rendering" REGULAR_EXPRESSION
-    src/core/rendering/.*
-)
-
-source_group(
-    "src\\core\\image_writers" REGULAR_EXPRESSION
-    src/core/image_writers./*
-)
-
-source_group(
-    "src\\core\\data_types" REGULAR_EXPRESSION
-    src/core/data_types/.*
-)
-
 set (
     HITABLES_SOURCES
-    src/hitables/constant_medium.h
-    src/hitables/constant_medium.cpp
-    src/hitables/i_hitable.h
-    src/hitables/hitable_list.h
-    src/hitables/sphere.h
-    src/hitables/sphere.cpp
-    src/hitables/moving_sphere.h
-    src/hitables/moving_sphere.cpp
-    src/hitables/rect.cpp
-    src/hitables/rect.h
-    src/hitables/box.cpp
-    src/hitables/box.h
-    src/hitables/instancers.cpp
-    src/hitables/instancers.h
-    src/hitables/sky_sphere.h
+    src/objects/hitables/constant_medium.h
+    src/objects/hitables/constant_medium.cpp
+    src/objects/hitables/i_hitable.h
+    src/objects/hitables/hitable_list.h
+    src/objects/hitables/sphere.h
+    src/objects/hitables/sphere.cpp
+    src/objects/hitables/moving_sphere.h
+    src/objects/hitables/moving_sphere.cpp
+    src/objects/hitables/rect.cpp
+    src/objects/hitables/rect.h
+    src/objects/hitables/box.cpp
+    src/objects/hitables/box.h
+    src/objects/hitables/instancers.cpp
+    src/objects/hitables/instancers.h
+    src/objects/hitables/sky_sphere.h
 )
 
 source_group(
-    "src\\hitables" REGULAR_EXPRESSION
-    src/hitables/.*
+    "src\\object\\hitables" REGULAR_EXPRESSION
+    src/objects/hitables/.*
 )
 
 set (
@@ -263,43 +208,6 @@ set (
     src/utility/version/version.h
 )
 
-source_group(
-    "src\\utilities\\math_functions" REGULAR_EXPRESSION
-    src/utility/math_functions/.*
-)
-
-source_group(
-    "src\\utilities\\version" FILES
-    src/utility/version/version.h
-    src/utility/version/version.h.in
-)
-
-source_group(
-    "src\\utilities\\noises" REGULAR_EXPRESSION
-    src/utility/noises/.*
-)
-
-source_group(
-    "src\\utilities\\containers" REGULAR_EXPRESSION
-    src/utility/containers/.*
-)
-
-source_group(
-    "src\\utilities\\generators" REGULAR_EXPRESSION
-    src/utility/generators/.*
-)
-
-source_group(
-    "cmd_parser" FILES
-    applications/RIFT_cli/command_line_parser.h
-    applications/RIFT_cli/command_line_parser.cpp
-)
-
-source_group(
-    "main" FILES
-    applications/RIFT_cli/main.cpp
-)
-
 set (
     MAIN_SOURCE
     applications/RIFT_cli/main.cpp
@@ -319,20 +227,22 @@ set (
     ${UTILITY_SOURCES}
 )
 
-set(
-    CMAKE_C_FLAGS_RELEASE
-    "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
-)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    set(
+        CMAKE_C_FLAGS_RELEASE
+        "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
+    )
 
-set(
-    CMAKE_CXX_FLAGS_RELEASE
-    "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
-)
+    set(
+        CMAKE_CXX_FLAGS_RELEASE
+        "/Zi /O2 /Ob2 /Oi /Ot /Oy /MD /GS- /GL"
+    )
 
-set(
-    CMAKE_EXE_LINKER_FLAGS_RELEASE
-    "/OPT:REF /OPT:ICF /LTCG /INCREMENTAL:NO"
-)
+    set(
+        CMAKE_EXE_LINKER_FLAGS_RELEASE
+        "/OPT:REF /OPT:ICF /LTCG /INCREMENTAL:NO"
+    )
+endif()
 
 add_executable(
     RIFT

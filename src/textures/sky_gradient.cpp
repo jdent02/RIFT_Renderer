@@ -22,7 +22,7 @@
 
 #include "sky_gradient.h"
 
-#include "core/data_types/ray.h"
+#include "utility/data_types/ray.h"
 
 Vec3 SkyGradient::value(float u, float v, const Vec3& p) const
 {

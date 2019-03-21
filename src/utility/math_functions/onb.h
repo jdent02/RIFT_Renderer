@@ -22,19 +22,46 @@
 
 #pragma once
 
-#include "i_hitable.h"
-#include "textures/i_texture.h"
+#include "utility/data_types/vec3.h"
 
-class ConstantMedium : public IHitable
+class ONB
 {
   public:
-    ConstantMedium(IHitable* b, float d, ITexture* a);
-    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
-    bool bounding_box(float t0, float t1, AABB& box) const override;
+    ONB() = default;
+    Vec3 operator[](int i) const { return m_axis_[i]; }
+    Vec3 u() const { return m_axis_[0]; }
+    Vec3 v() const { return m_axis_[1]; }
+    Vec3 w() const { return m_axis_[2]; }
+
+    Vec3 local(float a, float b, float c) const
+    {
+        return a * u() + b * v() + c * w();
+    }
+
+    Vec3 local(const Vec3& a) const
+    {
+        return a.x() * u() + a.y() * v() + a.z() * w();
+    }
+
+    void build_from_w(const Vec3& n);
 
   private:
-    std::unique_ptr<IMaterial> m_phase_function_;
-    IHitable*                  m_boundary_;
-    float                      m_density_;
+    Vec3 m_axis_[3];
 };
+
+inline void ONB::build_from_w(const Vec3& n)
+{
+    m_axis_[2] = unit_vector(n);
+    Vec3 a;
+    if (fabs(w().x()) > 0.9f)
+    {
+        a = Vec3(0, 1, 0);
+    }
+    else
+    {
+        a = Vec3(1, 0, 0);
+    }
+
+    m_axis_[1] = unit_vector(cross(w(), a));
+    m_axis_[0] = cross(w(), v());
+}

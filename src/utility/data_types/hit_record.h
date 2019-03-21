@@ -22,46 +22,16 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
-#include "core/rendering/utility_functions.h"
-#include "hitables/i_hitable.h"
+#include "vec3.h"
 
-// Forward declarations
 class IMaterial;
-class Ray;
-struct HitRecord;
 
-inline void get_sphere_uv(const Vec3& p, float& u, float& v)
+struct HitRecord
 {
-    float phi = std::atan2(p.z(), p.x());
-    float theta = std::asin(p.y());
-    u = 1.f - (phi + FLOAT_M_PI) / (2 * FLOAT_M_PI);
-    v = (theta + FLOAT_M_PI / 2) / FLOAT_M_PI;
-}
-
-class Sphere : public IHitable
-{
-  public:
-    Sphere() = default;
-
-    Sphere(const Vec3 cen, const float r, IMaterial* mat)
-      : m_center_(cen)
-      , m_radius_(r)
-      , m_material_(mat){};
-
-    ~Sphere() override = default;
-
-    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
-
-    bool bounding_box(float t0, float t1, AABB& box) const override;
-
-    float pdf_value(const Vec3& o, const Vec3& v) const override;
-
-    Vec3 random(const Vec3& o) const override;
-
-  private:
-    Vec3       m_center_;
-    float      m_radius_{};
-    IMaterial* m_material_{};
+    float      m_t{};
+    float      m_u{};
+    float      m_v{};
+    Vec3       m_p;
+    Vec3       m_normal;
+    IMaterial* m_mat_ptr{};
 };

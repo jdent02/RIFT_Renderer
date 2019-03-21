@@ -20,41 +20,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "box.h"
+#pragma once
 
-#include "core/acceleration_structures/aabb.h"
-#include "core/data_types/hit_record.h"
-#include "hitables/hitable_list.h"
-#include "hitables/rect.h"
+#include "core/rendering/utility_functions.h"
+#include "i_hitable.h"
 
-bool Box::hit(
-    const Ray&  r,
-    const float t_min,
-    const float t_max,
-    HitRecord&  rec) const
+// Forward declarations
+class IMaterial;
+class Ray;
+struct HitRecord;
+
+inline void get_sphere_uv(const Vec3& p, float& u, float& v)
 {
-    return m_list_ptr_->hit(r, t_min, t_max, rec);
+    float phi = std::atan2(p.z(), p.x());
+    float theta = std::asin(p.y());
+    u = 1.f - (phi + FLOAT_M_PI) / (2 * FLOAT_M_PI);
+    v = (theta + FLOAT_M_PI / 2) / FLOAT_M_PI;
 }
 
-bool Box::bounding_box(float t0, float t1, AABB& box) const
+class Sphere : public IHitable
 {
-    box = AABB(m_pmin_, m_pmax_);
-    return true;
-}
+  public:
+    Sphere() = default;
 
-Box::Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr)
-  : m_pmin_(p0)
-  , m_pmax_(p1)
-{
-    auto** list = new IHitable*[6];
-    list[0] = new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p1.z(), ptr);
-    list[1] = new FlipNormals(
-        new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p0.z(), ptr));
-    list[2] = new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p1.y(), ptr);
-    list[3] = new FlipNormals(
-        new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p0.y(), ptr));
-    list[4] = new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p1.x(), ptr);
-    list[5] = new FlipNormals(
-        new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p0.x(), ptr));
-    m_list_ptr_ = new HitableList(list, 6);
-}
+    Sphere(const Vec3 cen, const float r, IMaterial* mat)
+      : m_center_(cen)
+      , m_radius_(r)
+      , m_material_(mat){};
+
+    ~Sphere() override = default;
+
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
+
+    bool bounding_box(float t0, float t1, AABB& box) const override;
+
+    float pdf_value(const Vec3& o, const Vec3& v) const override;
+
+    Vec3 random(const Vec3& o) const override;
+
+  private:
+    Vec3       m_center_;
+    float      m_radius_{};
+    IMaterial* m_material_{};
+};

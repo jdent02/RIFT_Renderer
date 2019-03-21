@@ -23,7 +23,7 @@
 #pragma once
 
 #include "core/acceleration_structures/aabb.h"
-#include "hitables/i_hitable.h"
+#include "objects/hitables/i_hitable.h"
 
 struct HitRecord;
 

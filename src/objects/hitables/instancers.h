@@ -22,16 +22,38 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
+#include "core/acceleration_structures/aabb.h"
+#include "objects/hitables/i_hitable.h"
 
-class IMaterial;
-
-struct HitRecord
+class Translate : public IHitable
 {
-    float      m_t{};
-    float      m_u{};
-    float      m_v{};
-    Vec3       m_p;
-    Vec3       m_normal;
-    IMaterial* m_mat_ptr{};
+  public:
+    Translate(IHitable* p, const Vec3& displacement);
+
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
+
+    bool bounding_box(float t0, float t1, AABB& box) const override;
+
+  private:
+    IHitable* m_ptr_;
+    Vec3      m_offset_;
+};
+
+class RotateY : public IHitable
+{
+  public:
+    RotateY(IHitable* p, float angle);
+
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
+
+    bool bounding_box(float t0, float t1, AABB& box) const override;
+
+  private:
+    IHitable* m_ptr_;
+    float     m_sin_theta_;
+    float     m_cos_theta_;
+    bool      m_hasbox_;
+    AABB      m_bbox_;
 };

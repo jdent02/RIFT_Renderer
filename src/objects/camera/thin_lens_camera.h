@@ -22,32 +22,32 @@
 
 #pragma once
 
-#include "core/pdfs/pdf.h"
+#include "i_camera.h"
+#include "utility/data_types/ray.h"
+#include "utility/data_types/vec3.h"
 
-class MixturePDF : public PDF
+class ThinLensCamera : public ICamera
 {
   public:
-    MixturePDF(PDF* p0, PDF* p1)
-    {
-        m_p_[0] = p0;
-        m_p_[1] = p1;
-    }
+    ThinLensCamera(
+        Vec3  lookfrom,
+        Vec3  lookat,
+        Vec3  vup,
+        float vfov,
+        float aspect,
+        float aperture,
+        float focus_dist,
+        float t0,
+        float t1);
 
-    float value(const Vec3& direction) const override
-    {
-        return float(
-            0.5 * m_p_[0]->value(direction) + 0.5 * m_p_[1]->value(direction));
-    }
-
-    Vec3 generate() const override
-    {
-        if (rand() * (1.f / RAND_MAX) < 0.5)
-        {
-            return m_p_[0]->generate();
-        }
-        return m_p_[1]->generate();
-    }
+    Ray get_ray(float s, float t) const override;
 
   private:
-    PDF* m_p_[2]{};
+    Vec3  m_origin_;
+    Vec3  m_lower_left_corner_;
+    Vec3  m_horizontal_;
+    Vec3  m_vertical_;
+    Vec3  m_u_, m_v_, m_w_;
+    float m_lens_radius_;
+    float m_time0_, m_time1_;
 };

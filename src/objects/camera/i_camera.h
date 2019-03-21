@@ -22,16 +22,12 @@
 
 #pragma once
 
-#include "core/onb/onb.h"
-#include "core/pdfs/pdf.h"
+#include "utility/data_types/ray.h"
 
-class CosinePDF final : public PDF
+class ICamera
 {
   public:
-    explicit CosinePDF(const Vec3& w) { m_uvw_.build_from_w(w); }
-    float value(const Vec3& direction) const override;
-    Vec3  generate() const override;
+    virtual ~ICamera() = default;
 
-  private:
-    ONB m_uvw_;
+    virtual Ray get_ray(float s, float t) const = 0;
 };

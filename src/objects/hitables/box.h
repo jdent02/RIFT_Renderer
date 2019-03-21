@@ -22,28 +22,24 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
+#include "objects/hitables/i_hitable.h"
 
-class Ray
+class IMaterial;
+
+class Box : public IHitable
 {
   public:
-    Ray() = default;
+    Box() = default;
+    Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr);
 
-    Ray(const Vec3& a, const Vec3& b, const float ti = 0.f)
-      : A(a)
-      , B(b)
-      , m_time(ti){};
+    ~Box() override { delete m_list_ptr_; }
 
-    Vec3 origin() const { return A; }
+    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const override;
 
-    Vec3 direction() const { return B; }
+    bool bounding_box(float t0, float t1, AABB& box) const override;
 
-    float time() const { return m_time; }
-
-    Vec3 point_at_parameter(const float t) const { return A + t * B; }
-
-    // properties
-    Vec3  A;
-    Vec3  B;
-    float m_time{};
+  private:
+    Vec3      m_pmin_, m_pmax_;
+    IHitable* m_list_ptr_;
 };

@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
-#include "core/data_types/vec3.h"
 #include "materials/i_material.h"
 #include "textures/i_texture.h"
 

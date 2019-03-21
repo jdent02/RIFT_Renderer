@@ -20,18 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "box.h"
 
-#include "core/data_types/ray.h"
-#include "core/data_types/vec3.h"
-#include "core/pdfs/pdf.h"
+#include "core/acceleration_structures/aabb.h"
+#include "objects/hitables/hitable_list.h"
+#include "objects/hitables/rect.h"
 
-#include <memory>
-
-struct ScatterRecord
+bool Box::hit(
+    const Ray&  r,
+    const float t_min,
+    const float t_max,
+    HitRecord&  rec) const
 {
-    Ray                  m_specular_ray;
-    bool                 m_is_specular;
-    Vec3                 m_attenuation;
-    std::unique_ptr<PDF> m_pdf_ptr;
-};
+    return m_list_ptr_->hit(r, t_min, t_max, rec);
+}
+
+bool Box::bounding_box(float t0, float t1, AABB& box) const
+{
+    box = AABB(m_pmin_, m_pmax_);
+    return true;
+}
+
+Box::Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr)
+  : m_pmin_(p0)
+  , m_pmax_(p1)
+{
+    auto** list = new IHitable*[6];
+    list[0] = new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p1.z(), ptr);
+    list[1] = new FlipNormals(
+        new XYRect(p0.x(), p1.x(), p0.y(), p1.y(), p0.z(), ptr));
+    list[2] = new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p1.y(), ptr);
+    list[3] = new FlipNormals(
+        new XZRect(p0.x(), p1.x(), p0.z(), p1.z(), p0.y(), ptr));
+    list[4] = new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p1.x(), ptr);
+    list[5] = new FlipNormals(
+        new YZRect(p0.y(), p1.y(), p0.z(), p1.z(), p0.x(), ptr));
+    m_list_ptr_ = new HitableList(list, 6);
+}

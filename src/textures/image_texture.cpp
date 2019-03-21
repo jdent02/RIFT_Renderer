@@ -22,7 +22,7 @@
 
 #include "image_texture.h"
 
-#include "core/data_types/vec3.h"
+#include "utility/data_types/vec3.h"
 
 ImageTexture::ImageTexture(unsigned char* pixels, const int a, const int b)
   : m_data_(pixels)

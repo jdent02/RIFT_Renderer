@@ -22,32 +22,23 @@
 
 #pragma once
 
-#include "core/data_types/Vec3.h"
-#include "core/data_types/hit_record.h"
-#include "hitables/i_hitable.h"
+#include "utility/data_types/vec3.h"
 
-class MovingSphere : public IHitable
+struct HitRecord;
+class Ray;
+class AABB;
+
+class IHitable
 {
   public:
-    MovingSphere() = default;
+    virtual ~IHitable() = default;
 
-    MovingSphere(
-        Vec3       cen0,
-        Vec3       cen1,
-        float      t0,
-        float      t1,
-        float      r,
-        IMaterial* m);
+    virtual bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
+        const = 0;
 
-    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
+    virtual bool bounding_box(float t0, float t1, AABB& box) const = 0;
 
-    bool bounding_box(float t0, float t1, AABB& box) const override;
+    virtual float pdf_value(const Vec3& o, const Vec3& v) const { return 0.f; }
 
-    Vec3 center(float time) const;
-
-    Vec3       m_center0, m_center1;
-    float      m_time0{}, m_time1{};
-    float      m_radius{};
-    IMaterial* m_mat_ptr{};
+    virtual Vec3 random(const Vec3& o) const { return Vec3(1.f, 0.f, 0.f); }
 };

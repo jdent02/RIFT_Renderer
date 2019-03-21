@@ -22,8 +22,9 @@
 
 #pragma once
 
-#include "core/data_types/ray.h"
-#include "core/data_types/vec3.h"
+#include "utility/data_types/vec3.h"
+
+class Ray;
 
 class AABB
 {

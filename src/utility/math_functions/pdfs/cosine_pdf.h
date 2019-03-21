@@ -22,23 +22,16 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
-#include "materials/i_material.h"
+#include "utility/math_functions/onb.h"
+#include "pdf.h"
 
-class Ray;
-class AABB;
-
-class IHitable
+class CosinePDF final : public PDF
 {
   public:
-    virtual ~IHitable() = default;
+    explicit CosinePDF(const Vec3& w) { m_uvw_.build_from_w(w); }
+    float value(const Vec3& direction) const override;
+    Vec3  generate() const override;
 
-    virtual bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const = 0;
-
-    virtual bool bounding_box(float t0, float t1, AABB& box) const = 0;
-
-    virtual float pdf_value(const Vec3& o, const Vec3& v) const { return 0.f; }
-
-    virtual Vec3 random(const Vec3& o) const { return Vec3(1.f, 0.f, 0.f); }
+  private:
+    ONB m_uvw_;
 };

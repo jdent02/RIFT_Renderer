@@ -22,8 +22,9 @@
 
 #pragma once
 
-#include "camera/i_camera.h"
-#include "hitables/i_hitable.h"
+#include "materials/i_material.h"
+#include "objects/camera/i_camera.h"
+#include "objects/hitables/i_hitable.h"
 #include "textures/i_texture.h"
 
 #include <unordered_map>

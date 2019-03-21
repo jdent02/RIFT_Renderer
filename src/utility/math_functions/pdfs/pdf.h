@@ -22,32 +22,12 @@
 
 #pragma once
 
-#include "camera/i_camera.h"
-#include "core/data_types/ray.h"
-#include "core/data_types/vec3.h"
+class Vec3;
 
-class ThinLensCamera : public ICamera
+class PDF
 {
   public:
-    ThinLensCamera(
-        Vec3  lookfrom,
-        Vec3  lookat,
-        Vec3  vup,
-        float vfov,
-        float aspect,
-        float aperture,
-        float focus_dist,
-        float t0,
-        float t1);
-
-    Ray get_ray(float s, float t) const override;
-
-  private:
-    Vec3  m_origin_;
-    Vec3  m_lower_left_corner_;
-    Vec3  m_horizontal_;
-    Vec3  m_vertical_;
-    Vec3  m_u_, m_v_, m_w_;
-    float m_lens_radius_;
-    float m_time0_, m_time1_;
+    virtual ~PDF() = default;
+    virtual float value(const Vec3& direction) const = 0;
+    virtual Vec3  generate() const = 0;
 };

@@ -22,7 +22,7 @@
 
 #include "metal.h"
 
-#include "core/data_types/scatter_record.h"
+#include "utility/data_types/scatter_record.h"
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 

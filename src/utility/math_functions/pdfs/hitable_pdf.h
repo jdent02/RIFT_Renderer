@@ -22,46 +22,24 @@
 
 #pragma once
 
-#include "core/data_types/vec3.h"
+#include "pdf.h"
 
-class ONB
+class HitablePDF : public PDF
 {
   public:
-    ONB() = default;
-    Vec3 operator[](int i) const { return m_axis_[i]; }
-    Vec3 u() const { return m_axis_[0]; }
-    Vec3 v() const { return m_axis_[1]; }
-    Vec3 w() const { return m_axis_[2]; }
+    HitablePDF(IHitable* p, const Vec3& origin)
+      : m_o_(origin)
+      , m_ptr_(p)
+    {}
 
-    Vec3 local(float a, float b, float c) const
+    float value(const Vec3& direction) const override
     {
-        return a * u() + b * v() + c * w();
+        return m_ptr_->pdf_value(m_o_, direction);
     }
 
-    Vec3 local(const Vec3& a) const
-    {
-        return a.x() * u() + a.y() * v() + a.z() * w();
-    }
-
-    void build_from_w(const Vec3& n);
+    Vec3 generate() const override { return m_ptr_->random(m_o_); };
 
   private:
-    Vec3 m_axis_[3];
+    Vec3      m_o_;
+    IHitable* m_ptr_;
 };
-
-inline void ONB::build_from_w(const Vec3& n)
-{
-    m_axis_[2] = unit_vector(n);
-    Vec3 a;
-    if (fabs(w().x()) > 0.9f)
-    {
-        a = Vec3(0, 1, 0);
-    }
-    else
-    {
-        a = Vec3(1, 0, 0);
-    }
-
-    m_axis_[1] = unit_vector(cross(w(), a));
-    m_axis_[0] = cross(w(), v());
-}

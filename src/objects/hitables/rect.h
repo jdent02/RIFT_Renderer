@@ -22,8 +22,12 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
-#include "hitables/i_hitable.h"
+#include "objects/hitables/i_hitable.h"
+
+class AABB;
+struct HitRecord;
+class Ray;
+class IMaterial;
 
 class XYRect final : public IHitable
 {

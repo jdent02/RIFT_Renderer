@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
+#include "utility/data_types/hit_record.h"
 #include "materials/i_material.h"
 
 // Forward declaration

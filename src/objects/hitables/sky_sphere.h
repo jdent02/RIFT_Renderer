@@ -22,23 +22,27 @@
 
 #pragma once
 
-#include "core/data_types/hit_record.h"
-#include "hitables/i_hitable.h"
+#include "utility/data_types/hit_record.h"
+#include "sphere.h"
+#include "materials/diffuse_light.h"
+#include "textures/sky_gradient.h"
 
-class Box : public IHitable
+class SkySphere : public Sphere
 {
   public:
-    Box() = default;
-    Box(const Vec3& p0, const Vec3& p1, IMaterial* ptr);
+    explicit SkySphere(ITexture* texture)
+      : Sphere(Vec3(0.f, 0.f, 0.f), 100000.f, new DiffuseLight(texture)){};
 
-    ~Box() override { delete m_list_ptr_; }
+    ~SkySphere() override = default;
 
     bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
+        const override
+    {
+        return Sphere::hit(r, t_min, t_max, rec);
+    }
 
-    bool bounding_box(float t0, float t1, AABB& box) const override;
-
-  private:
-    Vec3      m_pmin_, m_pmax_;
-    IHitable* m_list_ptr_;
+    bool bounding_box(float t0, float t1, AABB& box) const override
+    {
+        return Sphere::bounding_box(t0, t1, box);
+    }
 };

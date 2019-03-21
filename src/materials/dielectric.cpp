@@ -22,7 +22,7 @@
 
 #include "dielectric.h"
 
-#include "core/data_types/ray.h"
+#include "utility/data_types/ray.h"
 #include "core/rendering/scatter_functions.h"
 #include "core/rendering/utility_functions.h"
 

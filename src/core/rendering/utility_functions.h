@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "core/data_types/ray.h"
+#include "utility/data_types/vec3.h"
 
 #include <cmath>
 

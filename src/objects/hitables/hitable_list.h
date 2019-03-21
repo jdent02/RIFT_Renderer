@@ -23,8 +23,8 @@
 #pragma once
 
 #include "core/acceleration_structures/aabb.h"
-#include "core/data_types/hit_record.h"
-#include "hitables/i_hitable.h"
+#include "utility/data_types/hit_record.h"
+#include "i_hitable.h"
 
 class HitableList : public IHitable
 {

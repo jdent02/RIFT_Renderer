@@ -22,11 +22,8 @@
 
 #include "path_tracer.h"
 
-#include "core/data_types/Ray.h"
-#include "core/data_types/hit_record.h"
-#include "core/data_types/vec3.h"
-#include "hitables/i_hitable.h"
 #include "materials/i_material.h"
+#include "objects/hitables/i_hitable.h"
 
 Vec3 PathTracer::trace(
     const Ray& r,
@@ -46,16 +43,17 @@ Vec3 PathTracer::trace(
             if (srec.m_is_specular)
             {
                 return srec.m_attenuation *
-                    trace(srec.m_specular_ray, world, light_shape, depth + 1);
+                       trace(
+                           srec.m_specular_ray, world, light_shape, depth + 1);
             }
-            Ray        scattered(hrec.m_p, srec.m_pdf_ptr->generate(), r.time());
-            float      pdf_val = srec.m_pdf_ptr->value(scattered.direction());
+            Ray   scattered(hrec.m_p, srec.m_pdf_ptr->generate(), r.time());
+            float pdf_val = srec.m_pdf_ptr->value(scattered.direction());
 
             return emitted +
-                srec.m_attenuation *
-                hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
-                trace(scattered, world, light_shape, depth + 1) /
-                pdf_val;
+                   srec.m_attenuation *
+                       hrec.m_mat_ptr->scattering_pdf(r, hrec, scattered) *
+                       trace(scattered, world, light_shape, depth + 1) /
+                       pdf_val;
         }
         return emitted;
     }

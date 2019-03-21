@@ -22,40 +22,16 @@
 
 #pragma once
 
-#include "core/acceleration_structures/aabb.h"
-#include "core/data_types/hit_record.h"
-#include "core/data_types/vec3.h"
-#include "hitables/i_hitable.h"
+#include "ray.h"
+#include "utility/math_functions/pdfs/pdf.h"
+#include "vec3.h"
 
-class Translate : public IHitable
+#include <memory>
+
+struct ScatterRecord
 {
-  public:
-    Translate(IHitable* p, const Vec3& displacement);
-
-    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
-
-    bool bounding_box(float t0, float t1, AABB& box) const override;
-
-  private:
-    IHitable* m_ptr_;
-    Vec3      m_offset_;
-};
-
-class RotateY : public IHitable
-{
-  public:
-    RotateY(IHitable* p, float angle);
-
-    bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec)
-        const override;
-
-    bool bounding_box(float t0, float t1, AABB& box) const override;
-
-  private:
-    IHitable* m_ptr_;
-    float     m_sin_theta_;
-    float     m_cos_theta_;
-    bool      m_hasbox_;
-    AABB      m_bbox_;
+    Ray                  m_specular_ray;
+    bool                 m_is_specular;
+    Vec3                 m_attenuation;
+    std::unique_ptr<PDF> m_pdf_ptr;
 };

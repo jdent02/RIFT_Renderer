@@ -22,6 +22,8 @@
 
 #include "core/acceleration_structures/aabb.h"
 
+#include "utility/data_types/ray.h"
+
 bool AABB::hit(const Ray& r, float tmin, float tmax) const
 {
     for (int a = 0; a < 3; a++)

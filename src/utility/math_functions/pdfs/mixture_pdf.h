@@ -22,12 +22,32 @@
 
 #pragma once
 
-#include "core/data_types/Ray.h"
+#include "pdf.h"
 
-class ICamera
+class MixturePDF : public PDF
 {
   public:
-    virtual ~ICamera() = default;
+    MixturePDF(PDF* p0, PDF* p1)
+    {
+        m_p_[0] = p0;
+        m_p_[1] = p1;
+    }
 
-    virtual Ray get_ray(float s, float t) const = 0;
+    float value(const Vec3& direction) const override
+    {
+        return float(
+            0.5 * m_p_[0]->value(direction) + 0.5 * m_p_[1]->value(direction));
+    }
+
+    Vec3 generate() const override
+    {
+        if (rand() * (1.f / RAND_MAX) < 0.5)
+        {
+            return m_p_[0]->generate();
+        }
+        return m_p_[1]->generate();
+    }
+
+  private:
+    PDF* m_p_[2]{};
 };
