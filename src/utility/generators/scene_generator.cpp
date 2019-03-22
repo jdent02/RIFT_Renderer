@@ -23,7 +23,6 @@
 #include "scene_generator.h"
 
 #include "core/acceleration_structures/bvh_node.h"
-#include "core/samplers/rng/xoroshiro128.h"
 #include "materials/dielectric.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"

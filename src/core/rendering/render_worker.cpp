@@ -22,19 +22,19 @@
 
 #include "core/rendering/render_worker.h"
 
-#include "objects/camera/i_camera.h"
 #include "color_functions.h"
+#include "objects/camera/i_camera.h"
 #include "utility/data_types/ray.h"
 // #include "core/lighting_integrators/direct_lighting.h"
+#include "core/lighting_integrators/direct_lighting.h"
 #include "core/lighting_integrators/i_light_integrator.h"
 #include "core/lighting_integrators/light_sample_path.h"
 #include "core/lighting_integrators/path_tracer.h"
-#include "core/samplers/rng/drand48.h"
-#include "utility/containers/scene.h"
 #include "utility/containers/render_settings.h"
+#include "utility/containers/scene.h"
+#include "utility/rng/drand48.h"
 
 #include <mutex>
-#include "core/lighting_integrators/direct_lighting.h"
 
 void render_worker::run_thread(
     const float           seed,
@@ -60,8 +60,8 @@ void render_worker::run_thread(
         light_integrator = std::make_unique<DirectLighting>();
     }
 
-
-    const int buffer_size = settings.m_resolution_x * settings.m_resolution_y * 3;
+    const int buffer_size =
+        settings.m_resolution_x * settings.m_resolution_y * 3;
 
     std::unique_ptr<IRandGenerator> rn_gen = std::make_unique<DRand48>();
 
@@ -89,10 +89,7 @@ void render_worker::run_thread(
 
                 Ray r = render_scene->m_cam->get_ray(u, v);
                 col += de_nan(light_integrator->trace(
-                    r,
-                    render_scene->m_world,
-                    render_scene->m_light_source,
-                    0));
+                    r, render_scene->m_world, render_scene->m_light_source, 0));
             }
 
             temp_buffer[buffer_pos++] = col[0];

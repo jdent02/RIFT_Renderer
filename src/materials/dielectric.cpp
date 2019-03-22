@@ -23,7 +23,7 @@
 #include "dielectric.h"
 
 #include "utility/data_types/ray.h"
-#include "core/rendering/scatter_functions.h"
+#include "utility/math_functions/scatter_functions.h"
 #include "utility/math_functions/utility_functions.h"
 
 bool Dielectric::scatter(

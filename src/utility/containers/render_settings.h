@@ -24,7 +24,7 @@
 
 #include "core/image_writers/i_out_writer.h"
 #include "core/lighting_integrators/i_light_integrator.h"
-#include "core/samplers/rng/i_rand_generator.h"
+#include "utility/rng/i_rand_generator.h"
 
 #include <thread>
 

@@ -23,7 +23,7 @@
 #pragma once
 
 // Local libraries
-#include "core/samplers/rng/i_rand_generator.h"
+#include "utility/rng/i_rand_generator.h"
 
 // Standard libraries
 #include <cstdint>

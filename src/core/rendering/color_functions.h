@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include "utility/data_types/vec3.h"
+
 inline Vec3 de_nan(const Vec3& c)
 {
     Vec3 temp = c;

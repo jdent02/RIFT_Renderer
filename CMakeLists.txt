@@ -107,7 +107,6 @@ set (
     src/core/rendering/render_controller.cpp
     src/core/rendering/render_worker.h
     src/core/rendering/render_worker.cpp
-    src/core/rendering/scatter_functions.h
     src/core/rendering/color_functions.h
 
     src/core/image_writers/jpeg_writer.cpp
@@ -116,18 +115,11 @@ set (
     src/core/image_writers/png_writer.cpp
     src/core/image_writers/png_writer.h
 
-    src/core/samplers/rng/xoroshiro128.h
-    src/core/samplers/rng/xoroshiro128.cpp
-    src/core/samplers/rng/i_rand_generator.h
-    src/core/samplers/rng/drand48.cpp
-    src/core/samplers/rng/drand48.h
     src/core/samplers/samplers/i_sampler.h
 )
 
 if(USE_PLUGINS)
     list(APPEND CORE_SOURCES
-        src/core/image_writers/open_exr_writer.h
-        src/core/image_writers/open_exr_writer.cpp
         src/core/image_writers/oiio_writer.h
         src/core/image_writers/oiio_writer.cpp
     )
@@ -177,6 +169,12 @@ set (
     src/utility/math_functions/pdfs/hitable_pdf.h
     src/utility/math_functions/pdfs/mixture_pdf.h
     src/utility/math_functions/onb.h
+    src/utility/math_functions/scatter_functions.h
+    src/utility/rng/xoroshiro128.h
+    src/utility/rng/xoroshiro128.cpp
+    src/utility/rng/i_rand_generator.h
+    src/utility/rng/drand48.cpp
+    src/utility/rng/drand48.h
 )
 
 set (
@@ -198,7 +196,7 @@ set (
     ${UTILITY_SOURCES}
 )
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+if (MSVC)
     add_definitions(
         -D_USE_MATH_DEFINES
     )
@@ -354,6 +352,16 @@ source_group(
 source_group(
     "src\\utility\\noises" REGULAR_EXPRESSION
     src/utility/noises/.*
+)
+
+source_group(
+    "src\\utility\\rng" REGULAR_EXPRESSION
+    src/utility/rng/.*
+)
+
+source_group(
+    "src\\utility\\qmc" REGULAR_EXPRESSION
+    src/utility/qmc/.*
 )
 
 source_group(

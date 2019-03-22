@@ -28,7 +28,6 @@ enum output_writers
 {
     JPEG,
     PNG,
-    OPENEXR,
     OPENIMAGEIO
 };
 

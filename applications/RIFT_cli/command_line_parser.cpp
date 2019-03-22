@@ -74,21 +74,11 @@ RenderSettings command_line_parser::parse(const int argc, char* argv[])
                 out_writer = JPEG;
             }
 #ifdef RIFT_USE_PLUGINS
-            else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
-            {
-                out_writer = OPENEXR;
-            }
             else if (!static_cast<bool>(strcmp(argv[i + 1], "oiio")))
             {
                 out_writer = OPENIMAGEIO;
             }
 #else
-            else if (!static_cast<bool>(strcmp(argv[i + 1], "open_exr")))
-            {
-                printf("ERROR: OpenEXR writer is not available.  Please "
-                       "compile RIFT with plugin support\n");
-                exit(EXIT_FAILURE);
-            }
             else if (!static_cast<bool>(strcmp(argv[i + 1], "oiio")))
             {
                 printf("ERROR: OpenImageIO writer is not available.  Please "

@@ -23,7 +23,6 @@
 #pragma once
 
 #include "core/image_writers/i_out_writer.h"
-#include "core/samplers/rng/i_rand_generator.h"
 #include "utility/containers/render_settings.h"
 #include "utility/containers/scene.h"
 

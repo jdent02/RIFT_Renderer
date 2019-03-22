@@ -23,7 +23,7 @@
 #include "metal.h"
 
 #include "utility/data_types/scatter_record.h"
-#include "core/rendering/scatter_functions.h"
+#include "utility/math_functions/scatter_functions.h"
 #include "utility/math_functions/utility_functions.h"
 
 bool Metal::scatter(const Ray& r_in, const HitRecord& hrec, ScatterRecord& srec)
