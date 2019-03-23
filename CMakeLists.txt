@@ -175,6 +175,9 @@ set (
     src/utility/rng/i_rand_generator.h
     src/utility/rng/drand48.cpp
     src/utility/rng/drand48.h
+    src/utility/buffers/i_buffer.h
+    src/utility/buffers/pixel_buffer.h
+    src/utility/buffers/pixel_buffer.cpp
 )
 
 set (
@@ -327,6 +330,11 @@ source_group(
 source_group(
     "src\\utility\\containers" REGULAR_EXPRESSION
     src/utility/containers/.*
+)
+
+source_group(
+    "src\\utility\\buffers" REGULAR_EXPRESSION
+    src/utility/buffers/.*
 )
 
 source_group(
